@@ -3,14 +3,14 @@
 **Task**  
 Extract structured person information from a bio text: full name, age, city, and job title / main profession.
 
-**Prompt text** (exact text used):'''Extract structured person information from the following bio text: name, age, city, and job title.
+**Prompt text** (exact text used):```Extract structured person information from the following bio text: name, age, city, and job title.
 
 Full name
 Age
 City they live in
 Job title or main profession
 
-Bio: Albert Smith is a 34-year-old software engineer living in Springfield. He works at a cloud consulting firm and enjoys gaming on the weekends.'''
+Bio: Albert Smith is a 34-year-old software engineer living in Springfield. He works at a cloud consulting firm and enjoys gaming on the weekends.```
 
 **Test settings**  
 - Model: Anthropic Claude Sonnet 4.5 (Bedrock Playground)  
@@ -19,11 +19,11 @@ Bio: Albert Smith is a 34-year-old software engineer living in Springfield. He w
 - Date: March 03, 2026  
 - Runs: 3 identical prompts (chat cleared between each)
 
-**Outputs** (all 3 runs identical):'''Based on the bio text, here is the extracted information:
+**Outputs** (all 3 runs identical):```Based on the bio text, here is the extracted information:
 Full name: Albert Smith
 Age: 34
 City they live in: Springfield
-Job title or main profession: Software engineer'''
+Job title or main profession: Software engineer```
 **Observations & Analysis**  
 - **Determinism**: 100% identical across all 3 runs — no variance at temperature=0.0  
 - **Format**: Free-form bullet list with a polite introductory sentence ("Based on the bio text, here is the extracted information:")  
