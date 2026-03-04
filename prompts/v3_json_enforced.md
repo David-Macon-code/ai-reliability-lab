@@ -5,12 +5,14 @@ Extract person info (full name, age, city, job title) from bio as JSON.
 
 **Prompt** (used in Bedrock Playground):
 
-```Text
+```text
 You are a precise data extractor. Extract exactly these fields from the bio: full name, age, city, job title.
 Bio: Albert Smith is a 34-year-old software engineer living in Springfield. He works at a cloud consulting firm and enjoys gaming on the weekends.
 Return ONLY the JSON object. No explanations, no markdown, no extra text.```
 
+
 **JSON Schema** (pasted into system prompt):
+
 
 ```json
 {
@@ -41,7 +43,9 @@ Outputs (all runs identical):```
   "job_title": "software engineer"
 }
 
+
 **Variance observed:** None — identical outputs across all runs (expected at temperature 0.0).
+
 
 **Comparison to V1/V2**
 - **Preamble:** Eliminated
@@ -67,10 +71,12 @@ Outputs (all runs identical):```
   "job_title": "software engineer"
 }
 
+
 **Token Usage (first boto3 run):**
 - **Input:** 354 tokens
 - **Output:** 26 tokens
 - **Total:** 380 tokens
+
 
 **Variance observed:** None — deterministic at temperature 0.0.
 
