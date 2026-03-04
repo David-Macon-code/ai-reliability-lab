@@ -5,12 +5,14 @@ Extract person info (full name, age, city, job title) from bio as JSON.
 
 **Prompt** (used in Bedrock Playground):
 
-```You are a precise data extractor. Extract exactly these fields from the bio: full name, age, city, job title.
+```Text
+You are a precise data extractor. Extract exactly these fields from the bio: full name, age, city, job title.
 Bio: Albert Smith is a 34-year-old software engineer living in Springfield. He works at a cloud consulting firm and enjoys gaming on the weekends.
 Return ONLY the JSON object. No explanations, no markdown, no extra text.```
 
 
 **JSON Schema** (pasted into system prompt):
+
 ```json
 {
   "type": "object",
@@ -25,6 +27,10 @@ Return ONLY the JSON object. No explanations, no markdown, no extra text.```
 }
 
 **Test settings**
+- **Model:** Anthropic Claude Sonnet 4.5
+- **Temperature:** 0.0
+- **Method:** Prompt + schema in system prompt (playground)
+- **Runs:** 5
 
 ```Model: Anthropic Claude Sonnet 4.5
 Temperature: 0.0
@@ -43,14 +49,13 @@ Outputs (all runs identical):```
 
 **Variance observed:** None — identical outputs across all runs (expected at temperature 0.0).
 
-```Comparison to V1/V2
+**Comparison to V1/V2**
+- **Preamble:** Eliminated
+- **Format:** Strict, valid JSON (parseable with json.loads)
+- **Reliability:** 100% in tests; native Converse API would guarantee via constrained decoding
+- **Variance:** None observed
 
-Preamble: Eliminated
-Format: Strict, valid JSON (parseable with json.loads)
-Reliability: 100% in tests; native Converse API would guarantee via constrained decoding
-Variance: None observed```
-
-### Native Bedrock Structured Outputs via Converse API (Full Win)
+### Native Bedrock Structured Outputs via Converse API
 
 **Method:** boto3 `converse()` with `outputConfig.textFormat = {"type": "json_schema", ...}` → token-level constrained decoding  
 **Inference Profile ID:** `global.anthropic.claude-sonnet-4-5-20250929-v1:0` (global cross-Region for reliable on-demand access)  
