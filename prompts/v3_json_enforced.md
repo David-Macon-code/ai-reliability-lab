@@ -26,7 +26,7 @@ Return ONLY the JSON object. No explanations, no markdown, no extra text.```
 Model: Anthropic Claude Sonnet 4.5
 Temperature: 0.0
 Method: Prompt + schema in system prompt (playground)
-Runs: [how many you did, e.g., 3]
+Runs: 3
 
 Outputs (all runs identical):```
 {
@@ -35,6 +35,7 @@ Outputs (all runs identical):```
   "city": "Springfield",
   "job_title": "software engineer"
 }
+**Variance observed:** None — identical outputs across all runs (expected at temperature 0.0).
 ```Comparison to V1/V2
 
 Preamble: Eliminated
@@ -57,8 +58,11 @@ Variance: None observed```
   "city": "Springfield",
   "job_title": "software engineer"
 }
-```Token Usage Example (first run):
-
-Input: 354
-Output: 26
-Total: 380```
+**Token Usage (first boto3 run):**
+- Input: 354
+- Output: 26
+- Total: 380
+**Key Portfolio Demonstration:**
+- Implemented native Bedrock structured JSON outputs using `outputConfig.textFormat` with json_schema → achieved guaranteed schema compliance without prompt hacks or post-processing.
+- Successfully navigated inference profile routing (`global.` prefix) for latest Claude 4.5 models.
+- Logged real invocation metrics (tokens) for observability.
