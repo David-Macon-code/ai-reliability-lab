@@ -23,21 +23,24 @@ Return ONLY the JSON object. No explanations, no markdown, no extra text.```
   "required": ["full_name", "age", "city", "job_title"],
   "additionalProperties": false
 }
-```**Test settings**
 
-Model: Anthropic Claude Sonnet 4.5
+**Test settings**
+
+```Model: Anthropic Claude Sonnet 4.5
 Temperature: 0.0
 Method: Prompt + schema in system prompt (playground)
 Runs: 5
 
 Outputs (all runs identical):```
 
+```json
 {
   "full_name": "Albert Smith",
   "age": 34,
   "city": "Springfield",
   "job_title": "software engineer"
 }
+
 **Variance observed:** None — identical outputs across all runs (expected at temperature 0.0).
 
 ```Comparison to V1/V2
@@ -64,6 +67,7 @@ Variance: None observed```
   "city": "Springfield",
   "job_title": "software engineer"
 }
+
 **Token Usage (first boto3 run):**
 - **Input:** 354 tokens
 - **Output:** 26 tokens
@@ -72,8 +76,7 @@ Variance: None observed```
 **Variance observed:** None — deterministic at temperature 0.0.
 
 **Key Portfolio Demonstration:**
+- Built on AWS Certified AI Practitioner (AIF-C01) knowledge of Bedrock Guardrails, Converse API, and responsible AI practices.
 - Implemented native Bedrock structured JSON outputs using `outputConfig.textFormat` with json_schema → achieved guaranteed schema compliance without prompt hacks or post-processing.
 - Successfully navigated inference profile routing (`global.` prefix) for latest Claude 4.5 models.
 - Logged real invocation metrics (tokens) for observability.
-
-- Built on AWS Certified AI Practitioner (AIF-C01) knowledge of Bedrock Guardrails, Converse API, and responsible AI practices.
