@@ -1,4 +1,5 @@
-  {
+[
+{
     "id": 1,
     "bio": "Albert Smith is a 34-year-old software engineer living in Springfield. He works at a cloud consulting firm and enjoys gaming on the weekends.",
     "expected": {
@@ -78,5 +79,6 @@
       "job_title": "project manager"
     }
   }
+]
 
 Add initial golden test set JSON for Day 6 evaluation (8 bios)
