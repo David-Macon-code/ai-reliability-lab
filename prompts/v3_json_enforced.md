@@ -3,7 +3,7 @@
 **Task**  
 Extract person info (full name, age, city, job title) from bio as JSON.
 
-**Prompt text** (used in Bedrock Playground):
+**Prompt** (used in Bedrock Playground):
 
 ```You are a precise data extractor. Extract exactly these fields from the bio: full name, age, city, job title.
 Bio: Albert Smith is a 34-year-old software engineer living in Springfield. He works at a cloud consulting firm and enjoys gaming on the weekends.
@@ -23,7 +23,7 @@ Return ONLY the JSON object. No explanations, no markdown, no extra text.```
   "required": ["full_name", "age", "city", "job_title"],
   "additionalProperties": false
 }
-```Test settings
+```**Test settings**
 
 Model: Anthropic Claude Sonnet 4.5
 Temperature: 0.0
@@ -54,7 +54,7 @@ Variance: None observed```
 **Temperature:** 0.0  
 **Prompt:** Minimal extraction instruction + bio (heavy "ONLY JSON" phrasing not required thanks to native enforcement)  
 **Schema:** Same as playground (required fields: full_name, age, city, job_title; additionalProperties: false)  
-**Runs:** At least 1 successful (repeat 3–5× for variance check — expect identical outputs at temp=0)  
+**Runs:** 5
 **Output (all runs):**
 
 ```json
@@ -65,10 +65,15 @@ Variance: None observed```
   "job_title": "software engineer"
 }
 **Token Usage (first boto3 run):**
-- Input: 354
-- Output: 26
-- Total: 380
+- **Input:** 354 tokens
+- **Output:** 26 tokens
+- **Total:** 380 tokens
+
+**Variance observed:** None — deterministic at temperature 0.0.
+
 **Key Portfolio Demonstration:**
 - Implemented native Bedrock structured JSON outputs using `outputConfig.textFormat` with json_schema → achieved guaranteed schema compliance without prompt hacks or post-processing.
 - Successfully navigated inference profile routing (`global.` prefix) for latest Claude 4.5 models.
 - Logged real invocation metrics (tokens) for observability.
+
+- Built on AWS Certified AI Practitioner (AIF-C01) knowledge of Bedrock Guardrails, Converse API, and responsible AI practices.
