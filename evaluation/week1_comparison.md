@@ -7,6 +7,7 @@
 - Average latency: ~2.2 seconds
 
   ```json
+  [
   {
     "id": 1,
     "bio_snippet": "Albert Smith is a 34-year-old software engineer li...",
@@ -119,7 +120,7 @@
     "tokens": 341,
     "latency_sec": 1.87
   }
-
+]
 **Key Observation**  
 Bedrock's `outputConfig.textFormat` with json_schema delivered perfect schema compliance across all varied bios (titles, reordered info, extra details). The single mismatch was semantic (inclusion of "Dr." in full_name), not structural — highlighting the value of clear expected definitions in golden sets.
 
