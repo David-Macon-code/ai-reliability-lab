@@ -4,9 +4,11 @@
 Extract person info (full name, age, city, job title) from bio as JSON.
 
 **Prompt text** (used in Bedrock Playground):
+
 ```You are a precise data extractor. Extract exactly these fields from the bio: full name, age, city, job title.
 Bio: Albert Smith is a 34-year-old software engineer living in Springfield. He works at a cloud consulting firm and enjoys gaming on the weekends.
 Return ONLY the JSON object. No explanations, no markdown, no extra text.```
+
 
 **JSON Schema** (pasted into system prompt):
 ```json
@@ -26,9 +28,10 @@ Return ONLY the JSON object. No explanations, no markdown, no extra text.```
 Model: Anthropic Claude Sonnet 4.5
 Temperature: 0.0
 Method: Prompt + schema in system prompt (playground)
-Runs: 3
+Runs: 5
 
 Outputs (all runs identical):```
+
 {
   "full_name": "Albert Smith",
   "age": 34,
@@ -36,12 +39,14 @@ Outputs (all runs identical):```
   "job_title": "software engineer"
 }
 **Variance observed:** None — identical outputs across all runs (expected at temperature 0.0).
+
 ```Comparison to V1/V2
 
 Preamble: Eliminated
 Format: Strict, valid JSON (parseable with json.loads)
 Reliability: 100% in tests; native Converse API would guarantee via constrained decoding
 Variance: None observed```
+
 ### Native Bedrock Structured Outputs via Converse API (Full Win)
 
 **Method:** boto3 `converse()` with `outputConfig.textFormat = {"type": "json_schema", ...}` → token-level constrained decoding  
@@ -50,7 +55,8 @@ Variance: None observed```
 **Prompt:** Minimal extraction instruction + bio (heavy "ONLY JSON" phrasing not required thanks to native enforcement)  
 **Schema:** Same as playground (required fields: full_name, age, city, job_title; additionalProperties: false)  
 **Runs:** At least 1 successful (repeat 3–5× for variance check — expect identical outputs at temp=0)  
-**Output (all runs):**  
+**Output (all runs):**
+
 ```json
 {
   "full_name": "Albert Smith",
