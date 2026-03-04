@@ -1,136 +1,35 @@
-## V3 Native Structured Outputs – Batch Results on Golden Test Set
+# Week 1 Comparison: V3 Native Structured Outputs
 
-- Cases tested: 8
-- Valid JSON: 8/8 (100%)
-- Exact match to expected: 7/8 (87.5%)
-- Average tokens: ~344
-- Average latency: ~2.2 seconds
+## V3 Batch Results on Golden Test Set
 
-  ID,Bio Snippet,Valid JSON,Matches Expected,Tokens,Latency (s)
-1,Albert Smith...,Yes,Yes,348,1.9
-2,Maria Gonzalez...,Yes,Yes,348,2.21
-3,Dr. Raj Patel...,Yes,No,350,2.08
-...,...,...,...,...,...
-8,Lisa Thompson...,Yes,Yes,341,1.87
+- **Cases tested**: 8  
+- **Valid JSON**: 8/8 (100%)  
+- **Exact match to expected**: 7/8 (87.5%)  
+- **Average tokens**: 343.5  
+- **Average latency**: ~2.17 seconds  
 
-  ```json
-  [
-  {
-    "id": 1,
-    "bio_snippet": "Albert Smith is a 34-year-old software engineer li...",
-    "valid_json": true,
-    "matches_expected": true,
-    "output": {
-      "full_name": "Albert Smith",
-      "age": 34,
-      "city": "Springfield",
-      "job_title": "software engineer"
-    },
-    "tokens": 348,
-    "latency_sec": 1.9
-  },
-  {
-    "id": 2,
-    "bio_snippet": "Maria Gonzalez, 28, from Miami, is a marketing spe...",
-    "valid_json": true,
-    "matches_expected": true,
-    "output": {
-      "full_name": "Maria Gonzalez",
-      "age": 28,
-      "city": "Miami",
-      "job_title": "marketing specialist"
-    },
-    "tokens": 348,
-    "latency_sec": 2.21
-  },
-  {
-    "id": 3,
-    "bio_snippet": "Dr. Raj Patel is 45 years old and resides in Bosto...",
-    "valid_json": true,
-    "matches_expected": false,
-    "output": {
-      "full_name": "Dr. Raj Patel",
-      "age": 45,
-      "city": "Boston",
-      "job_title": "cardiologist"
-    },
-    "tokens": 350,
-    "latency_sec": 2.08
-  },
-  {
-    "id": 4,
-    "bio_snippet": "Sophia Chen works as a data analyst in Seattle. Ag...",
-    "valid_json": true,
-    "matches_expected": true,
-    "output": {
-      "full_name": "Sophia Chen",
-      "age": 31,
-      "city": "Seattle",
-      "job_title": "data analyst"
-    },
-    "tokens": 340,
-    "latency_sec": 1.94
-  },
-  {
-    "id": 5,
-    "bio_snippet": "James O'Connor, a 52-year-old retired teacher from...",
-    "valid_json": true,
-    "matches_expected": true,
-    "output": {
-      "full_name": "James O'Connor",
-      "age": 52,
-      "city": "Chicago",
-      "job_title": "retired teacher"
-    },
-    "tokens": 343,
-    "latency_sec": 2.59
-  },
-  {
-    "id": 6,
-    "bio_snippet": "Elena Rossi is a graphic designer based in Austin....",
-    "valid_json": true,
-    "matches_expected": true,
-    "output": {
-      "full_name": "Elena Rossi",
-      "age": 29,
-      "city": "Austin",
-      "job_title": "graphic designer"
-    },
-    "tokens": 344,
-    "latency_sec": 1.74
-  },
-  {
-    "id": 7,
-    "bio_snippet": "Ahmed Khan, 38, lives in Denver and runs his own I...",
-    "valid_json": true,
-    "matches_expected": true,
-    "output": {
-      "full_name": "Ahmed Khan",
-      "age": 38,
-      "city": "Denver",
-      "job_title": "IT consultant"
-    },
-    "tokens": 334,
-    "latency_sec": 2.95
-  },
-  {
-    "id": 8,
-    "bio_snippet": "Lisa Thompson is 40 years old. She is a project ma...",
-    "valid_json": true,
-    "matches_expected": true,
-    "output": {
-      "full_name": "Lisa Thompson",
-      "age": 40,
-      "city": "Atlanta",
-      "job_title": "project manager"
-    },
-    "tokens": 341,
-    "latency_sec": 1.87
-  }
-]
+The single mismatch (ID 3) was semantic — the model included "Dr." in full_name, while the expected output did not. All outputs were perfectly valid JSON thanks to Bedrock's `outputConfig.textFormat` with json_schema.
+
+### Summary Table
+
+| ID | Bio Snippet                          | Valid JSON | Matches Expected | Tokens | Latency (s) |
+|----|--------------------------------------|------------|------------------|--------|-------------|
+| 1  | Albert Smith is a 34-year-old...     | Yes        | Yes              | 348    | 1.9         |
+| 2  | Maria Gonzalez, 28, from Miami...    | Yes        | Yes              | 348    | 2.21        |
+| 3  | Dr. Raj Patel is 45 years old...     | Yes        | No               | 350    | 2.08        |
+| 4  | Sophia Chen works as a data analyst... | Yes      | Yes              | 340    | 1.94        |
+| 5  | James O'Connor, a 52-year-old...     | Yes        | Yes              | 343    | 2.59        |
+| 6  | Elena Rossi is a graphic designer... | Yes        | Yes              | 344    | 1.74        |
+| 7  | Ahmed Khan, 38, lives in Denver...   | Yes        | Yes              | 334    | 2.95        |
+| 8  | Lisa Thompson is 40 years old...     | Yes        | Yes              | 341    | 1.87        |
+
 **Key Observation**  
-Bedrock's `outputConfig.textFormat` with json_schema delivered perfect schema compliance across all varied bios (titles, reordered info, extra details). The single mismatch was semantic (inclusion of "Dr." in full_name), not structural — highlighting the value of clear expected definitions in golden sets.
+Bedrock's native structured outputs delivered perfect schema compliance across varied bios (titles, reordered fields, extra details). The mismatch highlights the importance of precise golden set definitions (e.g., decide if honorifics belong in full_name).
 
-**Tokens & Latency** (consistent and low-cost for production use).
+**Tokens & Latency**  
+Consistent and low-cost — ideal for production entity extraction.
 
-**Next**: Run similar tests on V1 (baseline prompt) and V2 (structured prompt) via playground or script → compare validity % and reliability.
+**Next Steps**  
+Run similar batch/manual tests on V1 (baseline prompt) and V2 (structured prompt) to compare validity %, parsing issues, and reliability. Expect lower JSON validity on V1/V2 without enforcement.
+
+Full raw results: [v3_results.json](v3_results.json)
