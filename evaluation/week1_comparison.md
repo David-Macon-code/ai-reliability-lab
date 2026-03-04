@@ -6,6 +6,13 @@
 - Average tokens: ~344
 - Average latency: ~2.2 seconds
 
+  ID,Bio Snippet,Valid JSON,Matches Expected,Tokens,Latency (s)
+1,Albert Smith...,Yes,Yes,348,1.9
+2,Maria Gonzalez...,Yes,Yes,348,2.21
+3,Dr. Raj Patel...,Yes,No,350,2.08
+...,...,...,...,...,...
+8,Lisa Thompson...,Yes,Yes,341,1.87
+
   ```json
   [
   {
