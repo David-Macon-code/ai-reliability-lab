@@ -10,7 +10,6 @@ You are a precise data extractor. Extract exactly these fields from the bio: ful
 Bio: Albert Smith is a 34-year-old software engineer living in Springfield. He works at a cloud consulting firm and enjoys gaming on the weekends.
 Return ONLY the JSON object. No explanations, no markdown, no extra text.```
 
-
 **JSON Schema** (pasted into system prompt):
 
 ```json
@@ -31,11 +30,6 @@ Return ONLY the JSON object. No explanations, no markdown, no extra text.```
 - **Temperature:** 0.0
 - **Method:** Prompt + schema in system prompt (playground)
 - **Runs:** 5
-
-```Model: Anthropic Claude Sonnet 4.5
-Temperature: 0.0
-Method: Prompt + schema in system prompt (playground)
-Runs: 5
 
 Outputs (all runs identical):```
 
