@@ -31,4 +31,4 @@ Former NOC Engineer leveraging AWS Certified AI Practitioner (AIF-C01) knowledge
 - Golden test set creation & batch evaluation scripting.
 - GitHub repo organization + markdown documentation.
 
-Commit: [link to this week's commits]
+Commit: [link to this week's commits]](https://github.com/David-Macon-code/ai-reliability-lab/commits/main)
