@@ -1,5 +1,5 @@
 [
-{
+  {
     "id": 1,
     "bio": "Albert Smith is a 34-year-old software engineer living in Springfield. He works at a cloud consulting firm and enjoys gaming on the weekends.",
     "expected": {
@@ -23,7 +23,7 @@
     "id": 3,
     "bio": "Dr. Raj Patel is 45 years old and resides in Boston where he practices as a cardiologist.",
     "expected": {
-      "full_name": "Raj Patel",
+      "full_name": "Dr. Raj Patel",
       "age": 45,
       "city": "Boston",
       "job_title": "cardiologist"
@@ -66,7 +66,7 @@
       "full_name": "Ahmed Khan",
       "age": 38,
       "city": "Denver",
-      "job_title": "IT consultant"
+      "job_title": "IT consulting firm owner"
     }
   },
   {
@@ -80,4 +80,3 @@
     }
   }
 ]
-
