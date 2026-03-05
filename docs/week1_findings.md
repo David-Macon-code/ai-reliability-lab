@@ -33,4 +33,4 @@ Former NOC Engineer leveraging AWS Certified AI Practitioner (AIF-C01) knowledge
 
 Commit: [Week 1 commit history](https://github.com/David-Macon-code/ai-reliability-lab/commits/main)
 
-Overall, Week 1 established a strong foundation in LLM reliability using native Bedrock features, setting up for deeper observability and security in Week 2.
+Overall, Week 1 built a strong foundation in LLM reliability engineering on AWS Bedrock, with native structured outputs proving a major upgrade over traditional prompting.
