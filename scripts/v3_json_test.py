@@ -4,10 +4,6 @@ import time
 import csv
 from datetime import datetime
 import os
-import os
-import json
-import time
-# ... your other imports ...
 
 IS_INJECTION_TEST = True  # flip to False when done with Day 11
 INPUT_FILE = 'injection_test.json' if IS_INJECTION_TEST else 'golden_test.json'
@@ -169,8 +165,12 @@ if results:
         avg_tokens = sum(total_tokens_list) / len(total_tokens_list)
         print(f"Average total tokens: {avg_tokens:.1f}")
     
-    pass_rate = sum(1 for r in results if r.get('matches_expected', False)) / len(results) * 100
-    print(f"Golden pass rate: {pass_rate:.1f}% ({int(pass_rate/100 * len(results))}/{len(results)} cases)")
+        pass_rate = sum(1 for r in results if r.get('matches_expected', False)) / len(results) * 100
+        print(f"Golden pass rate: {pass_rate:.1f}% ({int(pass_rate/100 * len(results))}/{len(results)} cases)")
+    else:
+        valid_count = sum(1 for r in results if r.get('valid_json', False))
+        error_count = sum(1 for r in results if 'error' in r)
+        print(f"Injection test mode: {valid_count}/{len(results)} valid JSON outputs | {error_count} filtered/blocked")
 
 print(f"\nBatch complete.")
 print(f"Results saved to: {results_file}")
