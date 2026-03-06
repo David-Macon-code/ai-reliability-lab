@@ -1,4 +1,4 @@
-## Week 2 – Observability Baseline
+# Week 2 – Observability Baseline
 
 - 8 golden cases evaluated using Bedrock Converse + native json_schema
 - 100% valid JSON outputs
@@ -8,7 +8,7 @@
 - CSV logging: evaluation/v3_metrics_log.csv
 - Results: evaluation/v3_results.json
 
-# Week 2 - Observability & Metrics Baseline
+## Week 2 - Observability & Metrics Baseline
 
 ## Overview
 
@@ -21,25 +21,25 @@
 
 ## Aggregate Stats (Across 5 Runs, 40 Calls)
 
-| Metric                  | Average       | Min     | Max     | Std Dev | Notes |
-|-------------------------|---------------|---------|---------|---------|-------|
-| Latency (all cases)     | ~2.09 s       | 1.43 s  | 5.20 s  | ~0.6 s  | Includes cold-start |
-| Latency (cases 2–8)     | ~1.83 s       | 1.43 s  | 3.53 s  | ~0.3 s  | Very consistent after warm |
-| Total Tokens            | 309.8         | 302     | 316     | ~4.5    | Extremely stable |
-| Golden Pass Rate        | 100.0%        | -       | -       | -       | All 8 cases match exactly |
+| Metric                  | Average   | Min    | Max    | Std Dev | Notes                        |
+|-------------------------|-----------|--------|--------|---------|------------------------------|
+| Latency (all cases)     | ~2.09 s   | 1.43 s | 5.20 s | ~0.6 s  | Includes cold-start          |
+| Latency (cases 2–8)     | ~1.83 s   | 1.43 s | 3.53 s | ~0.3 s  | Very consistent after warm   |
+| Total Tokens            | 309.8     | 302    | 316    | ~4.5    | Extremely stable             |
+| Golden Pass Rate        | 100.0%    | -      | -      | -       | All 8 cases match exactly    |
 
 ## Per-Case Latency Breakdown (Averages from 5 Runs)
 
-| Case ID | Avg Latency (s) | Min (s) | Max (s) | Std Dev (s) | Observation |
-|---------|------------------|---------|---------|-------------|-------------|
-| 1       | **3.92**         | 3.13    | 5.20    | 0.83        | Consistent cold-start outlier (+~2.1s penalty) |
-| 2       | 1.78             | 1.68    | 2.01    | 0.12        | Stable |
-| 3       | 1.74             | 1.59    | 1.93    | 0.13        | Stable |
-| 4       | 1.90             | 1.54    | 1.96    | 0.15        | Stable |
-| 5       | 1.72             | 1.43    | 1.99    | 0.20        | Stable |
-| 6       | 1.74             | 1.55    | 1.96    | 0.14        | Stable |
-| 7       | 2.17             | 1.73    | 3.53    | 0.67        | One spike (likely transient) |
-| 8       | 1.78             | 1.64    | 1.90    | 0.10        | Very stable |
+|Case ID|Avg Latency (s)|Min (s)|Max (s)|Std Dev (s)|Observation|
+|---|---|---|---|---|---|
+|1|**3.92**|3.13|5.20|0.83|Consistent cold-start outlier (+~2.1s penalty)|
+|2|1.78|1.68|2.01|0.12|Stable|
+|3|1.74|1.59|1.93|0.13|Stable|
+|4|1.90|1.54|1.96|0.15|Stable|
+|5|1.72|1.43|1.99|0.20|Stable|
+|6|1.74|1.55|1.96|0.14|Stable|
+|7|2.17|1.73|3.53|0.67|One spike (likely transient)|
+|8|1.78|1.64|1.90|0.10|Very stable|
 
 ## Key Observations
 

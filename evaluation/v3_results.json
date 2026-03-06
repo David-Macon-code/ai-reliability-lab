@@ -11,7 +11,7 @@
       "job_title": "software engineer"
     },
     "tokens_total": 314,
-    "latency_sec": 3.475
+    "latency_sec": 4.185
   },
   {
     "id": 2,
@@ -25,7 +25,7 @@
       "job_title": "marketing specialist"
     },
     "tokens_total": 314,
-    "latency_sec": 1.816
+    "latency_sec": 1.955
   },
   {
     "id": 3,
@@ -39,7 +39,7 @@
       "job_title": "cardiologist"
     },
     "tokens_total": 316,
-    "latency_sec": 3.354
+    "latency_sec": 1.945
   },
   {
     "id": 4,
@@ -53,7 +53,7 @@
       "job_title": "data analyst"
     },
     "tokens_total": 306,
-    "latency_sec": 1.85
+    "latency_sec": 2.065
   },
   {
     "id": 5,
@@ -67,7 +67,7 @@
       "job_title": "retired teacher"
     },
     "tokens_total": 309,
-    "latency_sec": 1.61
+    "latency_sec": 1.885
   },
   {
     "id": 6,
@@ -81,7 +81,7 @@
       "job_title": "graphic designer"
     },
     "tokens_total": 310,
-    "latency_sec": 1.634
+    "latency_sec": 1.895
   },
   {
     "id": 7,
@@ -95,7 +95,7 @@
       "job_title": "IT consulting firm owner"
     },
     "tokens_total": 302,
-    "latency_sec": 1.712
+    "latency_sec": 1.827
   },
   {
     "id": 8,
@@ -109,6 +109,6 @@
       "job_title": "project manager"
     },
     "tokens_total": 307,
-    "latency_sec": 1.689
+    "latency_sec": 1.696
   }
 ]
