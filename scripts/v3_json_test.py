@@ -65,7 +65,7 @@ def normalize_name(name):
 for case in golden_data:
     id_ = case.get('id', 'unknown')
     bio = case['bio']
-    expected = case['expected']
+    # expected = case['expected']
 
     user_message = f"""Extract exactly these fields from the bio: full name, age, city, job title.
 
