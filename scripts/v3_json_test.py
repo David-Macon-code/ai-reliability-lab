@@ -5,6 +5,14 @@ import csv
 from datetime import datetime
 import os
 
+import os
+import json
+import time
+# ... your other imports ...
+
+IS_INJECTION_TEST = True  # flip to False when done with Day 11
+INPUT_FILE = 'injection_test.json' if IS_INJECTION_TEST else 'golden_test.json'
+
 # === CONFIG ===
 REGION = 'us-east-1'
 MODEL_ID = 'global.anthropic.claude-sonnet-4-5-20250929-v1:0'   # use this everywhere
