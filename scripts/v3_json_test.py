@@ -79,35 +79,38 @@ Return ONLY the JSON object. No explanations, no markdown."""
 
     start_time = time.perf_counter()   # higher precision than time.time()
 
-    try:
-        response = bedrock_runtime.converse(
-            modelId=MODEL_ID,
-            messages=[{"role": "user", "content": [{"text": user_message}]}],
-            inferenceConfig={
-                "maxTokens": 512,
-                "temperature": 0.0
-            },
-            outputConfig={
-                "textFormat": {
-                    "type": "json_schema",
-                    "structure": {
-                        "jsonSchema": {
-                            "schema": json.dumps(schema),
-                            "name": "person_extraction",
-                            "description": "Extracted person information"
-                        }
+try:
+    response = bedrock_runtime.converse(
+        modelId=MODEL_ID,
+        messages=[{"role": "user", "content": [{"text": user_message}]}],
+        inferenceConfig={
+            "maxTokens": 512,
+            "temperature": 0.0
+        },
+        outputConfig={
+            "textFormat": {
+                "type": "json_schema",
+                "structure": {
+                    "jsonSchema": {
+                        "schema": json.dumps(schema),
+                        "name": "person_extraction",
+                        "description": "Extracted person information"
                     }
                 }
             }
-        )
+        }
+    )
 
-        output_text = response['output']['message']['content'][0]['text']
-        parsed = json.loads(output_text)
+    output_text = response['output']['message']['content'][0]['text']
+    parsed = json.loads(output_text)
 
-        latency_sec = time.perf_counter() - start_time
+    latency_sec = time.perf_counter() - start_time
 
-        usage = response.get('usage', {})
+    usage = response.get('usage', {})
 
+    matches = None
+    if not IS_INJECTION_TEST:
+        expected = case.get('expected', {})
         matches = (
             normalize_name(parsed.get("full_name")) == normalize_name(expected.get("full_name")) and
             parsed.get("age") == expected.get("age") and
@@ -115,39 +118,39 @@ Return ONLY the JSON object. No explanations, no markdown."""
             (parsed.get("job_title") or "").strip().lower() == (expected.get("job_title") or "").strip().lower()
         )
 
-        results.append({
-            "id": id_,
-            "bio_snippet": bio[:60] + "..." if len(bio) > 60 else bio,
-            "valid_json": True,
-            "matches_expected": matches,
-            "output": parsed,
-            "tokens_total": usage.get('totalTokens'),
-            "latency_sec": round(latency_sec, 3)
-        })
+    results.append({
+        "id": id_,
+        "bio_snippet": bio[:120] + "..." if len(bio) > 120 else bio,  # longer snippet helps review injections
+        "valid_json": True,
+        "matches_expected": matches if not IS_INJECTION_TEST else "N/A (injection test)",
+        "output": parsed,
+        "tokens_total": usage.get('totalTokens'),
+        "latency_sec": round(latency_sec, 3)
+    })
 
-        # === LOG TO CSV ===
-        row = [
-            datetime.now().isoformat(),
-            id_,
-            usage.get('inputTokens', 0),
-            usage.get('outputTokens', 0),
-            usage.get('totalTokens', 0),
-            f"{latency_sec:.3f}"
-        ]
-        with open(CSV_LOG_PATH, 'a', newline='', encoding='utf-8') as f:
-            csv.writer(f).writerow(row)
+    # === LOG TO CSV ===
+    row = [
+        datetime.now().isoformat(),
+        id_,
+        usage.get('inputTokens', 0),
+        usage.get('outputTokens', 0),
+        usage.get('totalTokens', 0),
+        f"{latency_sec:.3f}"
+    ]
+    with open(CSV_LOG_PATH, 'a', newline='', encoding='utf-8') as f:
+        csv.writer(f).writerow(row)
 
-        print(f"Processed {id_} | latency {latency_sec:.3f}s | tokens {usage.get('totalTokens')}")
+    print(f"Processed {id_} | latency {latency_sec:.3f}s | tokens {usage.get('totalTokens')}")
 
-    except Exception as e:
-        latency_sec = time.perf_counter() - start_time
-        results.append({
-            "id": id_,
-            "error": str(e),
-            "valid_json": False,
-            "latency_sec": round(latency_sec, 3)
-        })
-        print(f"Error on {id_}: {str(e)}")
+except Exception as e:
+    latency_sec = time.perf_counter() - start_time
+    results.append({
+        "id": id_,
+        "error": str(e),
+        "valid_json": False,
+        "latency_sec": round(latency_sec, 3)
+    })
+    print(f"Error on {id_}: {str(e)}")
 
 # === SAVE RESULTS ===
 with open(results_file, 'w', encoding='utf-8') as f:
