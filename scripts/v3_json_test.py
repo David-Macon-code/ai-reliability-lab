@@ -4,7 +4,6 @@ import time
 import csv
 from datetime import datetime
 import os
-
 import os
 import json
 import time
@@ -49,9 +48,9 @@ schema = {
 # === BEDROCK CLIENT ===
 bedrock_runtime = boto3.client('bedrock-runtime', region_name=REGION)
 
-# === LOAD GOLDEN TEST SET ===
-golden_path = os.path.join("evaluation", "golden_test.json")
-with open(golden_path, 'r', encoding='utf-8') as f:
+# === LOAD TEST SET (golden or injection depending on toggle) ===
+test_path = os.path.join("evaluation", INPUT_FILE)
+with open(test_path, 'r', encoding='utf-8') as f:
     golden_data = json.load(f)
 
 # === OUTPUT FILES ===
