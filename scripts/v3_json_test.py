@@ -5,7 +5,7 @@ import csv
 from datetime import datetime
 import os
 
-IS_INJECTION_TEST = True  # flip to False when done with Day 11
+IS_INJECTION_TEST = False  
 INPUT_FILE = 'injection_test.json' if IS_INJECTION_TEST else 'golden_test.json'
 
 # === CONFIG ===
