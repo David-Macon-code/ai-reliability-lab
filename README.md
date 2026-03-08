@@ -25,7 +25,6 @@ As a former NOC engineer pivoting into AI, I'm bringing systems reliability thin
 | Day/Week | Status   | Key Outcome                                                                                                                         |
 | -------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------- |
 | Week 1   | Complete | 100% JSON success with native structured outputs (no parsing hacks)                                                                 |
-| Day 11   | Complete | **5/5 adversarial injections defeated** — 0 successful jailbreaks; 100% schema compliance; golden set 100% pass rate on validation  |
 | Day 12   | Complete | Guardrails integrated (100% prompt attack blocks); see evaluation/week2_guardrails.md for results/comparison                        |
 
 See full results in `/evaluation/` (v3_results.json, metrics CSVs).
