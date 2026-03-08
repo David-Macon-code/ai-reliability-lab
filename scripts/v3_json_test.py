@@ -5,17 +5,27 @@ import csv
 from datetime import datetime
 import os
 
-IS_INJECTION_TEST = False  
-INPUT_FILE = 'injection_test.json' if IS_INJECTION_TEST else 'golden_test.json'
-
 # === CONFIG ===
 REGION = 'us-east-1'
-MODEL_ID = 'global.anthropic.claude-sonnet-4-5-20250929-v1:0'   # use this everywhere
+MODEL_ID = 'global.anthropic.claude-sonnet-4-5-20250929-v1:0'  # or fallback to region-specific if needed
+
+# Guardrail config - prefer env vars for production/flexibility
+GUARDRAIL_ID = os.getenv("BEDROCK_GUARDRAIL_ID", "9g6hem28nedj")
+GUARDRAIL_VERSION = os.getenv("BEDROCK_GUARDRAIL_VERSION", "1")
+
+guardrail_config = {
+    "guardrailIdentifier": GUARDRAIL_ID,
+    "guardrailVersion": GUARDRAIL_VERSION,
+    "trace": "enabled"  # crucial for debugging
+}
+
+IS_INJECTION_TEST = False  # Flip to True for Day 12 injection re-test
+INPUT_FILE = 'injection_test.json' if IS_INJECTION_TEST else 'golden_test.json'
 
 # === CSV LOGGING SETUP ===
 CSV_LOG_PATH = os.path.join("evaluation", "v3_metrics_log.csv")
 
-# Create CSV header if it doesn't exist
+# Create CSV header if it doesn't exist (added guardrail_intervened)
 if not os.path.exists(CSV_LOG_PATH):
     with open(CSV_LOG_PATH, 'w', newline='', encoding='utf-8') as f:
         writer = csv.writer(f)
@@ -25,7 +35,8 @@ if not os.path.exists(CSV_LOG_PATH):
             "input_tokens",
             "output_tokens",
             "total_tokens",
-            "latency_sec"
+            "latency_sec",
+            "guardrail_intervened"
         ])
 
 # === JSON SCHEMA ===
@@ -44,29 +55,28 @@ schema = {
 # === BEDROCK CLIENT ===
 bedrock_runtime = boto3.client('bedrock-runtime', region_name=REGION)
 
-# === LOAD TEST SET (golden or injection depending on toggle) ===
+# === LOAD TEST SET ===
 test_path = os.path.join("evaluation", INPUT_FILE)
 with open(test_path, 'r', encoding='utf-8') as f:
-    golden_data = json.load(f)
+    test_data = json.load(f)
 
 # === OUTPUT FILES ===
 results_file = os.path.join("evaluation", "v3_results.json")
 results = []
 
-# === PROCESS BATCH ===
+# === HELPER ===
 def normalize_name(name):
     if not name:
         return ""
     name = name.strip()
-    # Standardize common title formats
     name = name.replace("Dr ", "Dr. ").replace("dr ", "Dr. ")
     return name.lower()
 
-for case in golden_data:
+# === PROCESS BATCH ===
+for case in test_data:
     try:
-        id_ = case.get('id', 'unknown')
+        case_id = case.get('id', 'unknown')
         bio = case['bio']
-        # expected = case['expected']   # already commented out - good
 
         user_message = f"""Extract exactly these fields from the bio: full name, age, city, job title.
 
@@ -74,7 +84,7 @@ Bio: {bio}
 
 Return ONLY the JSON object. No explanations, no markdown."""
 
-        start_time = time.perf_counter()   # higher precision than time.time()
+        start_time = time.perf_counter()
 
         response = bedrock_runtime.converse(
             modelId=MODEL_ID,
@@ -95,27 +105,31 @@ Return ONLY the JSON object. No explanations, no markdown."""
                     }
                 }
             },
-            guardrailConfig={
-                "guardrailIdentifier": "9g6hem28nedj",
-                "guardrailVersion": "1",
-                "trace": "enabled"
-            }
+            guardrailConfig=guardrail_config  # toggled via config above
         )
 
-        # Right after response = bedrock_runtime.converse(...)
         latency_sec = time.perf_counter() - start_time
 
-        # Guardrail check (new)
+        # Guardrail handling
         guardrail_intervened = False
         guardrail_trace = None
-        if 'trace' in response and 'guardrail' in response['trace']:
+        guardrail_trace_summary = None
+
+        if 'trace' in response and 'guardrail' in response.get('trace', {}):
             guardrail_trace = response['trace']['guardrail']
             if response.get('stopReason') == 'guardrail_intervened':
                 guardrail_intervened = True
-                print(f"  → Guardrail INTERVENED on {id_}")
+                print(f"  → Guardrail INTERVENED on {case_id}")
                 print("  Guardrail trace:", json.dumps(guardrail_trace, indent=2))
 
-        # Then your existing output_text = ... line, but wrapped:
+            # Richer summary for results/logging
+            guardrail_trace_summary = {
+                "action": guardrail_trace.get("action"),
+                "assessments": guardrail_trace.get("assessments", []),
+                # Add more fields if needed (e.g. "topicPolicy", "outputAssessments")
+            }
+
+        # Output parsing
         if guardrail_intervened:
             output_text = None
             parsed = None
@@ -125,57 +139,60 @@ Return ONLY the JSON object. No explanations, no markdown."""
             try:
                 parsed = json.loads(output_text)
                 valid_json = True
-            except:
+            except json.JSONDecodeError:
                 valid_json = False
                 parsed = None
 
         usage = response.get('usage', {})
 
+        # Golden matching (skip for injection tests)
         matches = None
         if not IS_INJECTION_TEST:
             expected = case.get('expected', {})
-            matches = (
-                normalize_name(parsed.get("full_name") if parsed else "") == normalize_name(expected.get("full_name")) and
-                (parsed.get("age") if parsed else None) == expected.get("age") and
-                (parsed.get("city") or "").strip().lower() == (expected.get("city") or "").strip().lower() and
-                (parsed.get("job_title") or "").strip().lower() == (expected.get("job_title") or "").strip().lower()
-            )
+            if parsed:
+                matches = (
+                    normalize_name(parsed.get("full_name")) == normalize_name(expected.get("full_name")) and
+                    parsed.get("age") == expected.get("age") and
+                    (parsed.get("city") or "").strip().lower() == (expected.get("city") or "").strip().lower() and
+                    (parsed.get("job_title") or "").strip().lower() == (expected.get("job_title") or "").strip().lower()
+                )
 
-        # Updated results.append with new guardrail fields
+        # Append to results
         results.append({
-            "id": id_,
+            "id": case_id,
             "bio_snippet": bio[:120] + "..." if len(bio) > 120 else bio,
             "valid_json": valid_json,
             "guardrail_intervened": guardrail_intervened,
-            "guardrail_trace_summary": guardrail_trace.get('action') if guardrail_trace else None,  # e.g., "BLOCK"
+            "guardrail_trace_summary": guardrail_trace_summary,
             "matches_expected": matches if not IS_INJECTION_TEST else "N/A (injection test)",
             "output": parsed,
             "tokens_total": usage.get('totalTokens'),
             "latency_sec": round(latency_sec, 3)
         })
-        print(f"  → Appended result for {id_} (valid: {valid_json}, intervened: {guardrail_intervened})")
+        print(f"  → Appended result for {case_id} (valid: {valid_json}, intervened: {guardrail_intervened})")
 
         # === LOG TO CSV ===
         row = [
             datetime.now().isoformat(),
-            id_,
+            case_id,
             usage.get('inputTokens', 0),
             usage.get('outputTokens', 0),
             usage.get('totalTokens', 0),
-            f"{latency_sec:.3f}"
+            f"{latency_sec:.3f}",
+            str(guardrail_intervened).lower()
         ]
         with open(CSV_LOG_PATH, 'a', newline='', encoding='utf-8') as f:
             csv.writer(f).writerow(row)
 
-        time.sleep(1)  # 1-second pause between cases
+        time.sleep(1)  # Rate limit safety
 
-        print(f"Processed {id_} | latency {latency_sec:.3f}s | tokens {usage.get('totalTokens')}")
+        print(f"Processed {case_id} | latency {latency_sec:.3f}s | tokens {usage.get('totalTokens')}")
 
-    except Exception as loop_e:
-        print(f"Unexpected error on case {id_ if 'id_' in locals() else 'unknown'}: {str(loop_e)}")
+    except Exception as e:
+        print(f"Unexpected error on case {case_id if 'case_id' in locals() else 'unknown'}: {str(e)}")
         results.append({
-            "id": id_ if 'id_' in locals() else "unknown",
-            "error": f"Loop-level error: {str(loop_e)}",
+            "id": case_id if 'case_id' in locals() else "unknown",
+            "error": str(e),
             "valid_json": False,
             "guardrail_intervened": False,
             "latency_sec": 0.0
@@ -185,30 +202,31 @@ Return ONLY the JSON object. No explanations, no markdown."""
 with open(results_file, 'w', encoding='utf-8') as f:
     json.dump(results, f, indent=2, ensure_ascii=False)
 
-# Quick summary stats
+# === SUMMARY ===
 if results:
-    latencies = [r['latency_sec'] for r in results if 'latency_sec' in r and r['latency_sec'] > 0 and 'error' not in r]
+    latencies = [r['latency_sec'] for r in results if r.get('latency_sec', 0) > 0 and 'error' not in r]
     total_tokens_list = [r.get('tokens_total', 0) for r in results if r.get('tokens_total', 0) > 0 and 'error' not in r]
-    
+
     if latencies:
-        avg_latency = sum(latencies) / len(latencies)
-        print(f"Average latency: {avg_latency:.3f} seconds")
-    
+        print(f"Average latency: {sum(latencies) / len(latencies):.3f} seconds")
     if total_tokens_list:
-        avg_tokens = sum(total_tokens_list) / len(total_tokens_list)
-        print(f"Average total tokens: {avg_tokens:.1f}")
-    
+        print(f"Average total tokens: {sum(total_tokens_list) / len(total_tokens_list):.1f}")
+
     if not IS_INJECTION_TEST:
         pass_rate = sum(1 for r in results if r.get('matches_expected', False)) / len(results) * 100
         print(f"Golden pass rate: {pass_rate:.1f}% ({int(pass_rate/100 * len(results))}/{len(results)} cases)")
     else:
         valid_count = sum(1 for r in results if r.get('valid_json', False))
         intervened_count = sum(1 for r in results if r.get('guardrail_intervened', False))
-        error_count = len(results) - valid_count
-        print(f"Injection test mode: {valid_count}/{len(results)} valid JSON | {intervened_count} guardrail interventions | {error_count} other errors")
+        error_count = len(results) - valid_count - intervened_count
+        print(f"Injection test mode:")
+        print(f"  Valid JSON: {valid_count}/{len(results)}")
+        print(f"  Guardrail interventions: {intervened_count}")
+        print(f"  Other errors: {error_count}")
 
 print(f"\nBatch complete.")
 print(f"Results saved to: {results_file}")
 print(f"Metrics logged to: {CSV_LOG_PATH}")
-print(f"Processed {len(results)} / {len(golden_data)} cases")
+print(f"Processed {len(results)} / {len(test_data)} cases")
 print(f"Model used: {MODEL_ID}")
+print(f"Guardrail used: {GUARDRAIL_ID} v{GUARDRAIL_VERSION}")
