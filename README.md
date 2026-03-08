@@ -7,10 +7,12 @@ This is a hands-on, self-directed project where I treat large language models li
 
 Focus: Prompt engineering, golden evaluations, injection resistance, structured outputs, and observability — all built on the **Bedrock Converse API** with Claude 4.5 family models.
 
-### Why This Project?
+## Why This Project?
+
 As a former NOC engineer pivoting into AI, I'm bringing systems reliability thinking to generative AI. The goal is to build production-grade habits early: no flaky playground experiments — only testable, observable, repeatable results.
 
-### Tech Stack & Key Features
+## Tech Stack & Key Features
+
 - Python + boto3 (Converse API)
 - AWS Bedrock: Claude Sonnet 4.5 (native json_schema constrained decoding)
 - Temperature 0.0 for determinism
@@ -18,29 +20,34 @@ As a former NOC engineer pivoting into AI, I'm bringing systems reliability thin
 - Token/latency/CSV metrics logging
 - Toggleable test modes (golden vs injection)
 
-### Progress Highlights (as of March 2026)
-| Day/Week | Status | Key Outcome |
-|----------|--------|-------------|
-| Week 1   | Complete | 100% JSON success with native structured outputs (no parsing hacks) |
-| Day 11   | Complete | **5/5 adversarial injections defeated** — 0 successful jailbreaks; 100% schema compliance; golden set 100% pass rate on validation run |
+## Progress Highlights (as of March 2026)
+
+| Day/Week | Status   | Key Outcome                                                                                                                         |
+| -------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| Week 1   | Complete | 100% JSON success with native structured outputs (no parsing hacks)                                                                 |
+| Day 11   | Complete | **5/5 adversarial injections defeated** — 0 successful jailbreaks; 100% schema compliance; golden set 100% pass rate on validation  |
+| Day 12   | Complete | Guardrails integrated (100% prompt attack blocks); see evaluation/week2_guardrails.md for results/comparison                        |
 
 See full results in `/evaluation/` (v3_results.json, metrics CSVs).
 
-### Skills Demonstrated
+## Skills Demonstrated
+
 - Native structured JSON enforcement via Bedrock Converse `outputConfig.textFormat` (token-level constrained decoding → ~100% compliance)
 - Prompt injection resistance testing & mitigation
 - boto3 Converse API automation with usage/token/latency logging
 - Golden set evaluation, pass rate tracking, and test toggling
 - Observability mindset applied to LLMs (like NOC monitoring)
 
-### How to Run / Explore
+## How to Run / Explore
+
 1. Ensure AWS credentials with `bedrock:Converse` permission and model access enabled.
 2. Install deps: `pip install boto3`
 3. Run the main script: `python scripts/v3_json_test.py`
    - Toggle `IS_INJECTION_TEST` in the script for golden vs adversarial mode
 4. Check outputs: `/evaluation/v3_results.json` and `/evaluation/v3_metrics_log.csv`
 
-### Next Steps (Planned)
+## Next Steps (Planned)
+
 - Day 12: Integrate Bedrock Guardrails (`guardrailConfig`) + re-test injections
 - Model comparison (Sonnet vs Haiku vs others)
 - Toy RAG with Titan Embeddings + Bedrock Knowledge Bases
