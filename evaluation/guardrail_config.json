@@ -1,0 +1,62 @@
+{
+  "ResponseMetadata": {
+    "RequestId": "6de50bc3-1bd4-46de-b510-b797679a2a98",
+    "HTTPStatusCode": 200,
+    "HTTPHeaders": {
+      "date": "Sun, 08 Mar 2026 20:19:19 GMT",
+      "content-type": "application/json",
+      "content-length": "1884",
+      "connection": "keep-alive",
+      "x-amzn-requestid": "6de50bc3-1bd4-46de-b510-b797679a2a98"
+    },
+    "RetryAttempts": 0
+  },
+  "name": "AIReliabilityLabV3Testing",
+  "description": "Version 1",
+  "guardrailId": "9g6hem28nedj",
+  "guardrailArn": "arn:aws:bedrock:us-east-1:887395463602:guardrail/9g6hem28nedj",
+  "version": "1",
+  "status": "READY",
+  "contentPolicy": {
+    "filters": [
+      {
+        "type": "VIOLENCE",
+        "inputStrength": "NONE",
+        "outputStrength": "NONE"
+      },
+      {
+        "type": "PROMPT_ATTACK",
+        "inputStrength": "HIGH",
+        "outputStrength": "NONE",
+        "inputModalities": [
+          "TEXT"
+        ],
+        "inputAction": "BLOCK"
+      },
+      {
+        "type": "MISCONDUCT",
+        "inputStrength": "NONE",
+        "outputStrength": "NONE"
+      },
+      {
+        "type": "HATE",
+        "inputStrength": "NONE",
+        "outputStrength": "NONE"
+      },
+      {
+        "type": "SEXUAL",
+        "inputStrength": "NONE",
+        "outputStrength": "NONE"
+      },
+      {
+        "type": "INSULTS",
+        "inputStrength": "NONE",
+        "outputStrength": "NONE"
+      }
+    ],
+    "tier": {
+      "tierName": "CLASSIC"
+    }
+  },
+  "createdAt": "2026-03-08T20:19:19Z"
+}
