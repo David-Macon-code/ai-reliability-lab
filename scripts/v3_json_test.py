@@ -94,13 +94,40 @@ Return ONLY the JSON object. No explanations, no markdown."""
                         }
                     }
                 }
+            },
+            guardrailConfig={
+                "guardrailIdentifier": "9g6hem28nedj",
+                "guardrailVersion": "1",
+                "trace": "enabled"
             }
         )
 
-        output_text = response['output']['message']['content'][0]['text']
-        parsed = json.loads(output_text)
-
+        # Right after response = bedrock_runtime.converse(...)
         latency_sec = time.perf_counter() - start_time
+
+        # Guardrail check (new)
+        guardrail_intervened = False
+        guardrail_trace = None
+        if 'trace' in response and 'guardrail' in response['trace']:
+            guardrail_trace = response['trace']['guardrail']
+            if response.get('stopReason') == 'guardrail_intervened':
+                guardrail_intervened = True
+                print(f"  → Guardrail INTERVENED on {id_}")
+                print("  Guardrail trace:", json.dumps(guardrail_trace, indent=2))
+
+        # Then your existing output_text = ... line, but wrapped:
+        if guardrail_intervened:
+            output_text = None
+            parsed = None
+            valid_json = False
+        else:
+            output_text = response['output']['message']['content'][0]['text']
+            try:
+                parsed = json.loads(output_text)
+                valid_json = True
+            except:
+                valid_json = False
+                parsed = None
 
         usage = response.get('usage', {})
 
@@ -108,22 +135,25 @@ Return ONLY the JSON object. No explanations, no markdown."""
         if not IS_INJECTION_TEST:
             expected = case.get('expected', {})
             matches = (
-                normalize_name(parsed.get("full_name")) == normalize_name(expected.get("full_name")) and
-                parsed.get("age") == expected.get("age") and
+                normalize_name(parsed.get("full_name") if parsed else "") == normalize_name(expected.get("full_name")) and
+                (parsed.get("age") if parsed else None) == expected.get("age") and
                 (parsed.get("city") or "").strip().lower() == (expected.get("city") or "").strip().lower() and
                 (parsed.get("job_title") or "").strip().lower() == (expected.get("job_title") or "").strip().lower()
             )
 
+        # Updated results.append with new guardrail fields
         results.append({
             "id": id_,
             "bio_snippet": bio[:120] + "..." if len(bio) > 120 else bio,
-            "valid_json": True,
+            "valid_json": valid_json,
+            "guardrail_intervened": guardrail_intervened,
+            "guardrail_trace_summary": guardrail_trace.get('action') if guardrail_trace else None,  # e.g., "BLOCK"
             "matches_expected": matches if not IS_INJECTION_TEST else "N/A (injection test)",
             "output": parsed,
             "tokens_total": usage.get('totalTokens'),
             "latency_sec": round(latency_sec, 3)
         })
-        print(f"  → Appended result for {id_} (valid: {results[-1]['valid_json']})")
+        print(f"  → Appended result for {id_} (valid: {valid_json}, intervened: {guardrail_intervened})")
 
         # === LOG TO CSV ===
         row = [
@@ -137,7 +167,7 @@ Return ONLY the JSON object. No explanations, no markdown."""
         with open(CSV_LOG_PATH, 'a', newline='', encoding='utf-8') as f:
             csv.writer(f).writerow(row)
 
-        time.sleep(1)  # 1-second pause between cases – add right after the CSV write
+        time.sleep(1)  # 1-second pause between cases
 
         print(f"Processed {id_} | latency {latency_sec:.3f}s | tokens {usage.get('totalTokens')}")
 
@@ -147,6 +177,7 @@ Return ONLY the JSON object. No explanations, no markdown."""
             "id": id_ if 'id_' in locals() else "unknown",
             "error": f"Loop-level error: {str(loop_e)}",
             "valid_json": False,
+            "guardrail_intervened": False,
             "latency_sec": 0.0
         })
 
@@ -172,8 +203,9 @@ if results:
         print(f"Golden pass rate: {pass_rate:.1f}% ({int(pass_rate/100 * len(results))}/{len(results)} cases)")
     else:
         valid_count = sum(1 for r in results if r.get('valid_json', False))
+        intervened_count = sum(1 for r in results if r.get('guardrail_intervened', False))
         error_count = len(results) - valid_count
-        print(f"Injection test mode: {valid_count}/{len(results)} valid JSON outputs | {error_count} errors/filtered")
+        print(f"Injection test mode: {valid_count}/{len(results)} valid JSON | {intervened_count} guardrail interventions | {error_count} other errors")
 
 print(f"\nBatch complete.")
 print(f"Results saved to: {results_file}")
