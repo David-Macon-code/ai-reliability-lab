@@ -22,3 +22,10 @@
       "trace": "enabled"  # Adds detailed trace.guardrail in response
   }
   # Passed in bedrock_runtime.converse(..., guardrailConfig=guardrail_config)
+
+## Pure Injection Re-Test (IS_INJECTION_TEST = True)
+
+- Cases: X adversarial only
+- Result: Y/Z blocked (Z% success)
+- Avg latency on blocks: ~0.XXs
+- Notes: Consistent PROMPT_ATTACK detection; no leakage.
