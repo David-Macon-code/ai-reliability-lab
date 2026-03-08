@@ -48,7 +48,7 @@ See full results in `/evaluation/` (v3_results.json, metrics CSVs).
 
 ## Next Steps (Planned)
 
-- Day 12: Integrate Bedrock Guardrails (`guardrailConfig`) + re-test injections
+- Day 13: Integrate Bedrock Guardrails (`guardrailConfig`) + re-test injections
 - Model comparison (Sonnet vs Haiku vs others)
 - Toy RAG with Titan Embeddings + Bedrock Knowledge Bases
 
