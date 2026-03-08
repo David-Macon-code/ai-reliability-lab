@@ -29,3 +29,12 @@
 - Result: Y/Z blocked (Z% success)
 - Avg latency on blocks: ~0.XXs
 - Notes: Consistent PROMPT_ATTACK detection; no leakage.
+
+### Detailed Results & Analysis
+
+- Cases run: [X] adversarial examples
+- Guardrail blocks: 100% (all intervened pre-model)
+- Avg latency: ~0.37s | Avg tokens: 0
+- JSON validity: 0% (expected — no output generated)
+- Key filter: PROMPT_ATTACK (HIGH strength, BLOCK action)
+- Improvement over Day 11: From "processed + resisted" to "never reaches model"
