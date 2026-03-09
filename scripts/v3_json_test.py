@@ -19,7 +19,7 @@ guardrail_config = {
     "trace": "enabled"  # crucial for debugging
 }
 
-IS_INJECTION_TEST = True  # Flip to True for Day 12 injection re-test
+IS_INJECTION_TEST = False  # Flip to True for Day 12 injection re-test
 INPUT_FILE = 'injection_test.json' if IS_INJECTION_TEST else 'golden_test.json'
 
 # === CSV LOGGING SETUP ===
@@ -107,6 +107,42 @@ Return ONLY the JSON object. No explanations, no markdown."""
             },
             guardrailConfig=guardrail_config  # toggled via config above
         )
+
+        intervened = False
+        filter_type = None
+        action = None
+        gr_latency = 0.0
+        confidence = None
+        guardrail_details = {}  # for extra debug if needed
+
+        if 'trace' in response and 'guardrail' in response['trace']:
+            trace = response['trace']['guardrail']
+            intervened = True
+            
+            # Handle inputAssessment (most common for prompt blocks)
+            if 'inputAssessment' in trace and trace['inputAssessment']:
+                # Get the first (usually only) assessment dict by its dynamic key
+                assess_key = next(iter(trace['inputAssessment']))
+                assess = trace['inputAssessment'][assess_key]
+                
+                # Content policy filters (e.g., PROMPT_ATTACK, HATE, etc.)
+                if 'contentPolicy' in assess and 'filters' in assess['contentPolicy'] and assess['contentPolicy']['filters']:
+                    f = assess['contentPolicy']['filters'][0]  # take first; extend to loop if multi
+                    filter_type = f.get('type')
+                    confidence = f.get('confidence')
+                    action = f.get('action')  # e.g., BLOCKED, NONE
+                
+                # Invocation metrics for latency
+                if 'invocationMetrics' in assess:
+                    gr_latency = assess['invocationMetrics'].get('guardrailProcessingLatency', 0)
+            
+            # Optional: capture outputAssessment if response was partially generated before block
+            if 'outputAssessment' in trace:
+                # similar parsing if needed
+                pass
+            
+            # Dump full trace for debugging rare cases
+            guardrail_details = trace
 
         latency_sec = time.perf_counter() - start_time
 
