@@ -1,6 +1,7 @@
 # AI Reliability Lab – 30-Day PromptOps Execution on AWS Bedrock
 
-A Personal lab I created following a structured 30-day plan to build reliable, observable, secure LLM workflows using AWS Bedrock (Converse API, structured outputs, Guardrails, etc.).![alt text](image.png)
+A Personal lab I created following a structured 30-day plan to build reliable, observable, secure LLM workflows using AWS Bedrock (Converse API, structured outputs, Guardrails, etc.).
+![alt text](image.png)
 
 **Current Status (as of March 9, 2026)**  
 ✅ **Week 1** – Complete: LLM foundations, prompt iteration (V1 → V3), native structured outputs achieved ~100% JSON validity.  
