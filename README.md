@@ -1,56 +1,46 @@
-# ai-reliability-lab
+# AI Reliability Lab – 30-Day PromptOps Execution on AWS Bedrock
 
-**30-Day AI Reliability Lab**  
-Applying NOC engineering discipline to LLM reliability using **AWS Bedrock**.
+A Personal lab I created following a structured 30-day plan to build reliable, observable, secure LLM workflows using AWS Bedrock (Converse API, structured outputs, Guardrails, etc.).![alt text](image.png)
 
-This is a hands-on, self-directed project where I treat large language models like production infrastructure: rigorous testing, observability, iteration, and failure-mode analysis.
+**Current Status (as of March 9, 2026)**  
+✅ **Week 1** – Complete: LLM foundations, prompt iteration (V1 → V3), native structured outputs achieved ~100% JSON validity.  
+✅ **Week 2** – Complete: Observability (guardrail trace parsing + metrics CSV), security tuning (Guardrail v3 – Medium strength), before/after testing.  
 
-Focus: Prompt engineering, golden evaluations, injection resistance, structured outputs, and observability — all built on the **Bedrock Converse API** with Claude 4.5 family models.
+- Golden benign: 100% pass rate (0% false positives after tuning)  
+- Injections: 93.3% blocked (14/15), one LOW-conf leak  
+- Key win: Balanced usability + strong attack protection  
 
-## Why This Project?
+🚧 **In progress:** Week 3 – Automation + Reliability Engineering  
 
-As a former NOC engineer pivoting into AI, I'm bringing systems reliability thinking to generative AI. The goal is to build production-grade habits early: no flaky playground experiments — only testable, observable, repeatable results.
+## Progress Overview
 
-## Tech Stack & Key Features
+| Week | Theme                                         | Status       | Key Outcomes                                                                                                   |
+|------|-----------------------------------------------|--------------|-------|-------------------------------------------------------------------|
+| 1    | LLM Foundations + Prompt Testing              | ✅ Complete  | 100% structured JSON on V3, golden test set created                                                            |
+| 2    | Observability + Security + API Control        | ✅ Complete  | Guardrail tuned (Medium strength), trace parsing + metrics logging, 100% golden pass, 93%+ injection blocks    |
+| 3    | Automation + Reliability Engineering          | In progress  | Batch scripts, retry logic, flake tracking, cost notes                                                          |
+| 4    | RAG + Cost Optimization + Enterprise Framing  | Planned      | Toy RAG, hallucination compare, model swap, final polish                                                        |
 
-- Python + boto3 (Converse API)
-- AWS Bedrock: Claude Sonnet 4.5 (native json_schema constrained decoding)
-- Temperature 0.0 for determinism
-- Golden test sets + adversarial injection testing
-- Token/latency/CSV metrics logging
-- Toggleable test modes (golden vs injection)
+### Detailed Reports
 
-## Progress Highlights (as of March 2026)
+- [Week 1 Findings](./docs/week1_findings.md)  
+- [Week 2 Completion – Observability + Security](./docs/Week%202%20Completion%20–%20Observability%20+%20Security%20+%20API%20Control.md)  
+- [Day 13](./docs/day13.md)  
+- [Day 14](./docs/day14.md)  
 
-| Day/Week | Status   | Key Outcome                                                                                                                         |
-| -------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| Week 1   | Complete | 100% JSON success with native structured outputs (no parsing hacks)                                                                 |
-| Day 12   | Complete | Guardrails integrated (100% prompt attack blocks); see evaluation/week2_guardrails.md for results/comparison                        |
+### Current Setup Highlights
 
-See full results in `/evaluation/` (v3_results.json, metrics CSVs).
+- Model: `global.anthropic.claude-sonnet-4-5-20250929-v1:0` (inference profile)  
+- Guardrail: `9g6hem28nedj` v3 (Medium strength on Prompt attacks)  
+- Scripts: `scripts/v3_json_test.py` (golden/injection toggles, trace parsing, CSV logging)  
+- Outputs: `/evaluation/v3_metrics_log.csv`, `/evaluation/v3_results.json`  
 
-## Skills Demonstrated
+### Next Steps (Week 3 Kickoff)
 
-- Native structured JSON enforcement via Bedrock Converse `outputConfig.textFormat` (token-level constrained decoding → ~100% compliance)
-- Prompt injection resistance testing & mitigation
-- boto3 Converse API automation with usage/token/latency logging
-- Golden set evaluation, pass rate tracking, and test toggling
-- Observability mindset applied to LLMs (like NOC monitoring)
+- Automate multi-run batches  
+- Add reliability features (retries, error classification)  
+- Track flake rate and token/cost aggregates  
 
-## How to Run / Explore
+Feel free to explore `/docs/`, `/scripts/`, and `/evaluation/` for details.
 
-1. Ensure AWS credentials with `bedrock:Converse` permission and model access enabled.
-2. Install deps: `pip install boto3`
-3. Run the main script: `python scripts/v3_json_test.py`
-   - Toggle `IS_INJECTION_TEST` in the script for golden vs adversarial mode
-4. Check outputs: `/evaluation/v3_results.json` and `/evaluation/v3_metrics_log.csv`
-
-## Next Steps (Planned)
-
-- Day 13: Integrate Bedrock Guardrails (`guardrailConfig`) + re-test injections
-- Model comparison (Sonnet vs Haiku vs others)
-- Toy RAG with Titan Embeddings + Bedrock Knowledge Bases
-
-MIT Licensed — feel free to fork or reference.
-
-Questions/comments? Reach out on X: [@1DavidInAtl](https://x.com/1DavidInAtl)
+Built with AWS Bedrock + Claude 4.5 family – ongoing PromptOps learning lab.
