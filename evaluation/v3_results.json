@@ -1,34 +1,34 @@
 [
   {
     "example_id": "1",
-    "error": "An error occurred (ValidationException) when calling the Converse operation: Invocation of model ID anthropic.claude-sonnet-4-5-20250929-v1:0 with on-demand throughput isn’t supported. Retry your request with the ID or ARN of an inference profile that contains this model."
+    "error": "An error occurred (ValidationException) when calling the Converse operation: The model returned the following errors: output_config.format.schema: For 'number' type, properties maximum, minimum are not supported"
   },
   {
     "example_id": "2",
-    "error": "An error occurred (ValidationException) when calling the Converse operation: Invocation of model ID anthropic.claude-sonnet-4-5-20250929-v1:0 with on-demand throughput isn’t supported. Retry your request with the ID or ARN of an inference profile that contains this model."
+    "error": "An error occurred (ValidationException) when calling the Converse operation: The model returned the following errors: output_config.format.schema: For 'number' type, properties maximum, minimum are not supported"
   },
   {
     "example_id": "3",
-    "error": "An error occurred (ValidationException) when calling the Converse operation: Invocation of model ID anthropic.claude-sonnet-4-5-20250929-v1:0 with on-demand throughput isn’t supported. Retry your request with the ID or ARN of an inference profile that contains this model."
+    "error": "An error occurred (ValidationException) when calling the Converse operation: The model returned the following errors: output_config.format.schema: For 'number' type, properties maximum, minimum are not supported"
   },
   {
     "example_id": "4",
-    "error": "An error occurred (ValidationException) when calling the Converse operation: Invocation of model ID anthropic.claude-sonnet-4-5-20250929-v1:0 with on-demand throughput isn’t supported. Retry your request with the ID or ARN of an inference profile that contains this model."
+    "error": "An error occurred (ValidationException) when calling the Converse operation: The model returned the following errors: output_config.format.schema: For 'number' type, properties maximum, minimum are not supported"
   },
   {
     "example_id": "5",
-    "error": "An error occurred (ValidationException) when calling the Converse operation: Invocation of model ID anthropic.claude-sonnet-4-5-20250929-v1:0 with on-demand throughput isn’t supported. Retry your request with the ID or ARN of an inference profile that contains this model."
+    "error": "An error occurred (ValidationException) when calling the Converse operation: The model returned the following errors: output_config.format.schema: For 'number' type, properties maximum, minimum are not supported"
   },
   {
     "example_id": "6",
-    "error": "An error occurred (ValidationException) when calling the Converse operation: Invocation of model ID anthropic.claude-sonnet-4-5-20250929-v1:0 with on-demand throughput isn’t supported. Retry your request with the ID or ARN of an inference profile that contains this model."
+    "error": "An error occurred (ValidationException) when calling the Converse operation: The model returned the following errors: output_config.format.schema: For 'number' type, properties maximum, minimum are not supported"
   },
   {
     "example_id": "7",
-    "error": "An error occurred (ValidationException) when calling the Converse operation: Invocation of model ID anthropic.claude-sonnet-4-5-20250929-v1:0 with on-demand throughput isn’t supported. Retry your request with the ID or ARN of an inference profile that contains this model."
+    "error": "An error occurred (ValidationException) when calling the Converse operation: The model returned the following errors: output_config.format.schema: For 'number' type, properties maximum, minimum are not supported"
   },
   {
     "example_id": "8",
-    "error": "An error occurred (ValidationException) when calling the Converse operation: Invocation of model ID anthropic.claude-sonnet-4-5-20250929-v1:0 with on-demand throughput isn’t supported. Retry your request with the ID or ARN of an inference profile that contains this model."
+    "error": "An error occurred (ValidationException) when calling the Converse operation: The model returned the following errors: output_config.format.schema: For 'number' type, properties maximum, minimum are not supported"
   }
 ]
