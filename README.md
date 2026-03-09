@@ -14,12 +14,12 @@ A Personal lab I created following a structured 30-day plan to build reliable, o
 
 ## Progress Overview
 
-| Week | Theme                                         | Status       | Key Outcomes                                                                                                   |
-|------|-----------------------------------------------|--------------|-------|-------------------------------------------------------------------|
-| 1    | LLM Foundations + Prompt Testing              | ✅ Complete  | 100% structured JSON on V3, golden test set created                                                            |
-| 2    | Observability + Security + API Control        | ✅ Complete  | Guardrail tuned (Medium strength), trace parsing + metrics logging, 100% golden pass, 93%+ injection blocks    |
-| 3    | Automation + Reliability Engineering          | In progress  | Batch scripts, retry logic, flake tracking, cost notes                                                          |
-| 4    | RAG + Cost Optimization + Enterprise Framing  | Planned      | Toy RAG, hallucination compare, model swap, final polish                                                        |
+| Week | Theme                              | Status     | Key Outcomes |
+|------|------------------------------------|------------|--------------|
+| 1    | LLM Foundations + Prompt Testing   | ✅ Complete | 100% structured JSON on V3, golden test set created |
+| 2    | Observability + Security + API Control | ✅ Complete | Guardrail tuned (Medium strength), trace parsing + metrics logging, 100% golden pass, 93%+ injection blocks |
+| 3    | Automation + Reliability Engineering | In progress | Batch scripts, retry logic, flake tracking, cost notes |
+| 4    | RAG + Cost Optimization + Enterprise Framing | Planned | Toy RAG, hallucination compare, model swap, final polish |
 
 ### Detailed Reports
 
