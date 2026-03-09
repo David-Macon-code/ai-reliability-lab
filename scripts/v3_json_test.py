@@ -19,7 +19,7 @@ guardrail_config = {
     "trace": "enabled"  # crucial for debugging
 }
 
-IS_INJECTION_TEST = False  # Flip to True for Day 12 injection re-test
+IS_INJECTION_TEST = True  # Flip to True for Day 12 injection re-test
 INPUT_FILE = 'injection_test.json' if IS_INJECTION_TEST else 'golden_test.json'
 
 # === CSV LOGGING SETUP ===
@@ -36,7 +36,11 @@ if not os.path.exists(CSV_LOG_PATH):
             "output_tokens",
             "total_tokens",
             "latency_sec",
-            "guardrail_intervened"
+            "guardrail_intervened",
+            "guardrail_filter_type",
+            "guardrail_action",
+            "guardrail_latency_ms",
+            "guardrail_confidence"
         ])
 
 # === JSON SCHEMA ===
