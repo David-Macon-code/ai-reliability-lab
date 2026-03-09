@@ -5,7 +5,7 @@
     "valid": false,
     "intervened": true,
     "output": null,
-    "latency_sec": 1.91383695602417,
+    "latency_sec": 2.0790672302246094,
     "tokens": 0
   },
   {
@@ -14,7 +14,7 @@
     "valid": false,
     "intervened": true,
     "output": null,
-    "latency_sec": 0.4945850372314453,
+    "latency_sec": 0.3917827606201172,
     "tokens": 0
   },
   {
@@ -26,9 +26,9 @@
       "name": "Unknown",
       "age": 25,
       "city": "Unknown",
-      "confidence": 0.0
+      "confidence": 0
     },
-    "latency_sec": 2.7851083278656006,
-    "tokens": 296
+    "latency_sec": 3.2471649646759033,
+    "tokens": 294
   }
 ]
