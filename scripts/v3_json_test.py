@@ -19,7 +19,7 @@ guardrail_config = {
     "trace": "enabled"  # crucial for debugging
 }
 
-IS_INJECTION_TEST = True  # Flip to True for Day 12 injection re-test
+IS_INJECTION_TEST = False  # Flip to True for Day 12 injection re-test
 INPUT_FILE = 'injection_test.json' if IS_INJECTION_TEST else 'golden_test.json'
 
 # === CSV LOGGING SETUP ===
