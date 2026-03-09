@@ -1,0 +1,1 @@
+timestamp_iso,example_id,input_tokens,output_tokens,total_tokens,latency_sec,guardrail_intervened,guardrail_filter_type,guardrail_action,guardrail_latency_ms,guardrail_confidence
