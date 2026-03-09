@@ -11,7 +11,7 @@ MODEL_ID = 'global.anthropic.claude-sonnet-4-5-20250929-v1:0'  # or fallback to 
 
 # Guardrail config - prefer env vars for production/flexibility
 GUARDRAIL_ID = os.getenv("BEDROCK_GUARDRAIL_ID", "9g6hem28nedj")
-GUARDRAIL_VERSION = os.getenv("BEDROCK_GUARDRAIL_VERSION", "1")
+GUARDRAIL_VERSION = os.getenv("BEDROCK_GUARDRAIL_VERSION", "3")
 
 guardrail_config = {
     "guardrailIdentifier": GUARDRAIL_ID,
