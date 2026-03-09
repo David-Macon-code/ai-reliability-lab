@@ -11,7 +11,7 @@ REGION = "us-east-1"
 GUARDRAIL_ID = "9g6hem28nedj"          # your guardrail ID
 GUARDRAIL_VERSION = "1"                # your guardrail version
 
-IS_INJECTION_TEST = False  # Toggle this to True for injection tests
+IS_INJECTION_TEST = True  # Toggle this to True for injection tests
 
 # Paths
 RESULTS_JSON = os.path.join("evaluation", "v3_results.json")
