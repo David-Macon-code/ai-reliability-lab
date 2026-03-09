@@ -1,34 +1,114 @@
 [
   {
     "example_id": "1",
-    "error": "An error occurred (ValidationException) when calling the Converse operation: The model returned the following errors: output_config.format.schema: For 'number' type, properties maximum, minimum are not supported"
+    "prompt": "Extract from: Alice Johnson, 28, New York",
+    "valid": true,
+    "intervened": true,
+    "output": {
+      "name": "Alice Johnson",
+      "age": 28,
+      "city": "New York",
+      "confidence": 1.0
+    },
+    "latency_sec": 5.909959077835083,
+    "tokens": 294
   },
   {
     "example_id": "2",
-    "error": "An error occurred (ValidationException) when calling the Converse operation: The model returned the following errors: output_config.format.schema: For 'number' type, properties maximum, minimum are not supported"
+    "prompt": "Extract: Bob Smith is 45 years old and lives in Chicago.",
+    "valid": true,
+    "intervened": true,
+    "output": {
+      "name": "Bob Smith",
+      "age": 45,
+      "city": "Chicago",
+      "confidence": 1.0
+    },
+    "latency_sec": 3.9859864711761475,
+    "tokens": 297
   },
   {
     "example_id": "3",
-    "error": "An error occurred (ValidationException) when calling the Converse operation: The model returned the following errors: output_config.format.schema: For 'number' type, properties maximum, minimum are not supported"
+    "prompt": "From text: Carol, age 32, Seattle resident.",
+    "valid": true,
+    "intervened": true,
+    "output": {
+      "name": "Carol",
+      "age": 32,
+      "city": "Seattle",
+      "confidence": 0.95
+    },
+    "latency_sec": 2.347592830657959,
+    "tokens": 293
   },
   {
     "example_id": "4",
-    "error": "An error occurred (ValidationException) when calling the Converse operation: The model returned the following errors: output_config.format.schema: For 'number' type, properties maximum, minimum are not supported"
+    "prompt": "Details: David Lee, 39, in Miami.",
+    "valid": true,
+    "intervened": true,
+    "output": {
+      "name": "David Lee",
+      "age": 39,
+      "city": "Miami",
+      "confidence": 1.0
+    },
+    "latency_sec": 4.520076751708984,
+    "tokens": 293
   },
   {
     "example_id": "5",
-    "error": "An error occurred (ValidationException) when calling the Converse operation: The model returned the following errors: output_config.format.schema: For 'number' type, properties maximum, minimum are not supported"
+    "prompt": "Extract person: Eve Brown, 31, lives in Denver.",
+    "valid": true,
+    "intervened": true,
+    "output": {
+      "name": "Eve Brown",
+      "age": 31,
+      "city": "Denver",
+      "confidence": 0.95
+    },
+    "latency_sec": 3.5347747802734375,
+    "tokens": 295
   },
   {
     "example_id": "6",
-    "error": "An error occurred (ValidationException) when calling the Converse operation: The model returned the following errors: output_config.format.schema: For 'number' type, properties maximum, minimum are not supported"
+    "prompt": "Name: Frank Green, 50, Boston.",
+    "valid": true,
+    "intervened": true,
+    "output": {
+      "name": "Frank Green",
+      "age": 50,
+      "city": "Boston",
+      "confidence": 1.0
+    },
+    "latency_sec": 2.552536964416504,
+    "tokens": 292
   },
   {
     "example_id": "7",
-    "error": "An error occurred (ValidationException) when calling the Converse operation: The model returned the following errors: output_config.format.schema: For 'number' type, properties maximum, minimum are not supported"
+    "prompt": "Grace White is 27 and from Phoenix.",
+    "valid": true,
+    "intervened": true,
+    "output": {
+      "name": "Grace White",
+      "age": 27,
+      "city": "Phoenix",
+      "confidence": 1.0
+    },
+    "latency_sec": 2.487436294555664,
+    "tokens": 292
   },
   {
     "example_id": "8",
-    "error": "An error occurred (ValidationException) when calling the Converse operation: The model returned the following errors: output_config.format.schema: For 'number' type, properties maximum, minimum are not supported"
+    "prompt": "Henry Black, 36 years old, Portland.",
+    "valid": true,
+    "intervened": true,
+    "output": {
+      "name": "Henry Black",
+      "age": 36,
+      "city": "Portland",
+      "confidence": 1.0
+    },
+    "latency_sec": 3.631533145904541,
+    "tokens": 293
   }
 ]
