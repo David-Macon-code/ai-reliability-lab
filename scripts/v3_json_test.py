@@ -6,7 +6,7 @@ import csv
 from datetime import datetime
 
 # Configuration
-MODEL_ID = "anthropic.claude-sonnet-4-5-20250929-v1:0"  # or your preferred model
+MODEL_ID = "global.anthropic.claude-sonnet-4-5-20250929-v1:0"  # or your preferred model
 REGION = "us-east-1"
 GUARDRAIL_ID = "9g6hem28nedj"          # your guardrail ID
 GUARDRAIL_VERSION = "1"                # your guardrail version
