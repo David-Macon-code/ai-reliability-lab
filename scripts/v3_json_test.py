@@ -50,7 +50,7 @@ schema = {
         "city": {"type": "string"},
         "confidence": {
             "type": "number",
-            "description": "Confidence score between 0 and 100 (0 = no confidence, 1 = very high confidence)"
+            "description": "Confidence score between 0 and 100 (0 = no confidence, 100 = very high confidence)"
         }  
     },
     "required": ["name", "confidence"],
