@@ -1,6 +1,6 @@
 # AI Reliability Lab – 30-Day PromptOps Execution on AWS Bedrock
 
-A personal lab following a structured 30-day plan to build reliable, observable, secure LLM workflows using **AWS Bedrock** (Converse API with native structured outputs, Guardrails, observability, etc.).
+A personal lab I created following a structured 30-day plan to build reliable, observable, secure LLM workflows using **AWS Bedrock** (Converse API with native structured outputs, Guardrails, observability, etc.).
 
 **Milestone Achieved!** 🎉  
 **Passed AWS Certified AI Practitioner (AIF-C01)** on March 11, 2026!  
