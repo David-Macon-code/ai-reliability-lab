@@ -8,11 +8,6 @@
 Issued March 11, 2026 | Valid until March 2029  
 [View on Credly](https://www.credly.com/badges/745adead-31ea-4399-99ff-35ff787966c8/public_url)
 
-**Credly Badges Overview** (auto-updates with new certifications)
-
-![Credly Badges Overview](https://credly-readme-stats.onrender.com/api/overview?username=david-macon&theme=dracula&show_icons=true&hide_border=true&cache_seconds=86400)
-
-*(Theme: dracula — try swapping to: tokyonight, radical, github_dark, nord, neon, etc.)*
 
 **Milestone Achieved!** 🎉  
 Passed **AWS Certified AI Practitioner (AIF-C01)** on March 11, 2026 — directly fueling better Guardrails, responsible AI practices, and Bedrock workflows in this lab.
