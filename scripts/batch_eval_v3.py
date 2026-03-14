@@ -199,11 +199,10 @@ def main():
     GUARDRAIL_VERSION = args.guardrail_version
 
     tests = load_golden_tests()
+    print(f"Loaded {len(tests)} golden test cases")
     
     total_runs = 0
     success_runs = 0
-
-    print(f"Loaded {len(tests)} golden test cases")
 
     os.makedirs(args.output_dir, exist_ok=True)
     csv_path = Path(args.output_dir) / "batch_metrics.csv"
