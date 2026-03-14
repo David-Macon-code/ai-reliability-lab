@@ -1,41 +1,41 @@
 test_id,run_id,input_text,expected_json_snippet,actual_json,valid_json,confidence,tokens_input,tokens_output,total_tokens,latency_sec,guardrail_blocked,guardrail_trace_category,flake_reason
-1,1,,"{""full_name"": ""Albert Smith"", ""age"": 34, ""city"": ""Springfield"", ""job_title"": ""software engineer""}",,False,0.0,0,0,0,0.93,False,,invalid_json
-1,2,,"{""full_name"": ""Albert Smith"", ""age"": 34, ""city"": ""Springfield"", ""job_title"": ""software engineer""}",,False,0.0,0,0,0,0.078,False,,invalid_json
-1,3,,"{""full_name"": ""Albert Smith"", ""age"": 34, ""city"": ""Springfield"", ""job_title"": ""software engineer""}",,False,0.0,0,0,0,0.076,False,,invalid_json
-1,4,,"{""full_name"": ""Albert Smith"", ""age"": 34, ""city"": ""Springfield"", ""job_title"": ""software engineer""}",,False,0.0,0,0,0,0.111,False,,invalid_json
-1,5,,"{""full_name"": ""Albert Smith"", ""age"": 34, ""city"": ""Springfield"", ""job_title"": ""software engineer""}",,False,0.0,0,0,0,0.121,False,,invalid_json
-2,1,,"{""full_name"": ""Maria Gonzalez"", ""age"": 28, ""city"": ""Miami"", ""job_title"": ""marketing specialist""}",,False,0.0,0,0,0,0.114,False,,invalid_json
-2,2,,"{""full_name"": ""Maria Gonzalez"", ""age"": 28, ""city"": ""Miami"", ""job_title"": ""marketing specialist""}",,False,0.0,0,0,0,0.11,False,,invalid_json
-2,3,,"{""full_name"": ""Maria Gonzalez"", ""age"": 28, ""city"": ""Miami"", ""job_title"": ""marketing specialist""}",,False,0.0,0,0,0,0.098,False,,invalid_json
+1,1,,"{""full_name"": ""Albert Smith"", ""age"": 34, ""city"": ""Springfield"", ""job_title"": ""software engineer""}",,False,0.0,0,0,0,0.861,False,,invalid_json
+1,2,,"{""full_name"": ""Albert Smith"", ""age"": 34, ""city"": ""Springfield"", ""job_title"": ""software engineer""}",,False,0.0,0,0,0,0.154,False,,invalid_json
+1,3,,"{""full_name"": ""Albert Smith"", ""age"": 34, ""city"": ""Springfield"", ""job_title"": ""software engineer""}",,False,0.0,0,0,0,0.116,False,,invalid_json
+1,4,,"{""full_name"": ""Albert Smith"", ""age"": 34, ""city"": ""Springfield"", ""job_title"": ""software engineer""}",,False,0.0,0,0,0,0.114,False,,invalid_json
+1,5,,"{""full_name"": ""Albert Smith"", ""age"": 34, ""city"": ""Springfield"", ""job_title"": ""software engineer""}",,False,0.0,0,0,0,0.114,False,,invalid_json
+2,1,,"{""full_name"": ""Maria Gonzalez"", ""age"": 28, ""city"": ""Miami"", ""job_title"": ""marketing specialist""}",,False,0.0,0,0,0,0.124,False,,invalid_json
+2,2,,"{""full_name"": ""Maria Gonzalez"", ""age"": 28, ""city"": ""Miami"", ""job_title"": ""marketing specialist""}",,False,0.0,0,0,0,0.127,False,,invalid_json
+2,3,,"{""full_name"": ""Maria Gonzalez"", ""age"": 28, ""city"": ""Miami"", ""job_title"": ""marketing specialist""}",,False,0.0,0,0,0,0.134,False,,invalid_json
 2,4,,"{""full_name"": ""Maria Gonzalez"", ""age"": 28, ""city"": ""Miami"", ""job_title"": ""marketing specialist""}",,False,0.0,0,0,0,0.12,False,,invalid_json
-2,5,,"{""full_name"": ""Maria Gonzalez"", ""age"": 28, ""city"": ""Miami"", ""job_title"": ""marketing specialist""}",,False,0.0,0,0,0,0.115,False,,invalid_json
-3,1,,"{""full_name"": ""Dr. Raj Patel"", ""age"": 45, ""city"": ""Boston"", ""job_title"": ""cardiologist""}",,False,0.0,0,0,0,0.101,False,,invalid_json
-3,2,,"{""full_name"": ""Dr. Raj Patel"", ""age"": 45, ""city"": ""Boston"", ""job_title"": ""cardiologist""}",,False,0.0,0,0,0,0.121,False,,invalid_json
-3,3,,"{""full_name"": ""Dr. Raj Patel"", ""age"": 45, ""city"": ""Boston"", ""job_title"": ""cardiologist""}",,False,0.0,0,0,0,0.106,False,,invalid_json
-3,4,,"{""full_name"": ""Dr. Raj Patel"", ""age"": 45, ""city"": ""Boston"", ""job_title"": ""cardiologist""}",,False,0.0,0,0,0,0.113,False,,invalid_json
-3,5,,"{""full_name"": ""Dr. Raj Patel"", ""age"": 45, ""city"": ""Boston"", ""job_title"": ""cardiologist""}",,False,0.0,0,0,0,0.118,False,,invalid_json
-4,1,,"{""full_name"": ""Sophia Chen"", ""age"": 31, ""city"": ""Seattle"", ""job_title"": ""data analyst""}",,False,0.0,0,0,0,0.112,False,,invalid_json
-4,2,,"{""full_name"": ""Sophia Chen"", ""age"": 31, ""city"": ""Seattle"", ""job_title"": ""data analyst""}",,False,0.0,0,0,0,0.116,False,,invalid_json
-4,3,,"{""full_name"": ""Sophia Chen"", ""age"": 31, ""city"": ""Seattle"", ""job_title"": ""data analyst""}",,False,0.0,0,0,0,0.101,False,,invalid_json
-4,4,,"{""full_name"": ""Sophia Chen"", ""age"": 31, ""city"": ""Seattle"", ""job_title"": ""data analyst""}",,False,0.0,0,0,0,0.107,False,,invalid_json
-4,5,,"{""full_name"": ""Sophia Chen"", ""age"": 31, ""city"": ""Seattle"", ""job_title"": ""data analyst""}",,False,0.0,0,0,0,0.093,False,,invalid_json
-5,1,,"{""full_name"": ""James O'Connor"", ""age"": 52, ""city"": ""Chicago"", ""job_title"": ""retired teacher""}",,False,0.0,0,0,0,0.109,False,,invalid_json
-5,2,,"{""full_name"": ""James O'Connor"", ""age"": 52, ""city"": ""Chicago"", ""job_title"": ""retired teacher""}",,False,0.0,0,0,0,0.126,False,,invalid_json
-5,3,,"{""full_name"": ""James O'Connor"", ""age"": 52, ""city"": ""Chicago"", ""job_title"": ""retired teacher""}",,False,0.0,0,0,0,0.122,False,,invalid_json
+2,5,,"{""full_name"": ""Maria Gonzalez"", ""age"": 28, ""city"": ""Miami"", ""job_title"": ""marketing specialist""}",,False,0.0,0,0,0,0.119,False,,invalid_json
+3,1,,"{""full_name"": ""Dr. Raj Patel"", ""age"": 45, ""city"": ""Boston"", ""job_title"": ""cardiologist""}",,False,0.0,0,0,0,0.148,False,,invalid_json
+3,2,,"{""full_name"": ""Dr. Raj Patel"", ""age"": 45, ""city"": ""Boston"", ""job_title"": ""cardiologist""}",,False,0.0,0,0,0,0.123,False,,invalid_json
+3,3,,"{""full_name"": ""Dr. Raj Patel"", ""age"": 45, ""city"": ""Boston"", ""job_title"": ""cardiologist""}",,False,0.0,0,0,0,0.12,False,,invalid_json
+3,4,,"{""full_name"": ""Dr. Raj Patel"", ""age"": 45, ""city"": ""Boston"", ""job_title"": ""cardiologist""}",,False,0.0,0,0,0,0.12,False,,invalid_json
+3,5,,"{""full_name"": ""Dr. Raj Patel"", ""age"": 45, ""city"": ""Boston"", ""job_title"": ""cardiologist""}",,False,0.0,0,0,0,0.166,False,,invalid_json
+4,1,,"{""full_name"": ""Sophia Chen"", ""age"": 31, ""city"": ""Seattle"", ""job_title"": ""data analyst""}",,False,0.0,0,0,0,0.123,False,,invalid_json
+4,2,,"{""full_name"": ""Sophia Chen"", ""age"": 31, ""city"": ""Seattle"", ""job_title"": ""data analyst""}",,False,0.0,0,0,0,0.113,False,,invalid_json
+4,3,,"{""full_name"": ""Sophia Chen"", ""age"": 31, ""city"": ""Seattle"", ""job_title"": ""data analyst""}",,False,0.0,0,0,0,0.111,False,,invalid_json
+4,4,,"{""full_name"": ""Sophia Chen"", ""age"": 31, ""city"": ""Seattle"", ""job_title"": ""data analyst""}",,False,0.0,0,0,0,0.129,False,,invalid_json
+4,5,,"{""full_name"": ""Sophia Chen"", ""age"": 31, ""city"": ""Seattle"", ""job_title"": ""data analyst""}",,False,0.0,0,0,0,0.146,False,,invalid_json
+5,1,,"{""full_name"": ""James O'Connor"", ""age"": 52, ""city"": ""Chicago"", ""job_title"": ""retired teacher""}",,False,0.0,0,0,0,0.116,False,,invalid_json
+5,2,,"{""full_name"": ""James O'Connor"", ""age"": 52, ""city"": ""Chicago"", ""job_title"": ""retired teacher""}",,False,0.0,0,0,0,0.116,False,,invalid_json
+5,3,,"{""full_name"": ""James O'Connor"", ""age"": 52, ""city"": ""Chicago"", ""job_title"": ""retired teacher""}",,False,0.0,0,0,0,0.112,False,,invalid_json
 5,4,,"{""full_name"": ""James O'Connor"", ""age"": 52, ""city"": ""Chicago"", ""job_title"": ""retired teacher""}",,False,0.0,0,0,0,0.113,False,,invalid_json
-5,5,,"{""full_name"": ""James O'Connor"", ""age"": 52, ""city"": ""Chicago"", ""job_title"": ""retired teacher""}",,False,0.0,0,0,0,0.121,False,,invalid_json
-6,1,,"{""full_name"": ""Elena Rossi"", ""age"": 29, ""city"": ""Austin"", ""job_title"": ""graphic designer""}",,False,0.0,0,0,0,0.118,False,,invalid_json
-6,2,,"{""full_name"": ""Elena Rossi"", ""age"": 29, ""city"": ""Austin"", ""job_title"": ""graphic designer""}",,False,0.0,0,0,0,0.12,False,,invalid_json
-6,3,,"{""full_name"": ""Elena Rossi"", ""age"": 29, ""city"": ""Austin"", ""job_title"": ""graphic designer""}",,False,0.0,0,0,0,0.116,False,,invalid_json
-6,4,,"{""full_name"": ""Elena Rossi"", ""age"": 29, ""city"": ""Austin"", ""job_title"": ""graphic designer""}",,False,0.0,0,0,0,0.118,False,,invalid_json
-6,5,,"{""full_name"": ""Elena Rossi"", ""age"": 29, ""city"": ""Austin"", ""job_title"": ""graphic designer""}",,False,0.0,0,0,0,0.113,False,,invalid_json
-7,1,,"{""full_name"": ""Ahmed Khan"", ""age"": 38, ""city"": ""Denver"", ""job_title"": ""IT consulting firm owner""}",,False,0.0,0,0,0,0.116,False,,invalid_json
-7,2,,"{""full_name"": ""Ahmed Khan"", ""age"": 38, ""city"": ""Denver"", ""job_title"": ""IT consulting firm owner""}",,False,0.0,0,0,0,0.122,False,,invalid_json
-7,3,,"{""full_name"": ""Ahmed Khan"", ""age"": 38, ""city"": ""Denver"", ""job_title"": ""IT consulting firm owner""}",,False,0.0,0,0,0,0.113,False,,invalid_json
-7,4,,"{""full_name"": ""Ahmed Khan"", ""age"": 38, ""city"": ""Denver"", ""job_title"": ""IT consulting firm owner""}",,False,0.0,0,0,0,0.113,False,,invalid_json
-7,5,,"{""full_name"": ""Ahmed Khan"", ""age"": 38, ""city"": ""Denver"", ""job_title"": ""IT consulting firm owner""}",,False,0.0,0,0,0,0.109,False,,invalid_json
-8,1,,"{""full_name"": ""Lisa Thompson"", ""age"": 40, ""city"": ""Atlanta"", ""job_title"": ""project manager""}",,False,0.0,0,0,0,0.107,False,,invalid_json
+5,5,,"{""full_name"": ""James O'Connor"", ""age"": 52, ""city"": ""Chicago"", ""job_title"": ""retired teacher""}",,False,0.0,0,0,0,0.111,False,,invalid_json
+6,1,,"{""full_name"": ""Elena Rossi"", ""age"": 29, ""city"": ""Austin"", ""job_title"": ""graphic designer""}",,False,0.0,0,0,0,0.108,False,,invalid_json
+6,2,,"{""full_name"": ""Elena Rossi"", ""age"": 29, ""city"": ""Austin"", ""job_title"": ""graphic designer""}",,False,0.0,0,0,0,0.119,False,,invalid_json
+6,3,,"{""full_name"": ""Elena Rossi"", ""age"": 29, ""city"": ""Austin"", ""job_title"": ""graphic designer""}",,False,0.0,0,0,0,0.113,False,,invalid_json
+6,4,,"{""full_name"": ""Elena Rossi"", ""age"": 29, ""city"": ""Austin"", ""job_title"": ""graphic designer""}",,False,0.0,0,0,0,0.114,False,,invalid_json
+6,5,,"{""full_name"": ""Elena Rossi"", ""age"": 29, ""city"": ""Austin"", ""job_title"": ""graphic designer""}",,False,0.0,0,0,0,0.122,False,,invalid_json
+7,1,,"{""full_name"": ""Ahmed Khan"", ""age"": 38, ""city"": ""Denver"", ""job_title"": ""IT consulting firm owner""}",,False,0.0,0,0,0,0.113,False,,invalid_json
+7,2,,"{""full_name"": ""Ahmed Khan"", ""age"": 38, ""city"": ""Denver"", ""job_title"": ""IT consulting firm owner""}",,False,0.0,0,0,0,0.121,False,,invalid_json
+7,3,,"{""full_name"": ""Ahmed Khan"", ""age"": 38, ""city"": ""Denver"", ""job_title"": ""IT consulting firm owner""}",,False,0.0,0,0,0,0.107,False,,invalid_json
+7,4,,"{""full_name"": ""Ahmed Khan"", ""age"": 38, ""city"": ""Denver"", ""job_title"": ""IT consulting firm owner""}",,False,0.0,0,0,0,0.115,False,,invalid_json
+7,5,,"{""full_name"": ""Ahmed Khan"", ""age"": 38, ""city"": ""Denver"", ""job_title"": ""IT consulting firm owner""}",,False,0.0,0,0,0,0.102,False,,invalid_json
+8,1,,"{""full_name"": ""Lisa Thompson"", ""age"": 40, ""city"": ""Atlanta"", ""job_title"": ""project manager""}",,False,0.0,0,0,0,0.117,False,,invalid_json
 8,2,,"{""full_name"": ""Lisa Thompson"", ""age"": 40, ""city"": ""Atlanta"", ""job_title"": ""project manager""}",,False,0.0,0,0,0,0.115,False,,invalid_json
-8,3,,"{""full_name"": ""Lisa Thompson"", ""age"": 40, ""city"": ""Atlanta"", ""job_title"": ""project manager""}",,False,0.0,0,0,0,0.113,False,,invalid_json
-8,4,,"{""full_name"": ""Lisa Thompson"", ""age"": 40, ""city"": ""Atlanta"", ""job_title"": ""project manager""}",,False,0.0,0,0,0,0.107,False,,invalid_json
-8,5,,"{""full_name"": ""Lisa Thompson"", ""age"": 40, ""city"": ""Atlanta"", ""job_title"": ""project manager""}",,False,0.0,0,0,0,0.114,False,,invalid_json
+8,3,,"{""full_name"": ""Lisa Thompson"", ""age"": 40, ""city"": ""Atlanta"", ""job_title"": ""project manager""}",,False,0.0,0,0,0,0.131,False,,invalid_json
+8,4,,"{""full_name"": ""Lisa Thompson"", ""age"": 40, ""city"": ""Atlanta"", ""job_title"": ""project manager""}",,False,0.0,0,0,0,0.115,False,,invalid_json
+8,5,,"{""full_name"": ""Lisa Thompson"", ""age"": 40, ""city"": ""Atlanta"", ""job_title"": ""project manager""}",,False,0.0,0,0,0,0.117,False,,invalid_json

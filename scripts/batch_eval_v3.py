@@ -64,8 +64,15 @@ def run_converse_single(user_message, temperature=0.0, max_tokens=512):
             },
             guardrailConfig=guardrail_config
         )
+
+        # ── Diagnostic: print full raw response when call succeeds ──
+        print("\n=== RAW RESPONSE ===")
+        print(json.dumps(response, indent=2, default=str))
+        print("=== END RAW RESPONSE ===\n")
+
     except Exception as api_err:
         latency = time.time() - start_time
+        print(f"API call failed: {str(api_err)}")  # ← added print for visibility
         return {
             "actual_json": None,
             "valid_json": False,
@@ -79,8 +86,19 @@ def run_converse_single(user_message, temperature=0.0, max_tokens=512):
             "raw_response": None
         }
 
+    # ── Only if no exception ──
     latency = time.time() - start_time
-    output_text = response['output']['message']['content'][0]['text']
+
+    # Safe access to output_text
+    try:
+        output_text = response['output']['message']['content'][0]['text']
+    except (KeyError, IndexError, TypeError) as e:
+        print(f"Response structure error: {str(e)}")
+        output_text = ""
+
+    # Print extracted text for easy debugging
+    print(f"Extracted output_text:\n{output_text}\n{'-' * 80}")
+
     usage = response.get('usage', {})
 
     # Guardrail trace parsing
@@ -162,7 +180,7 @@ def main():
 
         for test in tests:
             test_id = test.get("test_id", "unknown")
-            input_text = test.get("input_text", "")
+            input_text = test.get("bio", "")  # ← changed to "bio" based on your golden_test.json
             expected_snippet = json.dumps(test.get("expected", {}))[:100]
 
             for run_id in range(1, args.runs + 1):
