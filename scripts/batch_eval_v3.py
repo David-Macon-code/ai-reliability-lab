@@ -18,13 +18,13 @@ bedrock_runtime = boto3.client('bedrock-runtime', region_name=REGION)
 EXTRACTION_SCHEMA = {
     "type": "object",
     "properties": {
-        "full_name": {"type": "string", "description": "Full name of the person or null if missing"},
-        "age": {"type": "integer", "description": "Age as integer or null if missing"},
-        "city": {"type": "string", "description": "City or null if missing"},
-        "job_title": {"type": "string", "description": "Job title or null if missing"},
+        "full_name": {"type": "string", "description": "Extracted full name or null"},
+        "age": {"type": "integer", "description": "Age as integer or null"},
+        "city": {"type": "string", "description": "City or null"},
+        "job_title": {"type": "string", "description": "Job title or null"},
         "confidence": {
             "type": "number",
-            "description": "Confidence score between 0.0 and 1.0"
+            "description": "Model confidence in extraction (0.0 to 1.0)"
         }
     },
     "required": ["confidence"],
@@ -40,7 +40,23 @@ def load_golden_tests(path="evaluation/golden_test.json"):
 def run_converse_single(user_message, temperature=0.0, max_tokens=512):
     start_time = time.time()
     
-    messages = [{"role": "user", "content": [{"text": user_message}]}]
+    messages = [
+        {
+            "role": "system",
+            "content": [
+                {
+                    "text": (
+                        "You are a precise information extractor. "
+                        "Respond ONLY with valid JSON matching the schema. "
+                        "Use null for missing values. "
+                        "Always include 'confidence' (0.0–1.0) based on how clearly the information is stated. "
+                        "Do not add any extra text, explanations, markdown, or comments."
+                    )
+                }
+            ]
+        },
+        {"role": "user", "content": [{"text": user_message}]}
+    ]
     
     guardrail_config = {
         "guardrailIdentifier": GUARDRAIL_ID,
@@ -68,14 +84,14 @@ def run_converse_single(user_message, temperature=0.0, max_tokens=512):
             guardrailConfig=guardrail_config
         )
 
-        # ── Diagnostic: print full raw response when call succeeds ──
+        # Diagnostic prints (comment out when no longer needed)
         print("\n=== RAW RESPONSE ===")
         print(json.dumps(response, indent=2, default=str))
         print("=== END RAW RESPONSE ===\n")
 
     except Exception as api_err:
         latency = time.time() - start_time
-        print(f"API call failed: {str(api_err)}")  # ← added print for visibility
+        print(f"API call failed: {str(api_err)}")
         return {
             "actual_json": None,
             "valid_json": False,
@@ -89,7 +105,6 @@ def run_converse_single(user_message, temperature=0.0, max_tokens=512):
             "raw_response": None
         }
 
-    # ── Only if no exception ──
     latency = time.time() - start_time
 
     # Safe access to output_text
@@ -99,7 +114,7 @@ def run_converse_single(user_message, temperature=0.0, max_tokens=512):
         print(f"Response structure error: {str(e)}")
         output_text = ""
 
-    # Print extracted text for easy debugging
+    # Print extracted text
     print(f"Extracted output_text:\n{output_text}\n{'-' * 80}")
 
     usage = response.get('usage', {})
@@ -183,7 +198,7 @@ def main():
 
         for test in tests:
             test_id = test.get("test_id", "unknown")
-            input_text = test.get("bio", "")  # ← changed to "bio" based on your golden_test.json
+            input_text = test.get("bio", "")  # matches your golden_test.json
             expected_snippet = json.dumps(test.get("expected", {}))[:100]
 
             for run_id in range(1, args.runs + 1):
