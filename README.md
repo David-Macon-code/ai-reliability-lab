@@ -39,22 +39,22 @@ In progress: Week 3 – Automation + Reliability Engineering
 
 ### Detailed Reports
 
-- [Week 1 Findings](./docs/week1_findings.md)
-- [Week 2 Completion – Observability + Security + API Control](./docs/week2_completion.md)
-- [Day 1](./docs/day1.md)
-- [Day 2](./docs/day2.md)
-- [Day 3](./docs/day3.md)
-- [Day 4](./docs/day4.md)
-- [Day 5](./docs/day5.md)
-- [Day 6](./docs/day6.md)
-- [Day 7](./docs/day7.md)
-- [Day 8](./docs/day8.md)
-- [Day 9](./docs/day9.md)
-- [Day 10](./docs/day10.md)
-- [Day 11](./docs/day11.md)
-- [Day 12](./docs/day12.md)
-- [Day 13](./docs/day13.md)
-- [Day 14](./docs/day14.md)
+- **[Day 1](./docs/day1_summary.md)** — Studied tokens, context windows, temperature, and top_p; summarized core inference concepts.
+- **[Day 2](./docs/day2_failures.md)** — Documented 5 common LLM failure modes, including Bedrock-specific content filtering edge cases.
+- **[Day 3](./docs/day3.md)** — Created and console-tested baseline Prompt V1 for the core entity extraction task.
+- **[Day 4](./docs/day4.md)** — Developed Prompt V2 with role clarity and structure; compared outputs against V1.
+- **[Day 5](./docs/day5.md)** — Implemented Prompt V3 using Bedrock's native structured outputs (json_schema); achieved ~100% valid JSON.
+- **[Day 6](./docs/day6.md)** — Ran multi-version tests, logged token usage/determinism, and built the golden test set (8–10 cases).
+- **[Day 7](./docs/week1_findings.md)** — Compiled Week 1 Findings Report with JSON success rate table highlighting structured outputs impact.
+- **[Week 1 Findings](./docs/week1_findings.md)** 
+- **[Day 8](./docs/day8.md)** — Set up full boto3 Converse API scripting with latency and token observability logging.
+- **[Day 9](./docs/day9.md)** — Expanded batch testing; logged precise latency/token metrics to CSV for golden runs.
+- **[Day 10](./docs/day10.md)** — Built basic validation script and eval spreadsheet; scored initial golden pass rates.
+- **[Day 11](./docs/day11.md)** — Tested 5 prompt injections (DAN, HACKED, etc.); 100% defeated with no leaks, golden 100% pass.
+- **[Day 12](./docs/day12.md)** — Integrated Bedrock Guardrails (Medium strength) via guardrailConfig; re-tested and tuned for 93.3% injection blocks + 100% golden pass.
+- **[Day 13](./docs/day13.md)** — Enhanced validation script to parse guardrail traces; confirmed 100% injection blocks but 50% false positives pre-tuning.
+- **[Day 14](./docs/day14.md)** — Finalized guardrail tuning (Medium strength), compared metrics, and wrapped Week 2 with improved observability + security baseline.
+- **[Week 2 Completion – Observability + Security + API Control](./docs/week2_completion.md)**
 
 ### Current Setup Highlights
 
