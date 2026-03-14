@@ -56,7 +56,7 @@ In progress: Week 3 – Automation + Reliability Engineering
 - **[Day 13](./docs/day13.md)** — Enhanced validation script to parse guardrail traces; confirmed 100% injection blocks but 50% false positives pre-tuning.
 - **[Day 14](./docs/day14.md)** — Finalized guardrail tuning, compared metrics, and wrapped Week 2 with improved observability + security baseline.
 
-- **[Week 2 Completion – Observability + Security + API Control](./docs/week2_completion.md)** — Built observability (latency/token/trace logging), integrated & tuned Bedrock Guardrails (Medium strength); delivered 93.3% injection blocks + 100% golden benign pass.
+- **[Week 2 Findings](./docs/week2_completion.md)** — Built observability (latency/token/trace logging), integrated & tuned Bedrock Guardrails (Medium strength); delivered 93.3% injection blocks + 100% golden benign pass.
 
 ### Current Setup Highlights
 
@@ -76,14 +76,6 @@ Feel free to explore `/docs/` , `/scripts/` , and `/evaluation/` for details.
 Built with AWS Bedrock + Claude 4.5 family – ongoing PromptOps learning lab.
 
 # AWSBedrock #PromptOps #ResponsibleAI #AIFC01
-
-## About
-
-30-Day PromptOps / AI Reliability Lab – Applying NOC discipline to LLMs with AWS Bedrock
-
-### Resources
-
-[Readme](#readme-ov-file)
 
 ### License
 
