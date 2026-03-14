@@ -8,7 +8,6 @@
 Issued March 11, 2026 | Valid until March 2029  
 [View on Credly](https://www.credly.com/badges/745adead-31ea-4399-99ff-35ff787966c8/public_url)
 
-
 **Milestone Achieved!** 🎉  
 Passed **AWS Certified AI Practitioner (AIF-C01)** on March 11, 2026 — directly fueling better Guardrails, responsible AI practices, and Bedrock workflows in this lab.
 
@@ -46,15 +45,18 @@ In progress: Week 3 – Automation + Reliability Engineering
 - **[Day 5](./docs/day5.md)** — Implemented Prompt V3 using Bedrock's native structured outputs (json_schema); achieved ~100% valid JSON.
 - **[Day 6](./docs/day6.md)** — Ran multi-version tests, logged token usage/determinism, and built the golden test set (8–10 cases).
 - **[Day 7](./docs/week1_findings.md)** — Compiled Week 1 Findings Report with JSON success rate table highlighting structured outputs impact.
-- **[Week 1 Findings](./docs/week1_findings.md)** 
+
+- **[Week 1 Findings](./docs/week1_findings.md)** — Completed LLM foundations, prompt iterations (V1–V3), and native structured outputs; achieved ~100% JSON validity and created golden test set.
+
 - **[Day 8](./docs/day8.md)** — Set up full boto3 Converse API scripting with latency and token observability logging.
 - **[Day 9](./docs/day9.md)** — Expanded batch testing; logged precise latency/token metrics to CSV for golden runs.
 - **[Day 10](./docs/day10.md)** — Built basic validation script and eval spreadsheet; scored initial golden pass rates.
 - **[Day 11](./docs/day11.md)** — Tested 5 prompt injections (DAN, HACKED, etc.); 100% defeated with no leaks, golden 100% pass.
-- **[Day 12](./docs/day12.md)** — Integrated Bedrock Guardrails (Medium strength) via guardrailConfig; re-tested and tuned for 93.3% injection blocks + 100% golden pass.
+- **[Day 12](./docs/day12.md)** — Integrated Bedrock Guardrails via guardrailConfig; re-tested and tuned for 93.3% injection blocks + 100% golden pass.
 - **[Day 13](./docs/day13.md)** — Enhanced validation script to parse guardrail traces; confirmed 100% injection blocks but 50% false positives pre-tuning.
-- **[Day 14](./docs/day14.md)** — Finalized guardrail tuning (Medium strength), compared metrics, and wrapped Week 2 with improved observability + security baseline.
-- **[Week 2 Completion – Observability + Security + API Control](./docs/week2_completion.md)**
+- **[Day 14](./docs/day14.md)** — Finalized guardrail tuning, compared metrics, and wrapped Week 2 with improved observability + security baseline.
+
+- **[Week 2 Completion – Observability + Security + API Control](./docs/week2_completion.md)** — Built observability (latency/token/trace logging), integrated & tuned Bedrock Guardrails (Medium strength); delivered 93.3% injection blocks + 100% golden benign pass.
 
 ### Current Setup Highlights
 
