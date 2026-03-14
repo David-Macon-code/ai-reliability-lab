@@ -231,6 +231,9 @@ def main():
     print(f"Total test cases: {len(tests)}")
     print(f"Runs per case: {args.runs}")
     print(f"Output directory: {args.output_dir}")
+    print(f"\nBatch finished successfully.")
+    print(f"Results saved to: {csv_path}")
+    print(f"Processed {len(tests)} test cases × {args.runs} runs = {len(tests) * args.runs} total API calls")
 # If you want fancier stats, could use pandas here but keep it stdlib for Day 15
 
 if __name__ == "__main__":
