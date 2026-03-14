@@ -168,6 +168,20 @@ def validate_result(result, expected_snippet=None):
 
 # ------------------ Main Batch Logic ------------------
 def main():
+    global MODEL_ID, GUARDRAIL_VERSION   
+
+    parser = argparse.ArgumentParser(description="Batch evaluation on Bedrock Converse V3")
+    parser.add_argument("--runs", type=int, default=10, help="Runs per test case")
+    parser.add_argument("--temperature", type=float, default=0.0)
+    parser.add_argument("--model-id", default=MODEL_ID)          # now safe
+    parser.add_argument("--guardrail-version", default=GUARDRAIL_VERSION)
+    parser.add_argument("--output-dir", default=f"evaluation/batch_{datetime.now().strftime('%Y%m%d')}")
+    args = parser.parse_args()
+
+    # Override globals
+    MODEL_ID = args.model_id
+    GUARDRAIL_VERSION = args.guardrail_version
+
     parser = argparse.ArgumentParser(description="Batch evaluation on Bedrock Converse V3")
     parser.add_argument("--runs", type=int, default=10, help="Runs per test case")
     parser.add_argument("--temperature", type=float, default=0.0)
