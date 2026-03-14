@@ -1,6 +1,17 @@
 # Week 2 Completion – Observability + Security + API Control
 
 **Dates:** ~March 5–9, 2026  
+
+### Week 2 Overview: Observability + Security + API Control
+
+| Category              | Key Activities & Outcomes                                                                 | Result / Metric                          |
+|-----------------------|-------------------------------------------------------------------------------------------|------------------------------------------|
+| Observability Setup   | Full boto3 Converse scripting, latency (timeit), token usage logging, CSV output         | Latency ~0.4–0.6s, tokens tracked per run |
+| Injection Testing     | Prompt injection attacks (DAN, HACKED, XSS, etc.) on V3 prompt                           | Day 11: 100% defeated (5/5)             |
+| Guardrails Integration| Added guardrailConfig (Medium strength), trace parsing, pre/post tuning comparison       | 93.3% injection blocks (14/15), 100% golden benign pass |
+| Security Tuning       | Reduced false positives from High → Medium strength; logged trace details (confidence, latency) | From 50% false positives → 0% on golden |
+| Overall Reliability   | Combined structured outputs + Guardrails + observability pipeline                        | Production-viable security + usability balance |
+
 **Theme:** Monitor AI like a NOC monitors systems. Leverage Bedrock Guardrails for security, build programmatic observability, and tune for production balance.
 
 ## Quick Recap: Week 1 – LLM Foundations + Controlled Prompt Testing
