@@ -8,12 +8,9 @@ from datetime import datetime
 from pathlib import Path
 
 # ------------------ Config / Constants ------------------
-
-guardrail_config = None  # ← hard-disable for testing
 REGION = "us-east-1"
 MODEL_ID = 'global.anthropic.claude-sonnet-4-5-20250929-v1:0'
-GUARDRAIL_VERSION = "3"
-GUARDRAIL_ID = "9g6hem28nedj"
+GUARDRAIL_VERSION = "3"  # not used anymore
 
 bedrock_runtime = boto3.client('bedrock-runtime', region_name=REGION)
 
@@ -42,26 +39,20 @@ def load_golden_tests(path="evaluation/golden_test.json"):
 def run_converse_single(user_message, temperature=0.0, max_tokens=512):
     start_time = time.time()
     
-    # Combine system instructions + user message into a single "user" role message
-    system_instructions = (
+    # Instructions + user message combined (no "system" role)
+    instructions = (
         "You are a precise information extractor. "
-        "Respond ONLY with valid JSON matching the schema. "
-        "Use null for missing values. "
-        "Always include 'confidence' (0.0–1.0) based on how clearly the information is stated. "
-        "Do not add any extra text, explanations, markdown, or comments."
+        "Respond ONLY with valid JSON matching the schema below. "
+        "Use null for any missing values. "
+        "Always include a 'confidence' field from 0.0 to 1.0 based on how clearly the information is stated in the text. "
+        "Do not include any explanations, markdown, or extra text outside the JSON object."
     )
     
-    full_user_content = f"{system_instructions}\n\nExtract from this biography:\n{user_message}"
+    full_prompt = f"{instructions}\n\nExtract from this biography:\n{user_message}"
     
     messages = [
-        {"role": "user", "content": [{"text": full_user_content}]}
+        {"role": "user", "content": [{"text": full_prompt}]}
     ]
-    
-    guardrail_config = {
-        "guardrailIdentifier": GUARDRAIL_ID,
-        "guardrailVersion": GUARDRAIL_VERSION,
-        "trace": "enabled"
-    } if GUARDRAIL_VERSION else None
     
     try:
         response = bedrock_runtime.converse(
@@ -80,14 +71,8 @@ def run_converse_single(user_message, temperature=0.0, max_tokens=512):
                     }
                 }
             },
-            guardrailConfig=guardrail_config
+            guardrailConfig=None  # ← Guardrail DISABLED
         )
-
-        # Diagnostic prints (comment out when no longer needed)
-        print("\n=== RAW RESPONSE ===")
-        print(json.dumps(response, indent=2, default=str))
-        print("=== END RAW RESPONSE ===\n")
-
     except Exception as api_err:
         latency = time.time() - start_time
         print(f"API call failed: {str(api_err)}")
@@ -113,20 +98,11 @@ def run_converse_single(user_message, temperature=0.0, max_tokens=512):
         print(f"Response structure error: {str(e)}")
         output_text = ""
 
-    # Print extracted text
-    print(f"Extracted output_text:\n{output_text}\n{'-' * 80}")
-
     usage = response.get('usage', {})
 
-    # Guardrail trace parsing
+    # No guardrail trace parsing needed since disabled
     guardrail_blocked = False
     trace_category = None
-    if 'trace' in response:
-        trace_data = response['trace']
-        if isinstance(trace_data, dict) and 'guardrail' in trace_data:
-            gr = trace_data['guardrail']
-            guardrail_blocked = gr.get('blocked', False)
-            trace_category = gr.get('category') or gr.get('violatedFilter') or None
 
     try:
         parsed = json.loads(output_text)
@@ -163,18 +139,16 @@ def validate_result(result, expected_snippet=None):
 
 # ------------------ Main Batch Logic ------------------
 def main():
-    global MODEL_ID, GUARDRAIL_VERSION
+    global MODEL_ID
 
     parser = argparse.ArgumentParser(description="Batch evaluation on Bedrock Converse V3")
     parser.add_argument("--runs", type=int, default=10, help="Runs per test case")
     parser.add_argument("--temperature", type=float, default=0.0)
     parser.add_argument("--model-id", default=MODEL_ID)
-    parser.add_argument("--guardrail-version", default=GUARDRAIL_VERSION)
     parser.add_argument("--output-dir", default=f"evaluation/batch_{datetime.now().strftime('%Y%m%d')}")
     args = parser.parse_args()
 
     MODEL_ID = args.model_id
-    GUARDRAIL_VERSION = args.guardrail_version
 
     tests = load_golden_tests()
     print(f"Loaded {len(tests)} golden test cases")
@@ -197,7 +171,7 @@ def main():
 
         for test in tests:
             test_id = test.get("test_id", "unknown")
-            input_text = test.get("bio", "")  # matches your golden_test.json
+            input_text = test.get("bio", "")
             expected_snippet = json.dumps(test.get("expected", {}))[:100]
 
             for run_id in range(1, args.runs + 1):
