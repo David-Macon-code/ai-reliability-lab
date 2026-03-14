@@ -182,6 +182,10 @@ def main():
     GUARDRAIL_VERSION = args.guardrail_version
 
     tests = load_golden_tests()
+    
+    total_runs = 0
+    success_runs = 0
+
     print(f"Loaded {len(tests)} golden test cases")
 
     os.makedirs(args.output_dir, exist_ok=True)
@@ -207,6 +211,10 @@ def main():
                 result = run_converse_single(input_text, temperature=args.temperature)
                 
                 flake_reason = validate_result(result, expected_snippet)
+
+                total_runs += 1
+            if flake_reason is None:
+                success_runs += 1
                 
                 row = {
                     "test_id": test_id,
@@ -236,12 +244,14 @@ def main():
     print(f"\nBatch finished successfully.")
     print(f"Results saved to: {csv_path}")
     print(f"Processed {len(tests)} test cases × {args.runs} runs = {len(tests) * args.runs} total API calls")
+
     print("\n" + "="*50)
     print("Batch evaluation complete!")
     print(f"Results saved to: {csv_path}")
     print(f"Golden test cases: {len(tests)}")
     print(f"Runs per case: {args.runs}")
     print(f"Total API calls made: {len(tests) * args.runs}")
+
     print(f"Tip: Open the CSV and check the 'total_tokens' column for usage stats.")
     print("="*50 + "\n")
 # If you want fancier stats, could use pandas here but keep it stdlib for Day 15
