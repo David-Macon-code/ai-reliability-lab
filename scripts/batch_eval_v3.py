@@ -227,6 +227,11 @@ def main():
                 csvfile.flush()  # save progressively
 
     print(f"Batch complete. Results in: {csv_path}")
+    print("\nQuick summary:")
+    print(f"Total test cases: {len(tests)}")
+    print(f"Runs per case: {args.runs}")
+    print(f"Output directory: {args.output_dir}")
+# If you want fancier stats, could use pandas here but keep it stdlib for Day 15
 
 if __name__ == "__main__":
     main()
