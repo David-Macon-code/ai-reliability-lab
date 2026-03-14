@@ -4,7 +4,16 @@
 
 **Theme:** LLM Foundations + Controlled Prompt Testing  
 
-**Date completed:** ~March 2026 (Week 1)  
+**Date completed:** ~March 2026 (Week 1) 
+
+### Week 1 Overview: LLM Foundations + Controlled Prompt Testing
+
+| Category              | Key Activities & Outcomes                                                                 | Result / Metric                  |
+|-----------------------|-------------------------------------------------------------------------------------------|----------------------------------|
+| Core Concepts         | Studied tokens, context windows, temperature, top_p, hallucinations & failure patterns   | 1-page summary + 5 failure types documented |
+| Prompt Iterations     | V1 (baseline), V2 (role + structure), V3 (native json_schema structured outputs)         | V3: ~100% valid JSON             |
+| Testing & Evaluation  | Multi-run comparisons, determinism logging, golden test set creation (8–10 cases)        | Golden set saved; V3 perfect determinism at temp=0.0 |
+| Major Win             | Leveraged Bedrock Converse API native structured outputs (Claude 4.5 family)             | Eliminated "JSON hardest" problem; 100% schema compliance |
 
 **Key Activities & Outcomes:**
 
