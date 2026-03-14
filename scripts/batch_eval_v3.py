@@ -8,6 +8,8 @@ from datetime import datetime
 from pathlib import Path
 
 # ------------------ Config / Constants ------------------
+
+guardrail_config = None  # ← hard-disable for testing
 REGION = "us-east-1"
 MODEL_ID = 'global.anthropic.claude-sonnet-4-5-20250929-v1:0'
 GUARDRAIL_VERSION = "3"
