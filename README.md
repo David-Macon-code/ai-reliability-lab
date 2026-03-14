@@ -8,7 +8,9 @@
 Issued March 11, 2026 | Valid until March 2029  
 [View on Credly](https://www.credly.com/badges/745adead-31ea-4399-99ff-35ff787966c8/public_url)
 
-**Milestone Achieved!** 🎉
+**Milestone Achieved!** 🎉 Completed Weeks 1–2 with strong results on Bedrock structured outputs and Guardrails.  
+![AIF-C01 Certified](https://images.credly.com/size/110x110/images/4d4693bb-530e-4bca-9327-de07f3aa2348/image.png)  
+(Applied AIF-C01 knowledge throughout: responsible AI, Guardrails, content filtering.)
 
 Passed **AWS Certified AI Practitioner (AIF-C01)** on March 11, 2026 — directly fueling better Guardrails, responsible AI practices, and Bedrock workflows in this lab.
 
