@@ -41,8 +41,8 @@ In progress: Week 3 – Automation + Reliability Engineering
 
 - [Week 1 Findings](/David-Macon-code/ai-reliability-lab/blob/main/docs/week1_findings.md)
 - [Week 2 Completion – Observability + Security + API Control](/David-Macon-code/ai-reliability-lab/blob/main/docs/Week%202%20Completion%20%E2%80%93%20Observability%20+%20Security%20+%20API%20Control.md)
-- [Day 13](/David-Macon-code/ai-reliability-lab/blob/main/docs/day13.md)
-- [Day 14](/David-Macon-code/ai-reliability-lab/blob/main/docs/day14.md)
+- [Day 13](./docs/day13.md)
+- [Day 14](./docs/day14.md)
 
 ### Current Setup Highlights
 
