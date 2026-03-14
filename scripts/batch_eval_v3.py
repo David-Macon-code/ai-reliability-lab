@@ -189,11 +189,11 @@ def main():
 
     with open(csv_path, 'w', newline='') as csvfile:
         fieldnames = [
-            "test_id", "run_id", "input_text", "expected_json_snippet",
-            "actual_json", "valid_json", "confidence", "tokens_input",
-            "tokens_output", "latency_sec", "guardrail_blocked",
-            "guardrail_trace_category", "flake_reason"
-        ]
+    "test_id", "run_id", "input_text", "expected_json_snippet",
+    "actual_json", "valid_json", "confidence", "tokens_input",
+    "tokens_output", "total_tokens", "latency_sec", "guardrail_blocked",
+    "guardrail_trace_category", "flake_reason"
+       ]
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
 
@@ -218,6 +218,8 @@ def main():
                     "confidence": result["confidence"],
                     "tokens_input": result["tokens_input"],
                     "tokens_output": result["tokens_output"],
+                    "total_tokens": result["tokens_input"] + result["tokens_output"],
+                    "latency_sec": round(result["latency_sec"], 3),
                     "latency_sec": round(result["latency_sec"], 3),
                     "guardrail_blocked": result["guardrail_blocked"],
                     "guardrail_trace_category": result["guardrail_trace_category"],
