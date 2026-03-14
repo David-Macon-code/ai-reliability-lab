@@ -236,6 +236,14 @@ def main():
     print(f"\nBatch finished successfully.")
     print(f"Results saved to: {csv_path}")
     print(f"Processed {len(tests)} test cases × {args.runs} runs = {len(tests) * args.runs} total API calls")
+    print("\n" + "="*50)
+    print("Batch evaluation complete!")
+    print(f"Results saved to: {csv_path}")
+    print(f"Golden test cases: {len(tests)}")
+    print(f"Runs per case: {args.runs}")
+    print(f"Total API calls made: {len(tests) * args.runs}")
+    print(f"Tip: Open the CSV and check the 'total_tokens' column for usage stats.")
+    print("="*50 + "\n")
 # If you want fancier stats, could use pandas here but keep it stdlib for Day 15
 
 if __name__ == "__main__":
