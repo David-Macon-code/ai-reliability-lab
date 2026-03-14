@@ -18,11 +18,14 @@ bedrock_runtime = boto3.client('bedrock-runtime', region_name=REGION)
 EXTRACTION_SCHEMA = {
     "type": "object",
     "properties": {
-        "full_name": {"type": "string", "description": "Extracted full name or null"},
-        "age": {"type": "integer", "description": "Age as integer or null"},
-        "city": {"type": "string", "description": "City or null"},
-        "job_title": {"type": "string", "description": "Job title or null"},
-        "confidence": {"type": "number", "minimum": 0, "maximum": 1, "description": "Model confidence in extraction"}
+        "full_name": {"type": "string", "description": "Full name of the person or null if missing"},
+        "age": {"type": "integer", "description": "Age as integer or null if missing"},
+        "city": {"type": "string", "description": "City or null if missing"},
+        "job_title": {"type": "string", "description": "Job title or null if missing"},
+        "confidence": {
+            "type": "number",
+            "description": "Confidence score between 0.0 and 1.0"
+        }
     },
     "required": ["confidence"],
     "additionalProperties": False
