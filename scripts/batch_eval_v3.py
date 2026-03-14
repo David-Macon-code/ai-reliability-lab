@@ -200,7 +200,7 @@ def main():
 
     tests = load_golden_tests()
     print(f"Loaded {len(tests)} golden test cases")
-    
+
     total_runs = 0
     success_runs = 0
 
@@ -229,8 +229,8 @@ def main():
                 flake_reason = validate_result(result, expected_snippet)
 
                 total_runs += 1
-            if flake_reason is None:
-                success_runs += 1
+                if flake_reason is None:
+                 success_runs += 1
                 
                 row = {
                     "test_id": test_id,
@@ -269,7 +269,7 @@ def main():
     print(f"Total API calls made: {len(tests) * args.runs}")
 
     print(f"Tip: Open the CSV and check the 'total_tokens' column for usage stats.")
-    print("="*50 + "\n")
+    print("="*60 + "\n")
 # If you want fancier stats, could use pandas here but keep it stdlib for Day 15
 
 if __name__ == "__main__":
