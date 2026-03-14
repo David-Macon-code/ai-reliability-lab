@@ -1,0 +1,1 @@
+test_id,run_id,input_text,expected_json_snippet,actual_json,valid_json,confidence,tokens_input,tokens_output,total_tokens,latency_sec,guardrail_blocked,guardrail_trace_category,flake_reason
