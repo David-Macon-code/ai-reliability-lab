@@ -191,7 +191,7 @@ def main():
     args = parser.parse_args()
 
     # Override globals if CLI provided
-    global MODEL_ID, GUARDRAIL_VERSION
+    #global MODEL_ID, GUARDRAIL_VERSION
 
     GUARDRAIL_ID = "9g6hem28nedj" # your guardrail ID, e.g. "9g6hem28nedj" (find in Bedrock console under Guardrails)
     MODEL_ID = args.model_id
