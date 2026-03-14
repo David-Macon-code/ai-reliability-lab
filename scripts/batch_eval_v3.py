@@ -10,7 +10,6 @@ from pathlib import Path
 # ------------------ Config / Constants ------------------
 REGION = "us-east-1"
 MODEL_ID = 'global.anthropic.claude-sonnet-4-5-20250929-v1:0'
-GUARDRAIL_VERSION = "3"  # not used anymore
 
 bedrock_runtime = boto3.client('bedrock-runtime', region_name=REGION)
 
@@ -43,7 +42,7 @@ def run_converse_single(user_message, temperature=0.0, max_tokens=512):
     instructions = (
         "You are a precise information extractor. "
         "Respond ONLY with valid JSON matching the schema below. "
-        "Use null for any missing values. "
+        "Use null for missing values. "
         "Always include a 'confidence' field from 0.0 to 1.0 based on how clearly the information is stated in the text. "
         "Do not include any explanations, markdown, or extra text outside the JSON object."
     )
@@ -70,8 +69,8 @@ def run_converse_single(user_message, temperature=0.0, max_tokens=512):
                         }
                     }
                 }
-            },
-            guardrailConfig=None  # ← Guardrail DISABLED
+            }
+            # guardrailConfig intentionally omitted → disabled
         )
     except Exception as api_err:
         latency = time.time() - start_time
@@ -100,7 +99,7 @@ def run_converse_single(user_message, temperature=0.0, max_tokens=512):
 
     usage = response.get('usage', {})
 
-    # No guardrail trace parsing needed since disabled
+    # No guardrail since disabled
     guardrail_blocked = False
     trace_category = None
 
