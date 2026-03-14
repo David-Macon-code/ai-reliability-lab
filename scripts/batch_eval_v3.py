@@ -9,7 +9,7 @@ from pathlib import Path
 
 # ------------------ Config / Constants ------------------
 REGION = "us-east-1" # your Bedrock region
-MODEL_ID = "global.anthropic.claude-sonnet-4-5-20250929-v1:0"  # your model ID, e.g. "global.anthropic.claude-sonnet-4-5-20250929-v1:0"
+MODEL_ID = 'global.anthropic.claude-sonnet-4-5-20250929-v1:0'  # your model ID, e.g. "global.anthropic.claude-sonnet-4-5-20250929-v1:0"
 GUARDRAIL_VERSION = "3"  # your current v3
 GUARDRAIL_ID = "9g6hem28nedj" # your guardrail ID, e.g. "9g6hem28nedj" (find in Bedrock console under Guardrails)
 
