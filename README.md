@@ -48,6 +48,14 @@ In progress: Week 3 – Automation + Reliability Engineering
 
 - **[Week 1 Findings](./docs/week1_findings.md)** — Completed LLM foundations, prompt iterations (V1–V3), and native structured outputs; achieved ~100% JSON validity and created golden test set.
 
+- **[Week 1 Findings](./docs/week1_findings.md)** — Completed LLM foundations, prompt iterations (V1–V3), and native structured outputs; achieved ~100% JSON validity and created golden test set.
+
+  *Quick Overview:*
+
+  | Category | Key Activities & Outcomes | Result / Metric |
+  |----------|---------------------------|-----------------|
+  | ...      | ...                       | ...             |
+
 - **[Day 8](./docs/day8.md)** — Set up full boto3 Converse API scripting with latency and token observability logging.
 - **[Day 9](./docs/day9.md)** — Expanded batch testing; logged precise latency/token metrics to CSV for golden runs.
 - **[Day 10](./docs/day10.md)** — Built basic validation script and eval spreadsheet; scored initial golden pass rates.
@@ -57,6 +65,14 @@ In progress: Week 3 – Automation + Reliability Engineering
 - **[Day 14](./docs/day14.md)** — Finalized guardrail tuning, compared metrics, and wrapped Week 2 with improved observability + security baseline.
 
 - **[Week 2 Findings](./docs/week2_completion.md)** — Built observability (latency/token/trace logging), integrated & tuned Bedrock Guardrails (Medium strength); delivered 93.3% injection blocks + 100% golden benign pass.
+
+- **[Week 2 Completion – Observability + Security + API Control](./docs/week2_completion.md)** — Built observability (latency/token/trace logging), integrated & tuned Bedrock Guardrails (Medium strength); delivered 93.3% injection blocks + 100% golden benign pass.
+
+  *Quick Overview:*
+
+  | Category | Key Activities & Outcomes | Result / Metric |
+  |----------|---------------------------|-----------------|
+  | ...      | ...                       | ...             |
 
 ### Current Setup Highlights
 
