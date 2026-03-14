@@ -38,6 +38,8 @@ In progress: Week 3 – Automation + Reliability Engineering
 
 ### Detailed Reports
 
+### Week 1
+
 - **[Week 1 Findings](./docs/week1_findings.md)** — Completed LLM foundations, prompt iterations (V1–V3), and native structured outputs; achieved ~100% JSON validity and created golden test set.
 
 ### Week 1 Overview: LLM Foundations + Controlled Prompt Testing
@@ -56,6 +58,8 @@ In progress: Week 3 – Automation + Reliability Engineering
 - **[Day 5](./docs/day5.md)** — Implemented Prompt V3 using Bedrock's native structured outputs (json_schema); achieved ~100% valid JSON.
 - **[Day 6](./docs/day6.md)** — Ran multi-version tests, logged token usage/determinism, and built the golden test set (8–10 cases).
 - **[Day 7](./docs/week1_findings.md)** — Compiled Week 1 Findings Report with JSON success rate table highlighting structured outputs impact.
+
+### Week 2
 
 - **[Week 2 Findings](./docs/week2_completion.md)** — Built observability (latency/token/trace logging), integrated & tuned Bedrock Guardrails (Medium strength); delivered 93.3% injection blocks + 100% golden benign pass.
 
