@@ -48,6 +48,54 @@ def run_converse_single(user_message, temperature=0.0, max_tokens=512):
         "trace": "enabled"  # for parsing blocks
     } if GUARDRAIL_VERSION else None
     
+        # Guardrail config (unchanged)
+    guardrail_config = {
+        "guardrailIdentifier": GUARDRAIL_ID,
+        "guardrailVersion": GUARDRAIL_VERSION,
+        "trace": "enabled"
+    } if GUARDRAIL_VERSION else None
+    
+    try:
+        response = bedrock_runtime.converse(
+            modelId=MODEL_ID,
+            messages=messages,
+            inferenceConfig={"maxTokens": max_tokens, "temperature": temperature},
+            outputConfig={
+                "textFormat": {
+                    "type": "json_schema",
+                    "structure": {
+                        "jsonSchema": {
+                            "schema": json.dumps(EXTRACTION_SCHEMA),
+                            "name": "extraction_output",
+                            "description": "Structured extraction result"
+                        }
+                    }
+                }
+            },
+            guardrailConfig=guardrail_config if guardrail_config else None
+        )
+    except Exception as api_err:
+        latency = time.time() - start_time
+        return {
+            "actual_json": None,
+            "valid_json": False,
+            "confidence": 0.0,
+            "tokens_input": 0,
+            "tokens_output": 0,
+            "latency_sec": latency,
+            "guardrail_blocked": False,
+            "guardrail_trace_category": None,
+            "flake_reason": f"API error: {str(api_err)}",
+            "raw_response": None
+        }
+
+    # If we get here, call succeeded → continue normally
+    latency = time.time() - start_time
+    output_text = response['output']['message']['content'][0]['text']
+    usage = response.get('usage', {})
+    
+    # ... your existing guardrail parsing, json.loads, return dict ... (unchanged)
+
     response = bedrock_runtime.converse(
         modelId=MODEL_ID,
         messages=messages,
