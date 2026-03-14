@@ -40,22 +40,19 @@ def load_golden_tests(path="evaluation/golden_test.json"):
 def run_converse_single(user_message, temperature=0.0, max_tokens=512):
     start_time = time.time()
     
+    # Combine system instructions + user message into a single "user" role message
+    system_instructions = (
+        "You are a precise information extractor. "
+        "Respond ONLY with valid JSON matching the schema. "
+        "Use null for missing values. "
+        "Always include 'confidence' (0.0–1.0) based on how clearly the information is stated. "
+        "Do not add any extra text, explanations, markdown, or comments."
+    )
+    
+    full_user_content = f"{system_instructions}\n\nExtract from this biography:\n{user_message}"
+    
     messages = [
-        {
-            "role": "system",
-            "content": [
-                {
-                    "text": (
-                        "You are a precise information extractor. "
-                        "Respond ONLY with valid JSON matching the schema. "
-                        "Use null for missing values. "
-                        "Always include 'confidence' (0.0–1.0) based on how clearly the information is stated. "
-                        "Do not add any extra text, explanations, markdown, or comments."
-                    )
-                }
-            ]
-        },
-        {"role": "user", "content": [{"text": user_message}]}
+        {"role": "user", "content": [{"text": full_user_content}]}
     ]
     
     guardrail_config = {
