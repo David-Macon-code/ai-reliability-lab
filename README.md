@@ -19,6 +19,11 @@ Directly applying cert knowledge on responsible AI, content filtering, Bedrock s
 
 **Current Status (as of March 11, 2026)**
 
+| Week | Status          | Key Outcomes                                                                 |
+|------|-----------------|------------------------------------------------------------------------------|
+| 1    | ✅ Complete     | LLM foundations, V1–V3 prompts, native structured outputs → **~100% JSON validity**, golden set created |
+| 2    | ✅ Complete     | Observability pipeline, Bedrock Guardrails tuned (Medium) → **93.3% injection blocks**, **100% golden pass** |
+
 - Week 1 – Complete: LLM foundations, prompt iteration (V1 → V3), native structured outputs achieved ~100% JSON validity.
 - Week 2 – Complete: Observability (guardrail trace parsing + metrics CSV), security tuning (Guardrail v3 – Medium strength), before/after testing.
   - Golden benign: 100% pass rate (0% false positives after tuning)
