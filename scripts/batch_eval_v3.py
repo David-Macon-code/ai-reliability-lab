@@ -17,18 +17,16 @@ bedrock_runtime = boto3.client('bedrock-runtime', region_name=REGION)
 
 # Load your schema (copy from your existing script or external file)
 EXTRACTION_SCHEMA = {
-    
     "type": "object",
     "properties": {
-        "full_name": {"type": "string"},
-        "age": {"type": "integer"},
-        "city": {"type": "string"},
-        "job_title": {"type": "string"}
+        "full_name": {"type": "string", "description": "Extracted full name or null"},
+        "age": {"type": "integer", "description": "Age as integer or null"},
+        "city": {"type": "string", "description": "City or null"},
+        "job_title": {"type": "string", "description": "Job title or null"},
+        "confidence": {"type": "number", "minimum": 0, "maximum": 1, "description": "Model confidence in extraction"}
     },
-    "required": ["full_name", "age", "city", "job_title"],
-    "additionalProperties": False ,
-    "required": ["name", "confidence"],
-    "additionalProperties": False,
+    "required": ["confidence"],
+    "additionalProperties": False
 }
 
 # ------------------ Helper Functions ------------------
@@ -73,13 +71,15 @@ def run_converse_single(user_message, temperature=0.0, max_tokens=512):
     output_text = response['output']['message']['content'][0]['text']
     usage = response['usage']
     
-    # Parse guardrail trace if present
+    # Improved guardrail trace parsing
     guardrail_blocked = False
     trace_category = None
-    if 'guardrail' in response and response['guardrail'].get('trace'):
-        trace = response['guardrail']['trace']
-        guardrail_blocked = trace.get('blocked', False)
-        trace_category = trace.get('category', None)  # or parse filters/topics
+    if 'trace' in response:
+        trace_data = response['trace']
+        if isinstance(trace_data, dict) and 'guardrail' in trace_data:
+            gr = trace_data['guardrail']
+            guardrail_blocked = gr.get('blocked', False)
+            trace_category = gr.get('category') or gr.get('violatedFilter') or None
     
     try:
         parsed = json.loads(output_text)
