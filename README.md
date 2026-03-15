@@ -1,112 +1,230 @@
-# AI Reliability Lab – 30-Day PromptOps Execution on AWS Bedrock
+import boto3
+import json
+import time
+import argparse
+import csv
+import os
+from datetime import datetime
+from pathlib import Path
 
-<div align="center">
+# ------------------ Config / Constants ------------------
 
-[![AWS Certified AI Practitioner (AIF-C01)](https://images.credly.com/size/110x110/images/4d4693bb-530e-4bca-9327-de07f3aa2348/image.png)](https://www.credly.com/badges/745adead-31ea-4399-99ff-35ff787966c8/public_url)
+REGION = "us-east-1"
+MODEL_ID = 'global.anthropic.claude-sonnet-4-5-20250929-v1:0'
 
-**AWS Certified AI Practitioner (AIF-C01)**  
-Issued March 11, 2026 | Valid until March 2029  
+bedrock_runtime = boto3.client('bedrock-runtime', region_name=REGION)
 
-</div>
+EXTRACTION_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "full_name": {"type": "string", "description": "Extracted full name or null"},
+        "age": {"type": "integer", "description": "Age as integer or null"},
+        "city": {"type": "string", "description": "City or null"},
+        "job_title": {"type": "string", "description": "Job title or null"},
+        "confidence": {
+            "type": "number",
+            "description": "Model confidence in extraction (0.0 to 1.0)"
+        }
+    },
+    "required": ["confidence"],
+    "additionalProperties": False
+}
 
-A personal lab I created following a structured 30-day plan to build reliable, observable, secure LLM workflows using **AWS Bedrock** (Converse API with native structured outputs, Guardrails, observability, etc.).
+# ------------------ Helper Functions ------------------
 
-Directly applying cert knowledge on responsible AI, content filtering, Bedrock services, and Guardrails to Weeks 1–2 results (e.g., tuned Guardrails blocking 93%+ injections with 0% false positives on golden benign tests).
+def load_golden_tests(path="evaluation/golden_test.json"):
+    with open(path, 'r') as f:
+        data = json.load(f)
+    return data
 
-**Current Status (as of March 11, 2026)**
+def run_converse_single(user_message, temperature=0.0, max_tokens=512):
+    start_time = time.time()
 
-| Week | Status          | Key Outcomes                                                                 |
-|------|-----------------|------------------------------------------------------------------------------|
-| 1    | ✅ Complete     | LLM foundations, V1–V3 prompts, native structured outputs → **~100% JSON validity**, golden set created |
-| 2    | ✅ Complete     | Observability pipeline, Bedrock Guardrails tuned (Medium) → **93.3% injection blocks**, **100% golden pass** |
+    # Instructions + user message combined (no separate "system" role)
+    instructions = (
+        "You are a precise information extractor. "
+        "Respond ONLY with valid JSON matching the schema below. "
+        "Use null for missing values. "
+        "Always include a 'confidence' field from 0.0 to 1.0 based on how clearly the information is stated in the text. "
+        "Do not include any explanations, markdown, or extra text outside the JSON object."
+    )
+    
+    full_prompt = f"{instructions}\n\nExtract from this biography:\n{user_message}"
+    
+    messages = [
+        {"role": "user", "content": [{"text": full_prompt}]}
+    ]
+    
+    try:
+        response = bedrock_runtime.converse(
+            modelId=MODEL_ID,
+            messages=messages,
+            inferenceConfig={"maxTokens": max_tokens, "temperature": temperature},
+            outputConfig={
+                "textFormat": {
+                    "type": "json_schema",
+                    "structure": {
+                        "jsonSchema": {
+                            "schema": json.dumps(EXTRACTION_SCHEMA),
+                            "name": "extraction_output",
+                            "description": "Structured extraction result"
+                        }
+                    }
+                }
+            }
+            # guardrailConfig intentionally omitted → fully disabled
+        )
+    except Exception as api_err:
+        latency = time.time() - start_time
+        print(f"API call failed: {str(api_err)}")
+        return {
+            "actual_json": None,
+            "valid_json": False,
+            "confidence": 0.0,
+            "tokens_input": 0,
+            "tokens_output": 0,
+            "latency_sec": latency,
+            "guardrail_blocked": False,
+            "guardrail_trace_category": None,
+            "flake_reason": f"API error: {str(api_err)}",
+            "raw_response": None
+        }
 
-- Week 1 – : LLM foundations, prompt iteration (V1 → V3), native structured outputs achieved ~100% JSON validity.
-- Week 2 – : Observability (guardrail trace parsing + metrics CSV), security tuning (Guardrail v3 – Medium strength), before/after testing.
-  - Golden benign: 100% pass rate (0% false positives after tuning)
-  - Injections: 93.3% blocked (14/15), one LOW-conf leak
-  - Key win: Balanced usability + strong attack protection (enhanced by AIF-C01 insights on Guardrails & responsible AI)
+    latency = time.time() - start_time
 
-In progress: Week 3 – Automation + Reliability Engineering
+    # Safe access to output_text
+    try:
+        output_text = response['output']['message']['content'][0]['text']
+    except (KeyError, IndexError, TypeError) as e:
+        print(f"Response structure error: {str(e)}")
+        output_text = ""
 
-## Progress Overview
+    usage = response.get('usage', {})
 
-| Week | Theme | Status | Key Outcomes |
-| --- | --- | --- | --- |
-| 1 | LLM Foundations + Prompt Testing | Complete | 100% structured JSON on V3, golden test set created |
-| 2 | Observability + Security + API Control | Complete | Guardrail tuned (Medium strength), trace parsing + metrics logging, 100% golden pass, 93%+ injection blocks |
-| 3 | Automation + Reliability Engineering | In progress | Batch scripts, retry logic, flake tracking, cost notes |
-| 4 | RAG + Cost Optimization + Enterprise Framing | Planned | Toy RAG, hallucination compare, model swap, final polish |
+    # No guardrail trace needed since disabled
+    guardrail_blocked = False
+    trace_category = None
 
-### Detailed Reports
+    try:
+        parsed = json.loads(output_text)
+        valid_json = True
+        confidence = parsed.get("confidence", 0.0)
+        flake_reason = None
+    except Exception as e:
+        parsed = None
+        valid_json = False
+        confidence = 0.0
+        flake_reason = str(e)
 
-### Week 1
+    return {
+        "actual_json": parsed,
+        "valid_json": valid_json,
+        "confidence": confidence,
+        "tokens_input": usage.get("inputTokens", 0),
+        "tokens_output": usage.get("outputTokens", 0),
+        "latency_sec": latency,
+        "guardrail_blocked": guardrail_blocked,
+        "guardrail_trace_category": trace_category,
+        "flake_reason": flake_reason,
+        "raw_response": response
+    }
 
-- **[Week 1 Findings](./docs/week1_findings.md)** — Completed LLM foundations, prompt iterations (V1–V3), and native structured outputs; achieved ~100% JSON validity and created golden test set.
+def validate_result(result, expected_snippet=None):
+    if not result["valid_json"]:
+        return "invalid_json"
+    if result["confidence"] < 0.8:
+        return "low_confidence"
+    if result["guardrail_blocked"]:
+        return "guardrail_block"
+    return None
 
-### Week 1 Overview: LLM Foundations + Controlled Prompt Testing
+# ------------------ Main Batch Logic ------------------
 
-| Category              | Key Activities & Outcomes                                                                 | Result / Metric                  |
-|-----------------------|-------------------------------------------------------------------------------------------|----------------------------------|
-| Core Concepts         | Studied tokens, context windows, temperature, top_p, hallucinations & failure patterns   | 1-page summary + 5 failure types documented |
-| Prompt Iterations     | V1 (baseline), V2 (role + structure), V3 (native json_schema structured outputs)         | V3: ~100% valid JSON             |
-| Testing & Evaluation  | Multi-run comparisons, determinism logging, golden test set creation (8–10 cases)        | Golden set saved; V3 perfect determinism at temp=0.0 |
-| Major Win             | Leveraged Bedrock Converse API native structured outputs (Claude 4.5 family)             | Eliminated "JSON hardest" problem; 100% schema compliance |
+def main():
+    global MODEL_ID
 
-- **[Day 1](./docs/day1_summary.md)** — Studied tokens, context windows, temperature, and top_p; summarized core inference concepts.
-- **[Day 2](./docs/day2_failures.md)** — Documented 5 common LLM failure modes, including Bedrock-specific content filtering edge cases.
-- **[Day 3](./docs/day3.md)** — Created and console-tested baseline Prompt V1 for the core entity extraction task.
-- **[Day 4](./docs/day4.md)** — Developed Prompt V2 with role clarity and structure; compared outputs against V1.
-- **[Day 5](./docs/day5.md)** — Implemented Prompt V3 using Bedrock's native structured outputs (json_schema); achieved ~100% valid JSON.
-- **[Day 6](./docs/day6.md)** — Ran multi-version tests, logged token usage/determinism, and built the golden test set (8–10 cases).
-- **[Day 7](./docs/week1_findings.md)** — Compiled Week 1 Findings Report with JSON success rate table highlighting structured outputs impact.
+    parser = argparse.ArgumentParser(description="Batch evaluation on Bedrock Converse V3")
+    parser.add_argument("--runs", type=int, default=10, help="Runs per test case")
+    parser.add_argument("--temperature", type=float, default=0.0)
+    parser.add_argument("--model-id", default=MODEL_ID)
+    parser.add_argument("--output-dir", default=f"evaluation/batch_{datetime.now().strftime('%Y%m%d')}")
+    args = parser.parse_args()
 
-### Week 2
+    MODEL_ID = args.model_id
 
-- **[Week 2 Findings](./docs/week2_completion.md)** — Built observability (latency/token/trace logging), integrated & tuned Bedrock Guardrails (Medium strength); delivered 93.3% injection blocks + 100% golden benign pass.
+    tests = load_golden_tests()
+    print(f"Loaded {len(tests)} golden test cases")
 
-### Week 2 Overview: Observability + Security + API Control
+    total_runs = 0
+    success_runs = 0
 
-| Category              | Key Activities & Outcomes                                                                 | Result / Metric                          |
-|-----------------------|-------------------------------------------------------------------------------------------|------------------------------------------|
-| Observability Setup   | Full boto3 Converse scripting, latency (timeit), token usage logging, CSV output         | Latency ~0.4–0.6s, tokens tracked per run |
-| Injection Testing     | Prompt injection attacks (DAN, HACKED, XSS, etc.) on V3 prompt                           | Day 11: 100% defeated (5/5)             |
-| Guardrails Integration| Added guardrailConfig (Medium strength), trace parsing, pre/post tuning comparison       | 93.3% injection blocks (14/15), 100% golden benign pass |
-| Security Tuning       | Reduced false positives from High → Medium strength; logged trace details (confidence, latency) | From 50% false positives → 0% on golden |
-| Overall Reliability   | Combined structured outputs + Guardrails + observability pipeline                        | Production-viable security + usability balance |
+    os.makedirs(args.output_dir, exist_ok=True)
+    csv_path = Path(args.output_dir) / "batch_metrics.csv"
 
-- **[Day 8](./docs/day8.md)** — Set up full boto3 Converse API scripting with latency and token observability logging.
-- **[Day 9](./docs/day9.md)** — Expanded batch testing; logged precise latency/token metrics to CSV for golden runs.
-- **[Day 10](./docs/day10.md)** — Built basic validation script and eval spreadsheet; scored initial golden pass rates.
-- **[Day 11](./docs/day11.md)** — Tested 5 prompt injections (DAN, HACKED, etc.); 100% defeated with no leaks, golden 100% pass.
-- **[Day 12](./docs/day12.md)** — Integrated Bedrock Guardrails via guardrailConfig; re-tested and tuned for 93.3% injection blocks + 100% golden pass.
-- **[Day 13](./docs/day13.md)** — Enhanced validation script to parse guardrail traces; confirmed 100% injection blocks but 50% false positives pre-tuning.
-- **[Day 14](./docs/day14.md)** — Finalized guardrail tuning, compared metrics, and wrapped Week 2 with improved observability + security baseline.
+    with open(csv_path, 'w', newline='') as csvfile:
+        fieldnames = [
+            "test_id", "run_id", "input_text", "expected_json_snippet",
+            "actual_json", "valid_json", "confidence", "tokens_input",
+            "tokens_output", "total_tokens", "latency_sec", "guardrail_blocked",
+            "guardrail_trace_category", "flake_reason"
+        ]
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
 
-### Week 3
+        for test in tests:
+            test_id = test.get("test_id", "unknown")
+            input_text = test.get("bio", "")
+            expected_snippet = json.dumps(test.get("expected", {}))[:100]
 
-- **[Week 3 In Progress]** — Batch scripts, retry logic, flake tracking, cost notes
+            for run_id in range(1, args.runs + 1):
+                print(f"Running test {test_id} / run {run_id} ...")
+                result = run_converse_single(input_text, temperature=args.temperature)
+                
+                flake_reason = validate_result(result, expected_snippet)
 
-- **[Day 15](./docs/day15.md)** — Implemented Bedrock Converse batch runner with native structured outputs, metrics tracking, and perfect 40/40 pass rate on golden tests
+                total_runs += 1
+                if flake_reason is None:
+                    success_runs += 1
+                
+                row = {
+                    "test_id": test_id,
+                    "run_id": run_id,
+                    "input_text": input_text,
+                    "expected_json_snippet": expected_snippet,
+                    "actual_json": json.dumps(result["actual_json"]) if result["actual_json"] else "",
+                    "valid_json": result["valid_json"],
+                    "confidence": result["confidence"],
+                    "tokens_input": result["tokens_input"],
+                    "tokens_output": result["tokens_output"],
+                    "total_tokens": result["tokens_input"] + result["tokens_output"],
+                    "latency_sec": round(result["latency_sec"], 3),
+                    "guardrail_blocked": result["guardrail_blocked"],
+                    "guardrail_trace_category": result["guardrail_trace_category"],
+                    "flake_reason": flake_reason
+                }
+                writer.writerow(row)
+                csvfile.flush()
 
-### Current Setup Highlights
+    # Final summary
+    print(f"\nBatch complete. Results in: {csv_path}")
+    print("\nQuick summary:")
+    print(f"Total test cases: {len(tests)}")
+    print(f"Runs per case: {args.runs}")
+    print(f"Output directory: {args.output_dir}")
+    print(f"Processed {len(tests) * args.runs} total API calls")
 
-- Model: anthropic.claude-sonnet-4-5-20250929-v1:0 (via inference profile)
-- Guardrail: 9g6hem28nedj v3 (Medium strength on Prompt attacks)
-- Scripts: scripts/v3_json_test.py (golden/injection toggles, trace parsing, CSV logging)
-- Outputs: /evaluation/v3_metrics_log.csv , /evaluation/v3_results.json
+    print("\n" + "=" * 60)
+    print("Batch evaluation complete!")
+    print(f"Results saved to: {csv_path}")
+    print(f"Golden test cases: {len(tests)}")
+    print(f"Runs per case: {args.runs}")
+    print(f"Total API calls made: {len(tests) * args.runs}")
 
-### Next Steps (Week 3 Kickoff)
+    pass_rate = (success_runs / total_runs * 100) if total_runs > 0 else 0
+    print(f"Overall pass rate: {pass_rate:.1f}% ({success_runs}/{total_runs} runs)")
 
-- Automate multi-run batches
-- Add reliability features (retries with backoff, error classification)
-- Track flake rate, token/cost aggregates per run category
+    print("Tip: Open the CSV and check the 'total_tokens' column for usage stats.")
+    print("=" * 60 + "\n")
 
-Feel free to explore `/docs/` , `/scripts/` , and `/evaluation/` for details.
-
-Built with AWS Bedrock + Claude 4.5 family – ongoing PromptOps learning lab.
-
-# AWSBedrock #PromptOps #ResponsibleAI #AIFC01
-
-### License
-
-[MIT license](#MIT-1-ov-file)
+if __name__ == "__main__":
+    main()
