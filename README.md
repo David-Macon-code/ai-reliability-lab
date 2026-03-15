@@ -8,7 +8,6 @@ from datetime import datetime
 from pathlib import Path
 
 # ------------------ Config / Constants ------------------
-
 REGION = "us-east-1"
 MODEL_ID = 'global.anthropic.claude-sonnet-4-5-20250929-v1:0'
 
@@ -31,7 +30,6 @@ EXTRACTION_SCHEMA = {
 }
 
 # ------------------ Helper Functions ------------------
-
 def load_golden_tests(path="evaluation/golden_test.json"):
     with open(path, 'r') as f:
         data = json.load(f)
@@ -39,7 +37,7 @@ def load_golden_tests(path="evaluation/golden_test.json"):
 
 def run_converse_single(user_message, temperature=0.0, max_tokens=512):
     start_time = time.time()
-
+    
     # Instructions + user message combined (no separate "system" role)
     instructions = (
         "You are a precise information extractor. "
@@ -139,7 +137,6 @@ def validate_result(result, expected_snippet=None):
     return None
 
 # ------------------ Main Batch Logic ------------------
-
 def main():
     global MODEL_ID
 
