@@ -1,227 +1,64 @@
-import boto3
-import json
-import time
-import argparse
-import csv
-import os
-from datetime import datetime
-from pathlib import Path
+# AI Reliability Lab – 30-Day PromptOps Bootcamp
 
-# ------------------ Config / Constants ------------------
-REGION = "us-east-1"
-MODEL_ID = 'global.anthropic.claude-sonnet-4-5-20250929-v1:0'
+Personal lab and documentation for the 30-Day AI Bootcamp focused on prompt engineering, reliability, observability, and AWS Bedrock integration.
 
-bedrock_runtime = boto3.client('bedrock-runtime', region_name=REGION)
+## Progress Log
 
-EXTRACTION_SCHEMA = {
-    "type": "object",
-    "properties": {
-        "full_name": {"type": "string", "description": "Extracted full name or null"},
-        "age": {"type": "integer", "description": "Age as integer or null"},
-        "city": {"type": "string", "description": "City or null"},
-        "job_title": {"type": "string", "description": "Job title or null"},
-        "confidence": {
-            "type": "number",
-            "description": "Model confidence in extraction (0.0 to 1.0)"
-        }
-    },
-    "required": ["confidence"],
-    "additionalProperties": False
-}
+### Day 1 – LLM Foundations
 
-# ------------------ Helper Functions ------------------
-def load_golden_tests(path="evaluation/golden_test.json"):
-    with open(path, 'r') as f:
-        data = json.load(f)
-    return data
+Studied tokens, context windows, temperature, top_p. Wrote 1-page summary.
 
-def run_converse_single(user_message, temperature=0.0, max_tokens=512):
-    start_time = time.time()
-    
-    # Instructions + user message combined (no separate "system" role)
-    instructions = (
-        "You are a precise information extractor. "
-        "Respond ONLY with valid JSON matching the schema below. "
-        "Use null for missing values. "
-        "Always include a 'confidence' field from 0.0 to 1.0 based on how clearly the information is stated in the text. "
-        "Do not include any explanations, markdown, or extra text outside the JSON object."
-    )
-    
-    full_prompt = f"{instructions}\n\nExtract from this biography:\n{user_message}"
-    
-    messages = [
-        {"role": "user", "content": [{"text": full_prompt}]}
-    ]
-    
-    try:
-        response = bedrock_runtime.converse(
-            modelId=MODEL_ID,
-            messages=messages,
-            inferenceConfig={"maxTokens": max_tokens, "temperature": temperature},
-            outputConfig={
-                "textFormat": {
-                    "type": "json_schema",
-                    "structure": {
-                        "jsonSchema": {
-                            "schema": json.dumps(EXTRACTION_SCHEMA),
-                            "name": "extraction_output",
-                            "description": "Structured extraction result"
-                        }
-                    }
-                }
-            }
-            # guardrailConfig intentionally omitted → fully disabled
-        )
-    except Exception as api_err:
-        latency = time.time() - start_time
-        print(f"API call failed: {str(api_err)}")
-        return {
-            "actual_json": None,
-            "valid_json": False,
-            "confidence": 0.0,
-            "tokens_input": 0,
-            "tokens_output": 0,
-            "latency_sec": latency,
-            "guardrail_blocked": False,
-            "guardrail_trace_category": None,
-            "flake_reason": f"API error: {str(api_err)}",
-            "raw_response": None
-        }
+### Day 2 – Hallucinations & Failure Patterns
 
-    latency = time.time() - start_time
+Documented 5 common LLM failure types with Bedrock examples.
 
-    # Safe access to output_text
-    try:
-        output_text = response['output']['message']['content'][0]['text']
-    except (KeyError, IndexError, TypeError) as e:
-        print(f"Response structure error: {str(e)}")
-        output_text = ""
+### Day 3 – Baseline Prompt V1
 
-    usage = response.get('usage', {})
+Created and tested initial baseline prompt in Bedrock console.
 
-    # No guardrail trace needed since disabled
-    guardrail_blocked = False
-    trace_category = None
+### Day 4 – Prompt V2 (Role + Structure)
 
-    try:
-        parsed = json.loads(output_text)
-        valid_json = True
-        confidence = parsed.get("confidence", 0.0)
-        flake_reason = None
-    except Exception as e:
-        parsed = None
-        valid_json = False
-        confidence = 0.0
-        flake_reason = str(e)
+Improved prompt with role clarity and structure; compared vs V1.
 
-    return {
-        "actual_json": parsed,
-        "valid_json": valid_json,
-        "confidence": confidence,
-        "tokens_input": usage.get("inputTokens", 0),
-        "tokens_output": usage.get("outputTokens", 0),
-        "latency_sec": latency,
-        "guardrail_blocked": guardrail_blocked,
-        "guardrail_trace_category": trace_category,
-        "flake_reason": flake_reason,
-        "raw_response": response
-    }
+### Day 5 – JSON Day (Structured Outputs)
 
-def validate_result(result, expected_snippet=None):
-    if not result["valid_json"]:
-        return "invalid_json"
-    if result["confidence"] < 0.8:
-        return "low_confidence"
-    if result["guardrail_blocked"]:
-        return "guardrail_block"
-    return None
+Implemented native structured outputs via Converse API `outputConfig.textFormat` with JSON schema. Achieved near-100% valid JSON.
 
-# ------------------ Main Batch Logic ------------------
-def main():
-    global MODEL_ID
+### Day 6 – Multi-Run Testing & Golden Set
 
-    parser = argparse.ArgumentParser(description="Batch evaluation on Bedrock Converse V3")
-    parser.add_argument("--runs", type=int, default=10, help="Runs per test case")
-    parser.add_argument("--temperature", type=float, default=0.0)
-    parser.add_argument("--model-id", default=MODEL_ID)
-    parser.add_argument("--output-dir", default=f"evaluation/batch_{datetime.now().strftime('%Y%m%d')}")
-    args = parser.parse_args()
+Ran V1–V3 multiple times; created golden test set (8–10 cases); logged determinism and token usage.
 
-    MODEL_ID = args.model_id
+### Day 7 – Week 1 Findings
 
-    tests = load_golden_tests()
-    print(f"Loaded {len(tests)} golden test cases")
+Wrote Week 1 report highlighting impact of Bedrock structured outputs on JSON success rate.
 
-    total_runs = 0
-    success_runs = 0
+### Day 8–10 – API Setup & Observability
 
-    os.makedirs(args.output_dir, exist_ok=True)
-    csv_path = Path(args.output_dir) / "batch_metrics.csv"
+Set up Python script with latency/token logging to CSV; built evaluation spreadsheet.
 
-    with open(csv_path, 'w', newline='') as csvfile:
-        fieldnames = [
-            "test_id", "run_id", "input_text", "expected_json_snippet",
-            "actual_json", "valid_json", "confidence", "tokens_input",
-            "tokens_output", "total_tokens", "latency_sec", "guardrail_blocked",
-            "guardrail_trace_category", "flake_reason"
-        ]
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        writer.writeheader()
+### Day 11 – Prompt Injection Testing
 
-        for test in tests:
-            test_id = test.get("test_id", "unknown")
-            input_text = test.get("bio", "")
-            expected_snippet = json.dumps(test.get("expected", {}))[:100]
+Tested prompt injection attacks; logged Bedrock content filter behavior.
 
-            for run_id in range(1, args.runs + 1):
-                print(f"Running test {test_id} / run {run_id} ...")
-                result = run_converse_single(input_text, temperature=args.temperature)
-                
-                flake_reason = validate_result(result, expected_snippet)
+### Day 12 – Guardrail Instructions
 
-                total_runs += 1
-                if flake_reason is None:
-                    success_runs += 1
-                
-                row = {
-                    "test_id": test_id,
-                    "run_id": run_id,
-                    "input_text": input_text,
-                    "expected_json_snippet": expected_snippet,
-                    "actual_json": json.dumps(result["actual_json"]) if result["actual_json"] else "",
-                    "valid_json": result["valid_json"],
-                    "confidence": result["confidence"],
-                    "tokens_input": result["tokens_input"],
-                    "tokens_output": result["tokens_output"],
-                    "total_tokens": result["tokens_input"] + result["tokens_output"],
-                    "latency_sec": round(result["latency_sec"], 3),
-                    "guardrail_blocked": result["guardrail_blocked"],
-                    "guardrail_trace_category": result["guardrail_trace_category"],
-                    "flake_reason": flake_reason
-                }
-                writer.writerow(row)
-                csvfile.flush()
+Added guardrail instructions to prompt; compared outcomes with/without Bedrock Guardrails.
 
-    # Final summary
-    print(f"\nBatch complete. Results in: {csv_path}")
-    print("\nQuick summary:")
-    print(f"Total test cases: {len(tests)}")
-    print(f"Runs per case: {args.runs}")
-    print(f"Output directory: {args.output_dir}")
-    print(f"Processed {len(tests) * args.runs} total API calls")
+### Day 13–14 – Validation & Reporting
 
-    print("\n" + "=" * 60)
-    print("Batch evaluation complete!")
-    print(f"Results saved to: {csv_path}")
-    print(f"Golden test cases: {len(tests)}")
-    print(f"Runs per case: {args.runs}")
-    print(f"Total API calls made: {len(tests) * args.runs}")
+Enhanced validation script for JSON output; wrote Week 2 report.
 
-    pass_rate = (success_runs / total_runs * 100) if total_runs > 0 else 0
-    print(f"Overall pass rate: {pass_rate:.1f}% ({success_runs}/{total_runs} runs)")
+### Day 15 – Batch Evaluation Harness
 
-    print("Tip: Open the CSV and check the 'total_tokens' column for usage stats.")
-    print("=" * 60 + "\n")
+Built batch evaluation harness using Bedrock Converse API with structured JSON outputs, multi-run testing, metrics logging, and 100% pass rate on golden set.
 
-if __name__ == "__main__":
-    main()
+**Final status:** Scalable, reliable eval script with 100% pass rate (40/40 runs), token/latency tracking, and observability. Ready for Week 3 automation and reliability experiments.
+
+**Key files:**
+
+- `scripts/batch_eval_v3.py`
+- `evaluation/no_guardrail_working/batch_metrics.csv` (100% pass results)
+
+**Next:** Create relaxed guardrail version (low prompt-attack sensitivity) and test guarded vs unguarded behavior.
+
+Day 15 complete – strong reliability foundation established! 🚀
