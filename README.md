@@ -109,8 +109,8 @@ Built with AWS Bedrock + Claude 4.5 family – ongoing PromptOps learning lab.
 
 **Key files:**
 
-- `scripts/batch_eval_v3.py`
-- `evaluation/no_guardrail_working/batch_metrics.csv` (100% pass results)
+- **[Batch Eval_V3.py](scripts/batch_eval_v3.py)**
+- **[Batch Metrics.csv](evaluation/no_guardrail_working/batch_metrics.csv)** (100% pass results)
 
 **Next:** Create relaxed guardrail version (low prompt-attack sensitivity) and test guarded vs unguarded behavior.
 
