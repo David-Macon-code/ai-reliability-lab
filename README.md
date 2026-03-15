@@ -105,6 +105,17 @@ Feel free to explore `/docs/` , `/scripts/` , and `/evaluation/` for details.
 
 Built with AWS Bedrock + Claude 4.5 family – ongoing PromptOps learning lab.
 
+**Final status:** Scalable, reliable eval script with 100% pass rate (40/40 runs), token/latency tracking, and observability. Ready for Week 3 automation and reliability experiments.
+
+**Key files:**
+
+- `scripts/batch_eval_v3.py`
+- `evaluation/no_guardrail_working/batch_metrics.csv` (100% pass results)
+
+**Next:** Create relaxed guardrail version (low prompt-attack sensitivity) and test guarded vs unguarded behavior.
+
+Day 15 complete – strong reliability foundation established!
+
 # AWSBedrock #PromptOps #ResponsibleAI #AIFC01
 
 ### License
