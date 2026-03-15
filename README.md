@@ -101,8 +101,6 @@ In progress: Week 3 – Automation + Reliability Engineering
 - Add reliability features (retries with backoff, error classification)
 - Track flake rate, token/cost aggregates per run category
 
-Feel free to explore `/docs/` , `/scripts/` , and `/evaluation/` for details.
-
 Built with AWS Bedrock + Claude 4.5 family – ongoing PromptOps learning lab.
 
 **Final status:** Scalable, reliable eval script with 100% pass rate (40/40 runs), token/latency tracking, and observability. Ready for Week 3 automation and reliability experiments.
