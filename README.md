@@ -95,11 +95,14 @@ In progress: Week 3 – Automation + Reliability Engineering
 - Scripts: scripts/v3_json_test.py (golden/injection toggles, trace parsing, CSV logging)
 - Outputs: /evaluation/v3_metrics_log.csv , /evaluation/v3_results.json
 
-### Next Steps (Week 3 Kickoff)
+### Next Steps (Day 16)
 
-- Automate multi-run batches
-- Add reliability features (retries with backoff, error classification)
-- Track flake rate, token/cost aggregates per run category
+- Create new guardrail version with **low** or **none** sensitivity for "Prompt attacks"
+- Bedrock console → Guardrails → select 9g6hem28nedj → Create new version → relax prompt attack filter → deploy (e.g. version 4)
+- Test with hard-coded version number or add `--use-guardrail` flag
+- Add semantic validation (compare actual vs expected fields)
+- Run temperature sweep (0.0 → 1.0) to measure determinism
+- Expand golden set with adversarial / edge cases
 
 Built with AWS Bedrock + Claude 4.5 family – ongoing PromptOps learning lab.
 
