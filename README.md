@@ -112,10 +112,11 @@ Built with AWS Bedrock + Claude 4.5 family – ongoing PromptOps learning lab.
 
 **Next:** Create relaxed guardrail version (low prompt-attack sensitivity) and test guarded vs unguarded behavior.
 
-****Day 15 complete – strong reliability foundation established!****
+#
+3 Day 15 complete – strong reliability foundation established!
 
-# AWSBedrock #PromptOps #ResponsibleAI #AIFC01
+* AWSBedrock #PromptOps #ResponsibleAI #AIFC01*
 
-### License
+* License
 
 [MIT license](#MIT-1-ov-file)
