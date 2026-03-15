@@ -82,6 +82,8 @@ In progress: Week 3 – Automation + Reliability Engineering
 - **[Day 13](./docs/day13.md)** — Enhanced validation script to parse guardrail traces; confirmed 100% injection blocks but 50% false positives pre-tuning.
 - **[Day 14](./docs/day14.md)** — Finalized guardrail tuning, compared metrics, and wrapped Week 2 with improved observability + security baseline.
 
+- **[Day 15](./docs/day15.md)** — Implemented Bedrock Converse batch runner with native structured outputs, metrics tracking, and perfect 40/40 pass rate on golden tests
+
 ### Current Setup Highlights
 
 - Model: anthropic.claude-sonnet-4-5-20250929-v1:0 (via inference profile)
