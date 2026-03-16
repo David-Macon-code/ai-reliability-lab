@@ -212,19 +212,19 @@ def main():
                       total_tokens_success += row["total_tokens"]   # already calculated in row
 
     # Final summary
-print(f"\nBatch complete. Results in: {csv_path}")
-print("\nQuick summary:")
-print(f"Total test cases: {len(tests)}")
-print(f"Runs per case: {args.runs}")
-print(f"Output directory: {args.output_dir}")
-print(f"Processed {len(tests) * args.runs} total API calls")
+        print(f"\nBatch complete. Results in: {csv_path}")
+        print("\nQuick summary:")
+        print(f"Total test cases: {len(tests)}")
+        print(f"Runs per case: {args.runs}")
+        print(f"Output directory: {args.output_dir}")
+        print(f"Processed {len(tests) * args.runs} total API calls")
 
-print("\n" + "=" * 60)
-print("Batch evaluation complete!")
-print(f"Results saved to: {csv_path}")
-print(f"Golden test cases: {len(tests)}")
-print(f"Runs per case: {args.runs}")
-print(f"Total API calls made: {len(tests) * args.runs}")
+        print("\n" + "=" * 60)
+        print("Batch evaluation complete!")
+        print(f"Results saved to: {csv_path}")
+        print(f"Golden test cases: {len(tests)}")
+        print(f"Runs per case: {args.runs}")
+        print(f"Total API calls made: {len(tests) * args.runs}")
 
 pass_rate = (success_runs / total_runs * 100) if total_runs > 0 else 0
 print(f"Overall pass rate: {pass_rate:.1f}% ({success_runs}/{total_runs} runs)")
