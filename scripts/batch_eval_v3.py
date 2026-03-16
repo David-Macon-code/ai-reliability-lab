@@ -158,6 +158,11 @@ def main():
     os.makedirs(args.output_dir, exist_ok=True)
     csv_path = Path(args.output_dir) / "batch_metrics.csv"
 
+total_confidence = 0.0
+total_tokens_success = 0
+success_count = 0
+    
+
     with open(csv_path, 'w', newline='') as csvfile:
         fieldnames = [
             "test_id", "run_id", "input_text", "expected_json_snippet",
@@ -206,7 +211,7 @@ def main():
                 writer.writerow(row)
                 csvfile.flush()
 
-                if flake_reason is None:  # only count clean successes (valid JSON + high conf + no guardrail block)
+                if flake_reason is None:  
                       success_count += 1
                       total_confidence += result["confidence"]
                       total_tokens_success += row["total_tokens"]   # already calculated in row
