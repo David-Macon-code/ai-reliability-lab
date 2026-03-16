@@ -177,7 +177,7 @@ def main():
         total_tokens_success = 0      # we'll sum total_tokens only on successes
         success_count = 0             # we'll count only clean passes here (can reuse or separate from success_runs)
 
-            for test in tests:
+        for test in tests:
             test_id = test.get("test_id", "unknown")
             input_text = test.get("bio", "")
             expected_snippet = json.dumps(test.get("expected", {}))[:100]
