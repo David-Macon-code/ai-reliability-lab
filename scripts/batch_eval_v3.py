@@ -1,249 +1,231 @@
-import boto3
-import json
-import time
 import argparse
+import json
 import csv
+import time
 import os
-from datetime import datetime
 from pathlib import Path
+import boto3
+from botocore.exceptions import ClientError
 
-# ------------------ Config / Constants ------------------
-REGION = "us-east-1"
-MODEL_ID = 'global.anthropic.claude-sonnet-4-5-20250929-v1:0'
+# -------------------------------
+# Configuration constants
+# -------------------------------
+GUARDRAIL_ID = "9g6hem28nedj"  # Your guardrail ID (can be overridden via args later)
+MODEL_ID = "anthropic.claude-sonnet-4-5-20250929-v1:0"  # Example - adjust as needed
+DEFAULT_REGION = "us-east-1"
 
-bedrock_runtime = boto3.client('bedrock-runtime', region_name=REGION)
-
-EXTRACTION_SCHEMA = {
+# -------------------------------
+# Schema for structured output (native Bedrock Converse JSON mode)
+# -------------------------------
+OUTPUT_SCHEMA = {
     "type": "object",
     "properties": {
-        "full_name": {"type": "string", "description": "Extracted full name or null"},
-        "age": {"type": "integer", "description": "Age as integer or null"},
-        "city": {"type": "string", "description": "City or null"},
-        "job_title": {"type": "string", "description": "Job title or null"},
-        "confidence": {
-            "type": "number",
-            "description": "Model confidence in extraction (0.0 to 1.0)"
-        }
+        "name": {"type": "string", "description": "Full name extracted"},
+        "age": {"type": "integer", "description": "Age as number or null if missing"},
+        "city": {"type": "string"},
+        "confidence": {"type": "number", "minimum": 0, "maximum": 1}
     },
-    "required": ["confidence"],
+    "required": ["name", "confidence"],
     "additionalProperties": False
 }
 
-# ------------------ Helper Functions ------------------
-def load_golden_tests(path="evaluation/golden_test.json"):
-    with open(path, 'r') as f:
-        data = json.load(f)
-    return data
+def parse_arguments():
+    parser = argparse.ArgumentParser(description="Batch evaluation script for Bedrock Converse API with structured outputs")
+    parser.add_argument("--runs", type=int, default=5, help="Number of runs per test case")
+    parser.add_argument("--temperature", type=float, default=0.0, help="Temperature for inference")
+    parser.add_argument("--output-dir", type=str, default="evaluation/no_guardrail", help="Output directory for results")
+    parser.add_argument("--model-id", type=str, default=MODEL_ID, help="Bedrock model ID")
+    parser.add_argument("--guardrail-version", type=str, default=None, 
+                        help="Guardrail version to use (omit to disable guardrails)")
+    return parser.parse_args()
 
-def run_converse_single(user_message, temperature=0.0, max_tokens=512):
-    start_time = time.time()
+def get_bedrock_client(region=DEFAULT_REGION):
+    return boto3.client("bedrock-runtime", region_name=region)
+
+def run_converse_single(client, model_id, user_message, temperature=0.0, guardrail_version=None):
+    messages = [{"role": "user", "content": [{"text": user_message}]}]
     
-    # Instructions + user message combined (no "system" role)
-    instructions = (
-        "You are a precise information extractor. "
-        "Respond ONLY with valid JSON matching the schema below. "
-        "Use null for missing values. "
-        "Always include a 'confidence' field from 0.0 to 1.0 based on how clearly the information is stated in the text. "
-        "Do not include any explanations, markdown, or extra text outside the JSON object."
-    )
+    inference_config = {
+        "maxTokens": 512,
+        "temperature": temperature,
+        "topP": 1.0
+    }
     
-    full_prompt = f"{instructions}\n\nExtract from this biography:\n{user_message}"
-    
-    messages = [
-        {"role": "user", "content": [{"text": full_prompt}]}
-    ]
-    
-    try:
-        response = bedrock_runtime.converse(
-            modelId=MODEL_ID,
-            messages=messages,
-            inferenceConfig={"maxTokens": max_tokens, "temperature": temperature},
-            outputConfig={
-                "textFormat": {
-                    "type": "json_schema",
-                    "structure": {
-                        "jsonSchema": {
-                            "schema": json.dumps(EXTRACTION_SCHEMA),
-                            "name": "extraction_output",
-                            "description": "Structured extraction result"
-                        }
-                    }
+    output_config = {
+        "textFormat": {
+            "type": "json_schema",
+            "structure": {
+                "jsonSchema": {
+                    "schema": json.dumps(OUTPUT_SCHEMA),
+                    "name": "extraction_output",
+                    "description": "Structured extraction result"
                 }
             }
-            # guardrailConfig intentionally omitted → disabled
-        )
-    except Exception as api_err:
-        latency = time.time() - start_time
-        print(f"API call failed: {str(api_err)}")
-        return {
-            "actual_json": None,
-            "valid_json": False,
-            "confidence": 0.0,
-            "tokens_input": 0,
-            "tokens_output": 0,
-            "latency_sec": latency,
-            "guardrail_blocked": False,
-            "guardrail_trace_category": None,
-            "flake_reason": f"API error: {str(api_err)}",
-            "raw_response": None
         }
-
-    latency = time.time() - start_time
-
-    # Safe access to output_text
-    try:
-        output_text = response['output']['message']['content'][0]['text']
-    except (KeyError, IndexError, TypeError) as e:
-        print(f"Response structure error: {str(e)}")
-        output_text = ""
-
-    usage = response.get('usage', {})
-
-    # No guardrail since disabled
-    guardrail_blocked = False
-    trace_category = None
-
-    try:
-        parsed = json.loads(output_text)
-        valid_json = True
-        confidence = parsed.get("confidence", 0.0)
-        flake_reason = None
-    except Exception as e:
-        parsed = None
-        valid_json = False
-        confidence = 0.0
-        flake_reason = str(e)
-
-    return {
-        "actual_json": parsed,
-        "valid_json": valid_json,
-        "confidence": confidence,
-        "tokens_input": usage.get("inputTokens", 0),
-        "tokens_output": usage.get("outputTokens", 0),
-        "latency_sec": latency,
-        "guardrail_blocked": guardrail_blocked,
-        "guardrail_trace_category": trace_category,
-        "flake_reason": flake_reason,
-        "raw_response": response
     }
+    
+    guardrail_config = None
+    if guardrail_version:
+        guardrail_config = {
+            "guardrailIdentifier": GUARDRAIL_ID,
+            "guardrailVersion": guardrail_version,
+            "trace": "enabled"
+        }
+    
+    try:
+        start_time = time.time()
+        response = client.converse(
+            modelId=model_id,
+            messages=messages,
+            inferenceConfig=inference_config,
+            outputConfig=output_config,
+            guardrailConfig=guardrail_config
+        )
+        latency = time.time() - start_time
+        
+        output_text = response['output']['message']['content'][0]['text']
+        parsed = json.loads(output_text)
+        
+        usage = response.get('usage', {})
+        
+        return {
+            "success": True,
+            "parsed": parsed,
+            "latency": latency,
+            "usage": usage,
+            "raw_response": response
+        }, None
+    except ClientError as e:
+        return None, str(e)
+    except json.JSONDecodeError as e:
+        return None, f"JSON decode error: {str(e)}"
+    except Exception as e:
+        return None, str(e)
 
-def validate_result(result, expected_snippet=None):
-    if not result["valid_json"]:
-        return "invalid_json"
-    if result["confidence"] < 0.8:
-        return "low_confidence"
-    if result["guardrail_blocked"]:
-        return "guardrail_block"
-    return None
-
-# ------------------ Main Batch Logic ------------------
 def main():
-    global MODEL_ID
-
-    parser = argparse.ArgumentParser(description="Batch evaluation on Bedrock Converse V3")
-    parser.add_argument("--runs", type=int, default=10, help="Runs per test case")
-    parser.add_argument("--temperature", type=float, default=0.0)
-    parser.add_argument("--model-id", default=MODEL_ID)
-    parser.add_argument("--output-dir", default=f"evaluation/batch_{datetime.now().strftime('%Y%m%d')}")
-    args = parser.parse_args()
-
-    MODEL_ID = args.model_id
-
-    tests = load_golden_tests()
-    print(f"Loaded {len(tests)} golden test cases")
-
-    total_runs = 0
-    success_runs = 0
-
+    args = parse_arguments()
+    
+    client = get_bedrock_client()
+    
+    # Load your golden test set (adjust path/format as needed)
+    golden_path = Path("evaluation/golden_test.json")
+    if not golden_path.exists():
+        print(f"Golden test set not found: {golden_path}")
+        return
+    
+    with open(golden_path, 'r') as f:
+        tests = json.load(f)  # assume list of {"input": "...", "expected": {...}} or similar
+    
     os.makedirs(args.output_dir, exist_ok=True)
+    
     csv_path = Path(args.output_dir) / "batch_metrics.csv"
-
+    
     total_confidence = 0.0
     total_tokens_success = 0
     success_count = 0
     
-
+    total_runs = len(tests) * args.runs
+    success_runs = 0
+    
     with open(csv_path, 'w', newline='') as csvfile:
         fieldnames = [
-            "test_id", "run_id", "input_text", "expected_json_snippet",
-            "actual_json", "valid_json", "confidence", "tokens_input",
-            "tokens_output", "total_tokens", "latency_sec", "guardrail_blocked",
-            "guardrail_trace_category", "flake_reason"
+            "test_id", "run_id", "input_text", "latency", "total_tokens",
+            "input_tokens", "output_tokens", "confidence", "flake_reason",
+            "guardrail_intervened", "timestamp"
         ]
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
-
-        total_confidence = 0.0
-        total_tokens_success = 0      # we'll sum total_tokens only on successes
-        success_count = 0             # we'll count only clean passes here (can reuse or separate from success_runs)
-
-        for test in tests:
-            test_id = test.get("test_id", "unknown")
-            input_text = test.get("bio", "")
-            expected_snippet = json.dumps(test.get("expected", {}))[:100]
-
-            for run_id in range(1, args.runs + 1):
-                print(f"Running test {test_id} / run {run_id} ...")
-                result = run_converse_single(input_text, temperature=args.temperature)
+        
+        for test_idx, test in enumerate(tests):
+            user_message = test.get("input", "Extract details from sample text here.")
+            
+            for run_id in range(args.runs):
+                print(f"Running test {test_idx+1}/{len(tests)} - run {run_id+1}/{args.runs}")
                 
-                flake_reason = validate_result(result, expected_snippet)
-
-                total_runs += 1
-                if flake_reason is None:
-                    success_runs += 1
+                result, error = run_converse_single(
+                    client,
+                    args.model_id,
+                    user_message,
+                    temperature=args.temperature,
+                    guardrail_version=args.guardrail_version
+                )
+                
+                flake_reason = None
+                confidence = 0.0
+                intervened = False
+                
+                if result and result["success"]:
+                    parsed = result["parsed"]
+                    confidence = parsed.get("confidence", 0.0)
+                    
+                    # Example flake detection logic (customize!)
+                    if confidence < 0.7:
+                        flake_reason = "low_confidence"
+                    # Add more checks if needed (e.g. schema mismatch, guardrail block)
+                    
+                    if result["raw_response"].get("guardrailIntervened", False):
+                        intervened = True
+                        flake_reason = flake_reason or "guardrail_block"
+                    
+                    if flake_reason is None:
+                        success_runs += 1
+                else:
+                    flake_reason = error or "unknown_error"
                 
                 row = {
-                    "test_id": test_id,
-                    "run_id": run_id,
-                    "input_text": input_text,
-                    "expected_json_snippet": expected_snippet,
-                    "actual_json": json.dumps(result["actual_json"]) if result["actual_json"] else "",
-                    "valid_json": result["valid_json"],
-                    "confidence": result["confidence"],
-                    "tokens_input": result["tokens_input"],
-                    "tokens_output": result["tokens_output"],
-                    "total_tokens": result["tokens_input"] + result["tokens_output"],
-                    "latency_sec": round(result["latency_sec"], 3),
-                    "guardrail_blocked": result["guardrail_blocked"],
-                    "guardrail_trace_category": result["guardrail_trace_category"],
-                    "flake_reason": flake_reason
+                    "test_id": test_idx + 1,
+                    "run_id": run_id + 1,
+                    "input_text": user_message[:100] + "..." if len(user_message) > 100 else user_message,
+                    "latency": round(result["latency"], 3) if result else None,
+                    "total_tokens": result["usage"].get("totalTokens", 0) if result else 0,
+                    "input_tokens": result["usage"].get("inputTokens", 0) if result else 0,
+                    "output_tokens": result["usage"].get("outputTokens", 0) if result else 0,
+                    "confidence": round(confidence, 3),
+                    "flake_reason": flake_reason,
+                    "guardrail_intervened": intervened,
+                    "timestamp": time.strftime("%Y-%m-%d %H:%M:%S")
                 }
+                
                 writer.writerow(row)
                 csvfile.flush()
-
-                if flake_reason is None:  
-                      success_count += 1
-                      total_confidence += result["confidence"]
-                      total_tokens_success += row["total_tokens"]   # already calculated in row
-
-    # Final summary
-        print(f"\nBatch complete. Results in: {csv_path}")
-        print("\nQuick summary:")
-        print(f"Total test cases: {len(tests)}")
-        print(f"Runs per case: {args.runs}")
-        print(f"Output directory: {args.output_dir}")
-        print(f"Processed {len(tests) * args.runs} total API calls")
-
-        print("\n" + "=" * 60)
-        print("Batch evaluation complete!")
-        print(f"Results saved to: {csv_path}")
-        print(f"Golden test cases: {len(tests)}")
-        print(f"Runs per case: {args.runs}")
-        print(f"Total API calls made: {len(tests) * args.runs}")
-
-        pass_rate = (success_runs / total_runs * 100) if total_runs > 0 else 0
-        print(f"Overall pass rate: {pass_rate:.1f}% ({success_runs}/{total_runs} runs)")
-
-if success_count > 0:
-    avg_confidence = total_confidence / success_count
-    avg_tokens = total_tokens_success / success_count
-    print(f"Average confidence (successful runs): {avg_confidence:.3f}")
-    print(f"Average total tokens (successful runs): {avg_tokens:.1f}")
-else:
-    print("No successful runs → no average confidence/tokens available")
-
-print("Tip: Open the CSV and check the 'total_tokens' column for usage stats.")
-print("=" * 60 + "\n")
+                
+                # Accumulate only clean successes
+                if flake_reason is None:
+                    success_count += 1
+                    total_confidence += result["parsed"].get("confidence", 0.0)
+                    total_tokens_success += row["total_tokens"]
+    
+    # Final summary - now all variables are accessible
+    print(f"\nBatch complete. Results in: {csv_path}")
+    print("\nQuick summary:")
+    print(f"Total test cases: {len(tests)}")
+    print(f"Runs per case: {args.runs}")
+    print(f"Output directory: {args.output_dir}")
+    print(f"Processed {total_runs} total API calls")
+    
+    print("\n" + "=" * 60)
+    print("Batch evaluation complete!")
+    print(f"Results saved to: {csv_path}")
+    print(f"Golden test cases: {len(tests)}")
+    print(f"Runs per case: {args.runs}")
+    print(f"Total API calls made: {total_runs}")
+    
+    pass_rate = (success_runs / total_runs * 100) if total_runs > 0 else 0
+    print(f"Overall pass rate: {pass_rate:.1f}% ({success_runs}/{total_runs} runs)")
+    
+    if success_count > 0:
+        avg_confidence = total_confidence / success_count
+        avg_tokens = total_tokens_success / success_count
+        print(f"Average confidence (successful runs): {avg_confidence:.3f}")
+        print(f"Average total tokens (successful runs): {avg_tokens:.1f}")
+    else:
+        print("No successful runs → no average confidence/tokens available")
+    
+    gr_status = f"ENABLED (v{args.guardrail_version})" if args.guardrail_version else "DISABLED"
+    print(f"Guardrail status: {gr_status}")
+    
+    print("Tip: Open the CSV and check the 'total_tokens' column for usage stats.")
+    print("=" * 60 + "\n")
 
 if __name__ == "__main__":
     main()
