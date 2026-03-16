@@ -226,8 +226,8 @@ def main():
         print(f"Runs per case: {args.runs}")
         print(f"Total API calls made: {len(tests) * args.runs}")
 
-pass_rate = (success_runs / total_runs * 100) if total_runs > 0 else 0
-print(f"Overall pass rate: {pass_rate:.1f}% ({success_runs}/{total_runs} runs)")
+        pass_rate = (success_runs / total_runs * 100) if total_runs > 0 else 0
+        print(f"Overall pass rate: {pass_rate:.1f}% ({success_runs}/{total_runs} runs)")
 
 if success_count > 0:
     avg_confidence = total_confidence / success_count
