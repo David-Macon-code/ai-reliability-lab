@@ -48,7 +48,7 @@ def run_converse_single(client, model_id, user_message, temperature=0.0, guardra
     inference_config = {
         "maxTokens": 512,
         "temperature": temperature,
-        "topP": 1.0
+        # topP removed - Claude 4.5 family does not allow both temperature and top_p
     }
     
     output_config = {
