@@ -192,10 +192,10 @@ def main():
                     "input_tokens": result["usage"].get("inputTokens", 0) if result and "usage" in result else 0,
                     "output_tokens": result["usage"].get("outputTokens", 0) if result and "usage" in result else 0,
                     "confidence": round(confidence, 3),
-                    "flake_reason": flake_reason,
+                    "flake_reason": flake_reason,          # ← just the value, no annotation comment here
                     "guardrail_intervened": intervened,
                     "timestamp": time.strftime("%Y-%m-%d %H:%M:%S")
-                }
+}
                 result, error = run_converse_single(...)
 
                 flake_reason = None
