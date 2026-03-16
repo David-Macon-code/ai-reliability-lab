@@ -74,13 +74,19 @@ def run_converse_single(client, model_id, user_message, temperature=0.0, guardra
     
     try:
         start_time = time.time()
-        response = client.converse(
-            modelId=model_id,
-            messages=messages,
-            inferenceConfig=inference_config,
-            outputConfig=output_config,
-            guardrailConfig=guardrail_config
-        )
+        
+        # Build kwargs to conditionally include guardrailConfig only if it's not None
+        kwargs = {
+            "modelId": model_id,
+            "messages": messages,
+            "inferenceConfig": inference_config,
+            "outputConfig": output_config,
+        }
+        if guardrail_config is not None:
+            kwargs["guardrailConfig"] = guardrail_config
+        
+        response = client.converse(**kwargs)  # <-- unpack with **kwargs
+        
         latency = time.time() - start_time
         
         output_text = response['output']['message']['content'][0]['text']
@@ -95,6 +101,7 @@ def run_converse_single(client, model_id, user_message, temperature=0.0, guardra
             "usage": usage,
             "raw_response": response
         }, None
+
     except ClientError as e:
         return None, str(e)
     except json.JSONDecodeError as e:
