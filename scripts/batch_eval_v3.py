@@ -168,6 +168,10 @@ def main():
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
 
+        total_confidence = 0.0
+        total_tokens_success = 0      # we'll sum total_tokens only on successes
+        success_count = 0             # we'll count only clean passes here (can reuse or separate from success_runs)
+
         for test in tests:
             test_id = test.get("test_id", "unknown")
             input_text = test.get("bio", "")
@@ -202,26 +206,39 @@ def main():
                 writer.writerow(row)
                 csvfile.flush()
 
+                if flake_reason is None:  # only count clean successes (valid JSON + high conf + no guardrail block)
+                      success_count += 1
+                      total_confidence += result["confidence"]
+                      total_tokens_success += row["total_tokens"]   # already calculated in row
+
     # Final summary
-    print(f"\nBatch complete. Results in: {csv_path}")
-    print("\nQuick summary:")
-    print(f"Total test cases: {len(tests)}")
-    print(f"Runs per case: {args.runs}")
-    print(f"Output directory: {args.output_dir}")
-    print(f"Processed {len(tests) * args.runs} total API calls")
+print(f"\nBatch complete. Results in: {csv_path}")
+print("\nQuick summary:")
+print(f"Total test cases: {len(tests)}")
+print(f"Runs per case: {args.runs}")
+print(f"Output directory: {args.output_dir}")
+print(f"Processed {len(tests) * args.runs} total API calls")
 
-    print("\n" + "=" * 60)
-    print("Batch evaluation complete!")
-    print(f"Results saved to: {csv_path}")
-    print(f"Golden test cases: {len(tests)}")
-    print(f"Runs per case: {args.runs}")
-    print(f"Total API calls made: {len(tests) * args.runs}")
+print("\n" + "=" * 60)
+print("Batch evaluation complete!")
+print(f"Results saved to: {csv_path}")
+print(f"Golden test cases: {len(tests)}")
+print(f"Runs per case: {args.runs}")
+print(f"Total API calls made: {len(tests) * args.runs}")
 
-    pass_rate = (success_runs / total_runs * 100) if total_runs > 0 else 0
-    print(f"Overall pass rate: {pass_rate:.1f}% ({success_runs}/{total_runs} runs)")
+pass_rate = (success_runs / total_runs * 100) if total_runs > 0 else 0
+print(f"Overall pass rate: {pass_rate:.1f}% ({success_runs}/{total_runs} runs)")
 
-    print("Tip: Open the CSV and check the 'total_tokens' column for usage stats.")
-    print("=" * 60 + "\n")
+if success_count > 0:
+    avg_confidence = total_confidence / success_count
+    avg_tokens = total_tokens_success / success_count
+    print(f"Average confidence (successful runs): {avg_confidence:.3f}")
+    print(f"Average total tokens (successful runs): {avg_tokens:.1f}")
+else:
+    print("No successful runs → no average confidence/tokens available")
+
+print("Tip: Open the CSV and check the 'total_tokens' column for usage stats.")
+print("=" * 60 + "\n")
 
 if __name__ == "__main__":
     main()
