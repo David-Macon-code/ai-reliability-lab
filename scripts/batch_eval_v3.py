@@ -10,12 +10,12 @@ from botocore.exceptions import ClientError
 # -------------------------------
 # Configuration constants
 # -------------------------------
-GUARDRAIL_ID = "9g6hem28nedj"  # Your guardrail ID (can be overridden via args later)
-MODEL_ID = "anthropic.claude-sonnet-4-5-20250929-v1:0"  # Example - adjust as needed
+GUARDRAIL_ID = "9g6hem28nedj"  # Your guardrail ID
+MODEL_ID = "anthropic.claude-sonnet-4-5-20250929-v1:0"  # Adjust if needed
 DEFAULT_REGION = "us-east-1"
 
 # -------------------------------
-# Schema for structured output (native Bedrock Converse JSON mode)
+# Schema for structured output
 # -------------------------------
 OUTPUT_SCHEMA = {
     "type": "object",
@@ -30,13 +30,13 @@ OUTPUT_SCHEMA = {
 }
 
 def parse_arguments():
-    parser = argparse.ArgumentParser(description="Batch evaluation script for Bedrock Converse API with structured outputs")
+    parser = argparse.ArgumentParser(description="Batch evaluation for Bedrock Converse API with structured outputs")
     parser.add_argument("--runs", type=int, default=5, help="Number of runs per test case")
     parser.add_argument("--temperature", type=float, default=0.0, help="Temperature for inference")
-    parser.add_argument("--output-dir", type=str, default="evaluation/no_guardrail", help="Output directory for results")
+    parser.add_argument("--output-dir", type=str, default="evaluation/no_guardrail", help="Output directory")
     parser.add_argument("--model-id", type=str, default=MODEL_ID, help="Bedrock model ID")
     parser.add_argument("--guardrail-version", type=str, default=None, 
-                        help="Guardrail version to use (omit to disable guardrails)")
+                        help="Guardrail version to use (omit to disable)")
     return parser.parse_args()
 
 def get_bedrock_client(region=DEFAULT_REGION):
@@ -75,17 +75,17 @@ def run_converse_single(client, model_id, user_message, temperature=0.0, guardra
     try:
         start_time = time.time()
         
-        # Build kwargs to conditionally include guardrailConfig only if it's not None
-        kwargs = {
+        # Build params dynamically to avoid passing guardrailConfig=None
+        params = {
             "modelId": model_id,
             "messages": messages,
             "inferenceConfig": inference_config,
             "outputConfig": output_config,
         }
         if guardrail_config is not None:
-            kwargs["guardrailConfig"] = guardrail_config
+            params["guardrailConfig"] = guardrail_config
         
-        response = client.converse(**kwargs)  # <-- unpack with **kwargs
+        response = client.converse(**params)
         
         latency = time.time() - start_time
         
@@ -101,7 +101,7 @@ def run_converse_single(client, model_id, user_message, temperature=0.0, guardra
             "usage": usage,
             "raw_response": response
         }, None
-
+    
     except ClientError as e:
         return None, str(e)
     except json.JSONDecodeError as e:
@@ -114,14 +114,13 @@ def main():
     
     client = get_bedrock_client()
     
-    # Load your golden test set (adjust path/format as needed)
     golden_path = Path("evaluation/golden_test.json")
     if not golden_path.exists():
         print(f"Golden test set not found: {golden_path}")
         return
     
     with open(golden_path, 'r') as f:
-        tests = json.load(f)  # assume list of {"input": "...", "expected": {...}} or similar
+        tests = json.load(f)
     
     os.makedirs(args.output_dir, exist_ok=True)
     
@@ -165,10 +164,8 @@ def main():
                     parsed = result["parsed"]
                     confidence = parsed.get("confidence", 0.0)
                     
-                    # Example flake detection logic (customize!)
                     if confidence < 0.7:
                         flake_reason = "low_confidence"
-                    # Add more checks if needed (e.g. schema mismatch, guardrail block)
                     
                     if result["raw_response"].get("guardrailIntervened", False):
                         intervened = True
@@ -177,16 +174,17 @@ def main():
                     if flake_reason is None:
                         success_runs += 1
                 else:
-                    flake_reason = error or "unknown_error"
+                    flake_reason = error or "api_call_failed"
                 
+                # Safe row creation
                 row = {
                     "test_id": test_idx + 1,
                     "run_id": run_id + 1,
                     "input_text": user_message[:100] + "..." if len(user_message) > 100 else user_message,
-                    "latency": round(result["latency"], 3) if result else None,
-                    "total_tokens": result["usage"].get("totalTokens", 0) if result else 0,
-                    "input_tokens": result["usage"].get("inputTokens", 0) if result else 0,
-                    "output_tokens": result["usage"].get("outputTokens", 0) if result else 0,
+                    "latency": round(result["latency"], 3) if result and "latency" in result else None,
+                    "total_tokens": result["usage"].get("totalTokens", 0) if result and "usage" in result else 0,
+                    "input_tokens": result["usage"].get("inputTokens", 0) if result and "usage" in result else 0,
+                    "output_tokens": result["usage"].get("outputTokens", 0) if result and "usage" in result else 0,
                     "confidence": round(confidence, 3),
                     "flake_reason": flake_reason,
                     "guardrail_intervened": intervened,
@@ -196,13 +194,12 @@ def main():
                 writer.writerow(row)
                 csvfile.flush()
                 
-                # Accumulate only clean successes
                 if flake_reason is None:
                     success_count += 1
                     total_confidence += result["parsed"].get("confidence", 0.0)
                     total_tokens_success += row["total_tokens"]
     
-    # Final summary - now all variables are accessible
+    # Summary
     print(f"\nBatch complete. Results in: {csv_path}")
     print("\nQuick summary:")
     print(f"Total test cases: {len(tests)}")
