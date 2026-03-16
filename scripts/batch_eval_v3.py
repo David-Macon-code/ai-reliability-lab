@@ -161,8 +161,6 @@ def main():
                     guardrail_version=args.guardrail_version
                 )
                 print(f"DEBUG: result is {'valid' if result else 'None'}, error: {error}")
-                if result:
-                    print(f"DEBUG: flake_reason decided as: {flake_reason}")
                 
                 flake_reason = None
                 confidence = 0.0
@@ -198,6 +196,36 @@ def main():
                     "guardrail_intervened": intervened,
                     "timestamp": time.strftime("%Y-%m-%d %H:%M:%S")
                 }
+                result, error = run_converse_single(...)
+
+                flake_reason = None
+                confidence = 0.0
+                intervened = False
+
+                if result and result["success"]:
+                    parsed = result["parsed"]
+                    confidence = parsed.get("confidence", 0.0)
+
+                    if confidence < 0.7:
+                        flake_reason = "low_confidence"
+
+                    if result["raw_response"].get("guardrailIntervened", False):
+                        intervened = True
+                        flake_reason = flake_reason or "guardrail_block"
+
+                    if flake_reason is None:
+                        success_runs += 1
+                else:
+                    flake_reason = error or "api_call_or_parse_failed"
+
+                # ← Move debug print HERE — after flake_reason is always set
+                if result:
+                    print(f"DEBUG:flake_reason decided as: {flake_reason}")
+                
+                # Then continue with row = { ... }
+                
+                    "flake_reason":flake_reason, # type: ignore
+                ...
                 
                 writer.writerow(row)
                 csvfile.flush()
