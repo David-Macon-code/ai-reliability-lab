@@ -23,7 +23,7 @@ OUTPUT_SCHEMA = {
         "name": {"type": "string", "description": "Full name extracted"},
         "age": {"type": "integer", "description": "Age as number or null if missing"},
         "city": {"type": "string"},
-        "confidence": {"type": "number", "minimum": 0, "maximum": 1}
+        "confidence": {"type": "number", "description": "Confidence score between 0 and 1"}
     },
     "required": ["name", "confidence"],
     "additionalProperties": False
