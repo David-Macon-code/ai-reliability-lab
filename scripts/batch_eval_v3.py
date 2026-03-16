@@ -86,11 +86,16 @@ def run_converse_single(client, model_id, user_message, temperature=0.0, guardra
             params["guardrailConfig"] = guardrail_config
         
         response = client.converse(**params)
+        print(f"DEBUG: API call succeeded for this run. Latency: {latency:.2f}s")
+        print(f"DEBUG: Raw output_text type: {type(output_text)}, length: {len(output_text)}")
+        print(f"DEBUG: First 200 chars of output_text: {output_text[:200]}...")
         
         latency = time.time() - start_time
         
         output_text = response['output']['message']['content'][0]['text']
         parsed = json.loads(output_text)
+        print(f"DEBUG: Parsed JSON successfully: {json.dumps(parsed, indent=2)}")
+        print(f"DEBUG: Extracted confidence: {parsed.get('confidence', 'MISSING/None')}")
         
         usage = response.get('usage', {})
         
@@ -155,6 +160,9 @@ def main():
                     temperature=args.temperature,
                     guardrail_version=args.guardrail_version
                 )
+                print(f"DEBUG: result is {'valid' if result else 'None'}, error: {error}")
+                if result:
+                    print(f"DEBUG: flake_reason decided as: {flake_reason}")
                 
                 flake_reason = None
                 confidence = 0.0
