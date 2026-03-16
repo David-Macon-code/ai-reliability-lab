@@ -224,7 +224,7 @@ def main():
                 
                 # Then continue with row = { ... }
                 
-                    "flake_reason":flake_reason, # type: ignore
+                    "flake_reason":flake_reason,
                 ...
                 
                 writer.writerow(row)
