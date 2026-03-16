@@ -75,7 +75,6 @@ def run_converse_single(client, model_id, user_message, temperature=0.0, guardra
     try:
         start_time = time.time()
         
-        # Build params dynamically to avoid passing guardrailConfig=None
         params = {
             "modelId": model_id,
             "messages": messages,
@@ -86,16 +85,20 @@ def run_converse_single(client, model_id, user_message, temperature=0.0, guardra
             params["guardrailConfig"] = guardrail_config
         
         response = client.converse(**params)
-        print(f"DEBUG: API call succeeded for this run. Latency: {latency:.2f}s")
-        print(f"DEBUG: Raw output_text type: {type(output_text)}, length: {len(output_text)}")
-        print(f"DEBUG: First 200 chars of output_text: {output_text[:200]}...")
         
         latency = time.time() - start_time
         
+        # Now safe to print latency and response info
+        print(f"DEBUG: API call succeeded for this run. Latency: {latency:.2f}s")
+        print(f"DEBUG: Response keys: {list(response.keys())}")
+        
         output_text = response['output']['message']['content'][0]['text']
+        print(f"DEBUG: Output text length: {len(output_text)} chars")
+        print(f"DEBUG: Output text preview: {output_text[:200]}...")
+        
         parsed = json.loads(output_text)
-        print(f"DEBUG: Parsed JSON successfully: {json.dumps(parsed, indent=2)}")
-        print(f"DEBUG: Extracted confidence: {parsed.get('confidence', 'MISSING/None')}")
+        print(f"DEBUG: Parsed JSON: {json.dumps(parsed, indent=2)}")
+        print(f"DEBUG: Confidence: {parsed.get('confidence', 'MISSING')}")
         
         usage = response.get('usage', {})
         
@@ -107,11 +110,8 @@ def run_converse_single(client, model_id, user_message, temperature=0.0, guardra
             "raw_response": response
         }, None
     
-    except ClientError as e:
-        return None, str(e)
-    except json.JSONDecodeError as e:
-        return None, f"JSON decode error: {str(e)}"
-    except Exception as e:
+    except Exception as e:  # Catch everything, including UnboundLocalError if any
+        print(f"DEBUG: API call failed with error: {str(e)}")
         return None, str(e)
 
 def main():
