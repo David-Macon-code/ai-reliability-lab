@@ -11,7 +11,7 @@ from botocore.exceptions import ClientError
 # Configuration constants
 # -------------------------------
 GUARDRAIL_ID = "9g6hem28nedj"  # Your guardrail ID
-MODEL_ID = "anthropic.claude-sonnet-4-5-20250929-v1:0"  # Adjust if needed
+MODEL_ID = "global.anthropic.claude-sonnet-4-5-20250929-v1:0"  # Adjust if needed
 DEFAULT_REGION = "us-east-1"
 
 # -------------------------------
