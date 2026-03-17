@@ -195,8 +195,7 @@ def main():
                     "flake_reason": flake_reason,          # ← just the value, no annotation comment here
                     "guardrail_intervened": intervened,
                     "timestamp": time.strftime("%Y-%m-%d %H:%M:%S")
-}
-                result, error = run_converse_single(...)
+
 
                 flake_reason = None
                 confidence = 0.0
