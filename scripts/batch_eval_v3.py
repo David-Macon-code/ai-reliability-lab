@@ -177,8 +177,8 @@ def main():
                         intervened = True
                         flake_reason = flake_reason or "guardrail_block"
                     
-                    if flake_reason is None:
-                        success_runs += 1
+                    #if flake_reason is None:
+                        #success_runs += 1
                 else:
                     flake_reason = error or "api_call_failed"
                 
