@@ -1,1 +1,17 @@
 test_id,run_id,input_text,latency,total_tokens,input_tokens,output_tokens,confidence,flake_reason,guardrail_intervened,timestamp
+1,1,Extract details from sample text here.,2.992,274,251,23,0.1,low_confidence,False,2026-03-16 20:07:32
+1,2,Extract details from sample text here.,2.298,274,251,23,0.1,low_confidence,False,2026-03-16 20:07:34
+2,1,Extract details from sample text here.,22.608,274,251,23,0.1,low_confidence,False,2026-03-16 20:07:57
+2,2,Extract details from sample text here.,2.258,274,251,23,0.1,low_confidence,False,2026-03-16 20:07:59
+3,1,Extract details from sample text here.,2.259,274,251,23,0.1,low_confidence,False,2026-03-16 20:08:01
+3,2,Extract details from sample text here.,2.298,274,251,23,0.1,low_confidence,False,2026-03-16 20:08:03
+4,1,Extract details from sample text here.,2.243,274,251,23,0.1,low_confidence,False,2026-03-16 20:08:06
+4,2,Extract details from sample text here.,2.04,274,251,23,0.1,low_confidence,False,2026-03-16 20:08:08
+5,1,Extract details from sample text here.,2.253,274,251,23,0.1,low_confidence,False,2026-03-16 20:08:10
+5,2,Extract details from sample text here.,2.203,274,251,23,0.1,low_confidence,False,2026-03-16 20:08:12
+6,1,Extract details from sample text here.,2.43,274,251,23,0.1,low_confidence,False,2026-03-16 20:08:15
+6,2,Extract details from sample text here.,2.459,274,251,23,0.1,low_confidence,False,2026-03-16 20:08:17
+7,1,Extract details from sample text here.,2.379,274,251,23,0.1,low_confidence,False,2026-03-16 20:08:19
+7,2,Extract details from sample text here.,2.335,274,251,23,0.1,low_confidence,False,2026-03-16 20:08:22
+8,1,Extract details from sample text here.,2.707,274,251,23,0.1,low_confidence,False,2026-03-16 20:08:24
+8,2,Extract details from sample text here.,2.233,274,251,23,0.1,low_confidence,False,2026-03-16 20:08:27
