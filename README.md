@@ -88,7 +88,7 @@ In progress: Week 3 – Automation + Reliability Engineering
 
 - **[Day 15](./docs/day15.md)** — Implemented Bedrock Converse batch runner with native structured outputs, metrics tracking, and perfect 40/40 pass rate on golden tests
 
-- **[Day 16](./docs/day16.md)**  — Established stable Bedrock Converse baseline with native structured outputs on Claude Sonnet 4.5 inference profile; achieved 100% golden pass rate (160/160 runs unguarded); deployed relaxed guardrail v4 (Low prompt attacks); added toggle flag (--guardrail-version); confirmed 100% pass + zero interventions on benign set with v4 guarded run; captured scaled metrics (avg conf 0.962, avg tokens ~296); Week 3 reliability harness locked in.
+- **[Day 16](./docs/day16.md)** — Established stable Bedrock Converse baseline with native structured outputs on Claude Sonnet 4.5 inference profile; achieved 100% golden pass rate (160/160 runs unguarded); deployed relaxed guardrail v4 (Low prompt attacks); added toggle flag (--guardrail-version); confirmed 100% pass + zero interventions on benign set with v4 guarded run; captured scaled metrics (avg conf 0.962, avg tokens ~296); Week 3 reliability harness locked in.
 
 ### Current Setup Highlights
 
