@@ -136,6 +136,8 @@ def main():
 
     with open(test_path, 'r') as f:
         tests = json.load(f)
+    print(f"Loaded {len(tests)} test cases ({'ADVERSARIAL' if args.adversarial else 'GOLDEN'})")
+    
     
     os.makedirs(args.output_dir, exist_ok=True)
     
