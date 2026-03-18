@@ -285,6 +285,7 @@ def main():
     else:
         print("No successful runs → no average confidence/tokens available")
     
+    
     gr_status = f"ENABLED (v{args.guardrail_version})" if args.guardrail_version else "DISABLED"
     print(f"Guardrail status: {gr_status}")
     
