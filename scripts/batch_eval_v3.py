@@ -204,8 +204,7 @@ def main():
                  except (KeyError, IndexError, TypeError) as e:
                      print(f"DEBUG: Failed to extract output_text for leak check: {e}")
                      leak_detected = False  # fallback
-                row["leak_detected"] = leak_detected
-                
+                                
                 # Safe row creation
                 row = {
                     "test_id": test_idx + 1,
@@ -220,7 +219,10 @@ def main():
                     "leak_detected": leak_detected if 'leak_detected' in locals() else False,
                     "guardrail_intervened": intervened,
                     "timestamp": time.strftime("%Y-%m-%d %H:%M:%S")
+                    
                 }
+
+                row["leak_detected"] = leak_detected if 'leak_detected' in locals() else False
 
                 flake_reason = None
                 confidence = 0.0
