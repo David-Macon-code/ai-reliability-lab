@@ -162,6 +162,8 @@ def main():
         
         for test_idx, test in enumerate(tests):
             user_message = test.get("input", "Extract details from sample text here.")
+            if user_message is None:
+                user_message = test.get("bio", "Extract details from sample text here.")
             
             for run_id in range(args.runs):
                                 print(f"Running test {test_idx+1}/{len(tests)} - run {run_id+1}/{args.runs}")
