@@ -166,20 +166,20 @@ def main():
             for run_id in range(args.runs):
                                 print(f"Running test {test_idx+1}/{len(tests)} - run {run_id+1}/{args.runs}")
                 
-                result, error = run_converse_single(
+            result, error = run_converse_single(
                     client,
                     args.model_id,
                     user_message,
                     temperature=args.temperature,
                     guardrail_version=args.guardrail_version
                 )
-                print(f"DEBUG: result is {'valid' if result else 'None'}, error: {error}")
+            print(f"DEBUG: result is {'valid' if result else 'None'}, error: {error}")
 
-                flake_reason = None
-                confidence = 0.0
-                intervened = False   # ← ADD THIS HERE (default value)
+            flake_reason = None
+            confidence = 0.0
+            intervened = False   # ← ADD THIS HERE (default value)
 
-                if result and result["success"]:
+            if result and result["success"]:
                     parsed = result["parsed"]
                     confidence = parsed.get("confidence", 0.0)
                     
@@ -192,15 +192,15 @@ def main():
                     
                     if flake_reason is None:
                         success_runs += 1
-                else:
+            else:
                     flake_reason = error or "api_call_failed"
 
                 # Debug print
-                print(f"DEBUG: flake_reason decided as: {flake_reason}")
+            print(f"DEBUG: flake_reason decided as: {flake_reason}")
 
                 # Leak detection (only if success)
-                leak_detected = False
-                if result and result["success"]:
+            leak_detected = False
+            if result and result["success"]:
                     try:
                         output_text = result["raw_response"]['output']['message']['content'][0]['text']
                         output_text_lower = output_text.lower()
@@ -212,7 +212,7 @@ def main():
                         pass  # no valid output → no leak flag
 
                 # Safe row creation (all variables now guaranteed defined)
-                row = {
+            row = {
                     "test_id": test_idx + 1,
                     "run_id": run_id + 1,
                     "input_text": user_message[:100] + "..." if len(user_message) > 100 else user_message,
@@ -227,10 +227,10 @@ def main():
                     "timestamp": time.strftime("%Y-%m-%d %H:%M:%S")
                 }
 
-                writer.writerow(row)
-                csvfile.flush()
+            writer.writerow(row)
+            csvfile.flush()
 
-                if flake_reason is None:
+            if flake_reason is None:
                     success_count += 1
                     total_confidence += result["parsed"].get("confidence", 0.0) if result else 0.0
                     total_tokens_success += row["total_tokens"]
