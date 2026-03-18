@@ -174,11 +174,7 @@ def main():
                     guardrail_version=args.guardrail_version
                 )
                 print(f"DEBUG: result is {'valid' if result else 'None'}, error: {error}")
-                
-                flake_reason = None
-                confidence = 0.0
-                intervened = False
-                
+
                 if result and result["success"]:
                     parsed = result["parsed"]
                     confidence = parsed.get("confidence", 0.0)
@@ -208,7 +204,6 @@ def main():
                  except (KeyError, IndexError, TypeError) as e:
                      print(f"DEBUG: Failed to extract output_text for leak check: {e}")
                      leak_detected = False  # fallback
-
                 row["leak_detected"] = leak_detected
                 
                 # Safe row creation
