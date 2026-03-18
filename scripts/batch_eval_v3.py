@@ -204,7 +204,7 @@ def main():
                  except (KeyError, IndexError, TypeError) as e:
                      print(f"DEBUG: Failed to extract output_text for leak check: {e}")
                      leak_detected = False  # fallback
-                row["leak_detected"] = leak_detected
+                    row["leak_detected"] = leak_detected
                 
                 # Safe row creation
                 row = {
