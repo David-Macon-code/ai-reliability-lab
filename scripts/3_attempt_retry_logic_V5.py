@@ -78,6 +78,7 @@ def run_converse_single(client, model_id, user_message, temperature=0.0, guardra
     try:
         max_retries = 3
         retry_delay = 1  # initial backoff in seconds
+        retry_count = 0  # ← ADD THIS LINE HERE (initialize counter)
 
         for attempt in range(max_retries):
             try:
@@ -107,6 +108,8 @@ def run_converse_single(client, model_id, user_message, temperature=0.0, guardra
                     # Final attempt failed on non-throttling error – raise
                     raise
 
+                retry_count += 1  # ← ADD THIS LINE HERE (increment on each retry)
+
                 if attempt < max_retries - 1:
                     sleep_time = retry_delay * (2 ** attempt)  # exponential: 1s → 2s → 4s
                     print(f"Retrying in {sleep_time}s...")
@@ -132,7 +135,8 @@ def run_converse_single(client, model_id, user_message, temperature=0.0, guardra
             "latency": latency,
             "usage": usage,
             "raw_response": response,
-            "output_text": output_text
+            "output_text": output_text,
+            "retry_count": retry_count  # ← ADD THIS LINE HERE (pass count back)
         }, None
 
     except Exception as e:
@@ -184,7 +188,7 @@ def main():
         fieldnames = [
             "test_id", "run_id", "input_text", "latency", "total_tokens",
             "input_tokens", "output_tokens", "confidence", "flake_reason",
-            "guardrail_intervened", "leak_detected", "timestamp"
+            "guardrail_intervened", "leak_detected","retry_count", "timestamp"
         ]
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
@@ -253,6 +257,7 @@ def main():
                     "flake_reason": flake_reason,
                     "guardrail_intervened": intervened,
                     "leak_detected": leak_detected,
+                    "retry_count": result.get("retry_count", 0) if result else 0,
                     "timestamp": time.strftime("%Y-%m-%d %H:%M:%S")
                 }
                 
