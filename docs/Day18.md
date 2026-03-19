@@ -1,5 +1,5 @@
-* Day 18 — Retry Logic + Guarded Retry Runs  
-  Objective: Add 3-attempt retry with exponential backoff + retry_count column; test on expanded adversarial set (12 tests × 3 runs = 36 calls per mode).  
+## Day 18 — Retry Logic + Guarded Retry Runs  
+  **Objective**: Add 3-attempt retry with exponential backoff + retry_count column; test on expanded adversarial set (12 tests × 3 runs = 36 calls per mode).  
 
   Results:  
   * Unguarded: 91.7% pass rate (33/36), avg confidence 0.964, avg tokens 312.1, avg latency 2.67s  
