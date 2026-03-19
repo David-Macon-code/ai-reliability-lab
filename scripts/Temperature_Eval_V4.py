@@ -1,4 +1,5 @@
 import argparse
+from html import parser
 import json
 import csv
 import time
@@ -40,6 +41,8 @@ def parse_arguments():
                         help="Guardrail version to use (omit to disable)")
     parser.add_argument("--adversarial", action="store_true",
                     help="Run adversarial test set instead of golden")
+    parser.add_argument("--temperature", type=float, default=0.0, help="Temperature for inference")
+    parser.add_argument("--test-ids", type=str, default=None, help="Comma-separated test IDs to run (e.g. 1,4)")
     return parser.parse_args()
 
 def get_bedrock_client(region=DEFAULT_REGION):
@@ -137,9 +140,35 @@ def main():
     with open(test_path, 'r') as f:
         tests = json.load(f)
     print(f"Loaded {len(tests)} test cases ({'ADVERSARIAL' if args.adversarial else 'GOLDEN'})")
+    if args.test_ids:
+        selected_ids = [int(i.strip()) for i in args.test_ids.split(",")]
+        tests = [t for t in tests if t["test_id"] in selected_ids]
+        print(f"Filtered to test IDs: {selected_ids}")
+        if not tests:
+          print("Warning: No matching test IDs found — aborting.")
+        return
+
+    def main():
+      args = parse_arguments()
     
+    client = get_bedrock_client()
     
+    if args.adversarial:
+        test_path = Path("evaluation/adversarial_test.json")
+        print("Running ADVERSARIAL test set")
+    else:
+        test_path = Path("evaluation/golden_test.json")
+        print("Running GOLDEN benign test set")
+
+    if not test_path.exists():
+        print(f"Test file not found: {test_path}")
+        return
+
+    with open(test_path, 'r') as f:
+        tests = json.load(f)
+    print(f"Loaded {len(tests)} test cases ({'ADVERSARIAL' if args.adversarial else 'GOLDEN'})")
     
+        
     os.makedirs(args.output_dir, exist_ok=True)
     
     csv_path = Path(args.output_dir) / "batch_metrics.csv"
