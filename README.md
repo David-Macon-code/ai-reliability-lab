@@ -90,6 +90,8 @@ In progress: Week 3 – Automation + Reliability Engineering
 
 - **[Day 16](docs/Day16.md)** — Established stable Bedrock Converse baseline with native structured outputs on Claude Sonnet 4.5 inference profile; achieved 100% golden pass rate (160/160 runs unguarded); deployed relaxed guardrail v4 (Low prompt attacks); added toggle flag (--guardrail-version); confirmed 100% pass + zero interventions on benign set with v4 guarded run; captured scaled metrics (avg conf 0.962, avg tokens ~296); Week 3 reliability harness locked in.
 
+- **[Day 17](docs/Day17.md)** — Conducted adversarial injection testing on 7 jailbreak/prompt attack examples × 3 runs each (21 calls per mode); unguarded achieved 33.3% pass rate (7/21); both v4 Low and v3 Medium guarded modes achieved 4.8% pass rate (1/21) with high blocking; confirmed identical strict behavior between v4 and v3 on obvious attacks; leak_detected zero across all; Week 3 security/usability comparison baseline established.
+
 ### Current Setup Highlights
 
 - Model: anthropic.claude-sonnet-4-5-20250929-v1:0 (via inference profile)
