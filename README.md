@@ -105,12 +105,12 @@ In progress: Week 3 – Automation + Reliability Engineering
 
 - Model: `global.anthropic.claude-sonnet-4-5-20250929-v1:0` (inference profile)
 - Guardrail: `9g6hem28nedj` v3 (Medium) + v4 (Low prompt attacks)
-- Main script: **[batch_eval_v3.py](scripts/batch_eval_v3.py)** (Converse API, guardrail toggle, adversarial/golden switching, retry logic, metrics logging)
+- Main script: **[3_attempt_retry_logic_V5.py](scripts/3_attempt_retry_logic_V5.py)** (Converse API, guardrail toggle, adversarial/golden switching, retry logic, metrics logging)
 - Outputs: CSV in /evaluation/ folders (e.g. no_guardrail_final, retry_v4_low, etc.)
 
 ### Key Files & Results
 
-- **[batch_eval_v3.py](scripts/batch_eval_v3.py)** — core evaluation script
+- **[batch_eval_v3.py](scripts/3_attempt_retry_logic_V5.py)** — core evaluation script
 - **[batch_metrics.csv examples](evaluation/)** — recent baselines & tests:
   - [Unguarded baseline (Day 16)](evaluation/no_guardrail_final/batch_metrics.csv) — 100% pass (160/160)
   - [Unguarded adversarial (Day 17)](evaluation/adversarial_unguarded_test/batch_metrics.csv) — 33.3% pass
