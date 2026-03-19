@@ -92,6 +92,15 @@ In progress: Week 3 – Automation + Reliability Engineering
 
 - **[Day 17](docs/Day17.md)** — Conducted adversarial injection testing on 7 jailbreak/prompt attack examples × 3 runs each (21 calls per mode); unguarded achieved 33.3% pass rate (7/21); both v4 Low and v3 Medium guarded modes achieved 4.8% pass rate (1/21) with high blocking; confirmed identical strict behavior between v4 and v3 on obvious attacks; leak_detected zero across all; Week 3 security/usability comparison baseline established.
 
+- **[Day 18](docs/Day18.md)** Retry logic + guarded retry runs  
+  - Added 3-attempt retry with exponential backoff + retry_count column  
+  - Retry test on expanded adversarial set (12 tests × 3 runs = 36 calls):  
+    - Unguarded: 91.7% pass  
+    - Guarded v4 Low: 16.7% pass  
+    - Guarded v3 Medium: 16.7% pass  
+  - v4 Low and v3 Medium identical on this set — no usability gain from relaxing to Low  
+  - Next: temperature sweep, exact-match scoring, more subtle attacks
+
 ### Current Setup Highlights
 
 - Model: `global.anthropic.claude-sonnet-4-5-20250929-v1:0` (inference profile)
@@ -122,5 +131,7 @@ Built with AWS Bedrock + Claude 4.5 family – ongoing PromptOps learning lab.
 **Current status:** Day 18 complete – 100% benign pass, adversarial shows security/usability trade-offs (33.3% unguarded vs 4.8% guarded v4/v3). Retry logic added. Ready for variance analysis & robustness improvements.
 
 * AWSBedrock #PromptOps #ResponsibleAI #AIFC01*
+
+* License
 
 [MIT license](#MIT-1-ov-file)
