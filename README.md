@@ -92,51 +92,35 @@ In progress: Week 3 – Automation + Reliability Engineering
 
 - **[Day 17](docs/Day17.md)** — Conducted adversarial injection testing on 7 jailbreak/prompt attack examples × 3 runs each (21 calls per mode); unguarded achieved 33.3% pass rate (7/21); both v4 Low and v3 Medium guarded modes achieved 4.8% pass rate (1/21) with high blocking; confirmed identical strict behavior between v4 and v3 on obvious attacks; leak_detected zero across all; Week 3 security/usability comparison baseline established.
 
-- **[Day 18](docs/Day18.md)** Retry logic + guarded retry runs  
-  - Added 3-attempt retry with exponential backoff + retry_count column  
-  - Retry test on expanded adversarial set (12 tests × 3 runs = 36 calls):  
-    - Unguarded: 91.7% pass  
-    - Guarded v4 Low: 16.7% pass  
-    - Guarded v3 Medium: 16.7% pass  
-  - v4 Low and v3 Medium identical on this set — no usability gain from relaxing to Low  
-  - Next: temperature sweep, exact-match scoring, more subtle attacks
-
 ### Current Setup Highlights
 
-- Model: anthropic.claude-sonnet-4-5-20250929-v1:0 (via inference profile)
-- Guardrail: 9g6hem28nedj v3 (Medium strength on Prompt attacks)
-- Scripts: scripts/v3_json_test.py (golden/injection toggles, trace parsing, CSV logging)
-- Outputs: /evaluation/v3_metrics_log.csv , /evaluation/v3_results.json
+- Model: `global.anthropic.claude-sonnet-4-5-20250929-v1:0` (inference profile)
+- Guardrail: `9g6hem28nedj` v3 (Medium) + v4 (Low prompt attacks)
+- Main script: **[batch_eval_v3.py](scripts/batch_eval_v3.py)** (Converse API, guardrail toggle, adversarial/golden switching, retry logic, metrics logging)
+- Outputs: CSV in /evaluation/ folders (e.g. no_guardrail_final, retry_v4_low, etc.)
 
-### Next Steps (Day 17+)
+### Key Files & Results
 
-- Expand adversarial set with subtler / edge-case attacks (encoded, multilingual, indirect jailbreaks)  
-- Add exact leak scoring (compare parsed output vs expected → flag hallucinations / leaks)  
-- Run temperature sweep (0.0 / 0.3 / 0.7) on select benign + adversarial tests → measure flake rate & confidence variance  
-- Implement retry logic (3 attempts + exponential backoff on transient errors like ThrottlingException)  
-- Compare cost & latency across unguarded / v4 Low / v3 Medium on larger runs  
-- Explore semantic validation (cosine similarity on embeddings of parsed vs expected)
+- **[batch_eval_v3.py](scripts/batch_eval_v3.py)** — core evaluation script
+- **[batch_metrics.csv examples](evaluation/)** — recent baselines & tests:
+  - [Unguarded baseline (Day 16)](evaluation/no_guardrail_final/batch_metrics.csv) — 100% pass (160/160)
+  - [Unguarded adversarial (Day 17)](evaluation/adversarial_unguarded_test/batch_metrics.csv) — 33.3% pass
+  - [v4 Low guarded adversarial (Day 17)](evaluation/adversarial_v4_low/batch_metrics.csv) — 4.8% pass
+  - [v3 Medium guarded adversarial (Day 17)](evaluation/adversarial_v3_medium/batch_metrics.csv) — 4.8% pass
+  - [Retry logic test (Day 18)](evaluation/retry_count_test/batch_metrics.csv) — 91.7% pass on expanded set
+
+### Next Steps (Day 19+)
+
+- Temperature sweep (0.0 / 0.3 / 0.7) on select tests → flake rate & confidence variance
+- Exact-match scoring (parsed vs "expected" fields → match % column)
+- Expand adversarial set with subtler attacks (base64, multilingual, indirect)
+- Add retry_count logging + cost estimation per call
+- Semantic validation (cosine similarity on embeddings of parsed vs expected)
 
 Built with AWS Bedrock + Claude 4.5 family – ongoing PromptOps learning lab.
 
-**Final status:** Scalable, reliable eval script with 100% pass rate (40/40 runs), token/latency tracking, and observability. Ready for Week 3 automation and reliability experiments.
-
-**Key files:**
-
-- **[batch_eval_v3.py](scripts/batch_eval_v3.py)** — main batch evaluation script with Converse API, guardrail toggle, adversarial/golden switching, and metrics logging  
-- **[batch_metrics.csv](evaluation/no_guardrail_final/batch_metrics.csv)** — 100% pass baseline results (unguarded, Day 16)  
-- **[adversarial_test.json](evaluation/adversarial_test.json)** — 7 injection/jailbreak examples used in Day 17 adversarial testing  
-- **[batch_metrics.csv examples](evaluation/)** — recent adversarial results:  
-- **[Unguarded](evaluation/adversarial_unguarded_test/batch_metrics.csv)** (33.3% pass)..
-- **[v4 Low](evaluation/adversarial_v4_low/batch_metrics.csv)** (4.8% pass)..
-- **[v3 Medium](evaluation/adversarial_v3_medium/batch_metrics.csv)** (4.8% pass)..
-
-**Next:** Temperature sweep (0.0 / 0.3 / 0.7) for flake variance, retry logic on transient errors, expanded adversarial set, exact-match scoring against expected fields.
-
-**Day 17 complete – 100% benign pass, adversarial shows security/usability trade-offs (33.3% vs 4.8%).**
+**Current status:** Day 18 complete – 100% benign pass, adversarial shows security/usability trade-offs (33.3% unguarded vs 4.8% guarded v4/v3). Retry logic added. Ready for variance analysis & robustness improvements.
 
 * AWSBedrock #PromptOps #ResponsibleAI #AIFC01*
-
-* License
 
 [MIT license](#MIT-1-ov-file)
