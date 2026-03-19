@@ -76,34 +76,56 @@ def run_converse_single(client, model_id, user_message, temperature=0.0, guardra
         }
     
     try:
-        start_time = time.time()
-        
-        params = {
-            "modelId": model_id,
-            "messages": messages,
-            "inferenceConfig": inference_config,
-            "outputConfig": output_config,
-        }
-        if guardrail_config is not None:
-            params["guardrailConfig"] = guardrail_config
-        
-        response = client.converse(**params)
-        
-        latency = time.time() - start_time
-        
-        print(f"DEBUG: API call succeeded for this run. Latency: {latency:.2f}s")
-        print(f"DEBUG: Response keys: {list(response.keys())}")
-        
+        max_retries = 3
+        retry_delay = 1  # initial backoff in seconds
+
+        for attempt in range(max_retries):
+            try:
+                start_time = time.time()
+
+                params = {
+                    "modelId": model_id,
+                    "messages": messages,
+                    "inferenceConfig": inference_config,
+                    "outputConfig": output_config,
+                }
+                if guardrail_config is not None:
+                    params["guardrailConfig"] = guardrail_config
+
+                response = client.converse(**params)
+
+                latency = time.time() - start_time
+
+                # Success – break retry loop
+                break
+
+            except ClientError as e:
+                error_str = str(e)
+                print(f"DEBUG: API attempt {attempt+1}/{max_retries} failed: {error_str}")
+
+                if "ThrottlingException" not in error_str and attempt == max_retries - 1:
+                    # Final attempt failed on non-throttling error – raise
+                    raise
+
+                if attempt < max_retries - 1:
+                    sleep_time = retry_delay * (2 ** attempt)  # exponential: 1s → 2s → 4s
+                    print(f"Retrying in {sleep_time}s...")
+                    time.sleep(sleep_time)
+                else:
+                    # Last retry failed – return failure
+                    return None, error_str
+
+        # If we got here, response is valid
         output_text = response['output']['message']['content'][0]['text']
         print(f"DEBUG: Output text length: {len(output_text)} chars")
         print(f"DEBUG: Output text preview: {output_text[:200]}...")
-        
+
         parsed = json.loads(output_text)
         print(f"DEBUG: Parsed JSON: {json.dumps(parsed, indent=2)}")
         print(f"DEBUG: Confidence: {parsed.get('confidence', 'MISSING')}")
-        
+
         usage = response.get('usage', {})
-        
+
         return {
             "success": True,
             "parsed": parsed,
@@ -112,9 +134,9 @@ def run_converse_single(client, model_id, user_message, temperature=0.0, guardra
             "raw_response": response,
             "output_text": output_text
         }, None
-    
+
     except Exception as e:
-        print(f"DEBUG: API call failed with error: {str(e)}")
+        print(f"DEBUG: API call failed after retries: {str(e)}")
         return None, str(e)
 
 def main():
