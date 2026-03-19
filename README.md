@@ -5,7 +5,7 @@
 [![AWS Certified AI Practitioner (AIF-C01)](https://images.credly.com/size/110x110/images/4d4693bb-530e-4bca-9327-de07f3aa2348/image.png)](https://www.credly.com/badges/745adead-31ea-4399-99ff-35ff787966c8/public_url)
 
 **AWS Certified AI Practitioner (AIF-C01)**  
-Issued March 19, 2026 | Valid until March 2029  
+Issued March 11, 2026 | Valid until March 2029  
 
 </div>
 
@@ -13,7 +13,7 @@ A personal lab I created following a structured 30-day plan to build reliable, o
 
 Directly applying cert knowledge on responsible AI, content filtering, Bedrock services, and Guardrails to Weeks 1–2 results (e.g., tuned Guardrails blocking 93%+ injections with 0% false positives on golden benign tests).
 
-**Current Status (as of March 11, 2026)**
+**Current Status (as of March 19, 2026)**
 
 | Week | Status          | Key Outcomes                                                                 |
 |------|-----------------|------------------------------------------------------------------------------|
