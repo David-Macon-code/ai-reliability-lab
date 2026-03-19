@@ -1,4 +1,4 @@
-* Day 17 — Adversarial / Injection Testing  
+## Day 17 — Adversarial / Injection Testing  
   **Objective**: Compare unguarded vs guarded (v4 Low vs v3 Medium) on 7 prompt injection / jailbreak examples × 3 runs each (21 calls per mode).  
 
   **Results**  
