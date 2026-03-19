@@ -110,7 +110,7 @@ In progress: Week 3 – Automation + Reliability Engineering
 
 ### Key Files & Results
 
-- **[batch_eval_v3.py](scripts/3_attempt_retry_logic_V5.py)** — core evaluation script
+- **[3_attempt_retry_logic_V5.py](scripts/3_attempt_retry_logic_V5.py)** — core evaluation script
 - **[batch_metrics.csv examples](evaluation/)** — recent baselines & tests:
   - [Unguarded baseline (Day 16)](evaluation/no_guardrail_final/batch_metrics.csv) — 100% pass (160/160)
   - [Unguarded adversarial (Day 17)](evaluation/adversarial_unguarded_test/batch_metrics.csv) — 33.3% pass
