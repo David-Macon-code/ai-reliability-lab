@@ -5,7 +5,7 @@
 [![AWS Certified AI Practitioner (AIF-C01)](https://images.credly.com/size/110x110/images/4d4693bb-530e-4bca-9327-de07f3aa2348/image.png)](https://www.credly.com/badges/745adead-31ea-4399-99ff-35ff787966c8/public_url)
 
 **AWS Certified AI Practitioner (AIF-C01)**  
-Issued March 11, 2026 | Valid until March 2029  
+Issued March 19, 2026 | Valid until March 2029  
 
 </div>
 
