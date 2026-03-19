@@ -114,12 +114,17 @@ Built with AWS Bedrock + Claude 4.5 family – ongoing PromptOps learning lab.
 
 **Key files:**
 
-- **[Batch Eval_V3.py](scripts/batch_eval_v3.py)**
-- **[Batch Metrics.csv](evaluation/no_guardrail_working/batch_metrics.csv)** (100% pass results)
+- **[batch_eval_v3.py](scripts/batch_eval_v3.py)** — main batch evaluation script with Converse API, guardrail toggle, adversarial/golden switching, and metrics logging  
+- **[batch_metrics.csv](evaluation/no_guardrail_final/batch_metrics.csv)** — 100% pass baseline results (unguarded, Day 16)  
+- **[adversarial_test.json](evaluation/adversarial_test.json)** — 7 injection/jailbreak examples used in Day 17 adversarial testing  
+- **[batch_metrics.csv examples](evaluation/)** — recent adversarial results:  
+  - [Unguarded](evaluation/adversarial_unguarded_test/batch_metrics.csv) (33.3% pass)  
+  - [v4 Low](evaluation/adversarial_v4_low/batch_metrics.csv) (4.8% pass)  
+  - [v3 Medium](evaluation/adversarial_v3_medium/batch_metrics.csv) (4.8% pass)
 
-**Next:** Create relaxed guardrail version (low prompt-attack sensitivity) and test guarded vs unguarded behavior.
+**Next:** Temperature sweep (0.0 / 0.3 / 0.7) for flake variance, retry logic on transient errors, expanded adversarial set, exact-match scoring against expected fields.
 
-## Day 15 complete – strong reliability foundation established!
+**Day 17 complete – 100% benign pass, adversarial shows security/usability trade-offs (33.3% vs 4.8%).**
 
 * AWSBedrock #PromptOps #ResponsibleAI #AIFC01*
 
