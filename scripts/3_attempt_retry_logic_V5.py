@@ -319,7 +319,7 @@ def main():
         print(f"  Avg confidence (success): {avg_confidence:>6.3f}")
         print(f"  Avg exact-match % (success): {avg_match_pct:>6.1f}%")
         print(f"  Avg latency (success):     {avg_latency:>6.3f}s  (total: {total_latency:>6.3f}s over {latency_count} runs)")
-        
+
         print(f"  Successful runs:          {len(success_rows):>3}")
         print("\nCost Estimation (Successful runs only):")
 
@@ -328,6 +328,8 @@ def main():
         print(f"  Total estimated cost:     ${total_cost:.4f}")
         print(f"  Avg cost per successful run: ${avg_cost:.6f}")
         print(f"  (Based on Claude Sonnet 4.5: ${INPUT_COST_PER_MILLION}/M in, ${OUTPUT_COST_PER_MILLION}/M out)")
+
+        print(f"  Guardrail version:        {args.guardrail_version or 'None'}")
     else:
         print("\nNo successful runs — summary skipped.")
 
