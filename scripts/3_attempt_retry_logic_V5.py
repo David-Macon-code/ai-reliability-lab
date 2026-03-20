@@ -4,6 +4,7 @@ import csv
 import time
 import os
 from pathlib import Path
+from tkinter.filedialog import test
 import boto3
 from botocore.exceptions import ClientError
 
@@ -150,14 +151,26 @@ def main():
         writer.writeheader()
 
         for test_idx, test in enumerate(tests):
-            user_message = test.get("input") or test.get("bio") or "Extract details from sample text here."
-            user_message = user_message.strip()  # remove leading/trailing whitespace
+            # Get raw value first (for debug)
+          raw_input = test.get("input")
+          raw_bio = test.get("bio")
 
-            if not user_message:
-              user_message = "Extract details from sample text here."
-            print(f"DEBUG: Used fallback message for test {test_idx+1} (empty input)")
+          print(f"DEBUG: Raw 'input': {raw_input!r} | Raw 'bio': {raw_bio!r}")
 
-            for run_id in range(args.runs):
+# Prefer 'input', fallback to 'bio', ultimate fallback to non-blank
+          user_message = raw_input or raw_bio or "Extract details from sample text here."
+
+# Strip and ensure non-empty
+          user_message = (user_message or "").strip()
+
+          if not user_message:
+            user_message = "Extract details from sample text here."
+            print(f"DEBUG: Used fallback message for test {test_idx+1} (empty after strip)")
+          else:
+    
+            print(f"DEBUG: Using user_message for test {test_idx+1}: {user_message[:50]}...")
+
+    for run_id in range(args.runs):
                 result, error = run_converse_single(
                     client, args.model_id, user_message,
                     temperature=args.temperature,
