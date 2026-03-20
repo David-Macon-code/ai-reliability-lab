@@ -145,7 +145,7 @@ def main():
         writer.writeheader()
 
         for test_idx, test in enumerate(tests):
-            user_message = test.get("input") or test.get("bio")
+            user_message = test.get("input") or test.get("bio") or "Extract details from sample text here."
             if not user_message or not user_message.strip():
               user_message = "Extract details from sample text here."
               print(f"DEBUG: Used fallback message for test {test_idx+1} (empty input)")
