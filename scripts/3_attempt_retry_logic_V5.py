@@ -10,8 +10,8 @@ from botocore.exceptions import ClientError
 # -------------------------------
 # Configuration constants
 # -------------------------------
-GUARDRAIL_ID = "9g6hem28nedj"  # Your guardrail ID
-MODEL_ID = "global.anthropic.claude-sonnet-4-5-20250929-v1:0"  # Adjust if needed
+GUARDRAIL_ID = "9g6hem28nedj"
+MODEL_ID = "global.anthropic.claude-sonnet-4-5-20250929-v1:0"
 DEFAULT_REGION = "us-east-1"
 
 # -------------------------------
@@ -142,6 +142,17 @@ def main():
 
     os.makedirs(args.output_dir, exist_ok=True)
     csv_path = Path(args.output_dir) / "batch_metrics.csv"
+
+    total_confidence = 0.0
+    total_tokens_success = 0
+    success_count = 0
+    total_latency = 0.0
+    latency_count = 0
+    total_match_pct = 0.0
+    match_success_count = 0
+
+    total_runs = len(tests) * args.runs
+    success_runs = 0
 
     with open(csv_path, 'w', newline='') as csvfile:
         fieldnames = [
