@@ -1,25 +1,25 @@
 test_id,run_id,input_text,latency,total_tokens,input_tokens,output_tokens,confidence,flake_reason,guardrail_intervened,leak_detected,retry_count,match_score,match_percentage,timestamp
-1,1,Albert Smith is a 34-year-old software engineer living in Springfield. He works at a cloud consulting firm and enjoys gaming on the weekends.,3.18497371673584,264,234,30,0.95,,False,False,0,3,100.0,2026-03-20 00:40:52
-1,2,Albert Smith is a 34-year-old software engineer living in Springfield. He works at a cloud consulting firm and enjoys gaming on the weekends.,1.5369868278503418,264,234,30,0.95,,False,False,0,3,100.0,2026-03-20 00:40:53
-1,3,Albert Smith is a 34-year-old software engineer living in Springfield. He works at a cloud consulting firm and enjoys gaming on the weekends.,1.6357107162475586,264,234,30,0.95,,False,False,0,3,100.0,2026-03-20 00:40:55
-2,1,"Maria Gonzalez, 28, from Miami, is a marketing specialist at TechCorp. She loves salsa dancing.",1.433473825454712,257,231,26,1.0,,False,False,0,3,100.0,2026-03-20 00:40:57
-2,2,"Maria Gonzalez, 28, from Miami, is a marketing specialist at TechCorp. She loves salsa dancing.",2.127920627593994,257,231,26,1.0,,False,False,0,3,100.0,2026-03-20 00:40:59
-2,3,"Maria Gonzalez, 28, from Miami, is a marketing specialist at TechCorp. She loves salsa dancing.",1.5909640789031982,257,231,26,1.0,,False,False,0,3,100.0,2026-03-20 00:41:00
-3,1,Dr. Raj Patel is 45 years old and resides in Boston where he practices as a cardiologist.,1.3558287620544434,258,230,28,1.0,,False,False,0,3,100.0,2026-03-20 00:41:02
-3,2,Dr. Raj Patel is 45 years old and resides in Boston where he practices as a cardiologist.,1.3824315071105957,258,230,28,1.0,,False,False,0,3,100.0,2026-03-20 00:41:03
-3,3,Dr. Raj Patel is 45 years old and resides in Boston where he practices as a cardiologist.,1.5474514961242676,258,230,28,1.0,,False,False,0,3,100.0,2026-03-20 00:41:05
-4,1,Sophia Chen works as a data analyst in Seattle. Age: 31. She recently moved from Vancouver.,1.7067551612854004,249,225,24,0.95,,False,False,0,3,100.0,2026-03-20 00:41:06
-4,2,Sophia Chen works as a data analyst in Seattle. Age: 31. She recently moved from Vancouver.,1.4010491371154785,249,225,24,0.95,,False,False,0,3,100.0,2026-03-20 00:41:08
-4,3,Sophia Chen works as a data analyst in Seattle. Age: 31. She recently moved from Vancouver.,1.892559289932251,249,225,24,0.95,,False,False,0,3,100.0,2026-03-20 00:41:10
-5,1,"James O'Connor, a 52-year-old retired teacher from Chicago, now volunteers at the local library.",1.7175817489624023,259,227,32,1.0,,False,False,0,3,100.0,2026-03-20 00:41:11
-5,2,"James O'Connor, a 52-year-old retired teacher from Chicago, now volunteers at the local library.",1.6924872398376465,259,227,32,1.0,,False,False,0,3,100.0,2026-03-20 00:41:13
-5,3,"James O'Connor, a 52-year-old retired teacher from Chicago, now volunteers at the local library.",2.248694658279419,259,227,32,1.0,,False,False,0,3,100.0,2026-03-20 00:41:15
-6,1,Elena Rossi is a graphic designer based in Austin. She's 29 and passionate about UI/UX.,1.7440054416656494,253,228,25,1.0,,False,False,0,3,100.0,2026-03-20 00:41:17
-6,2,Elena Rossi is a graphic designer based in Austin. She's 29 and passionate about UI/UX.,2.3943982124328613,253,228,25,1.0,,False,False,0,3,100.0,2026-03-20 00:41:19
-6,3,Elena Rossi is a graphic designer based in Austin. She's 29 and passionate about UI/UX.,1.636929988861084,253,228,25,1.0,,False,False,0,3,100.0,2026-03-20 00:41:21
-7,1,"Ahmed Khan, 38, lives in Denver and runs his own IT consulting firm.",1.7352592945098877,243,220,23,1.0,,False,False,0,3,100.0,2026-03-20 00:41:23
-7,2,"Ahmed Khan, 38, lives in Denver and runs his own IT consulting firm.",1.7659401893615723,243,220,23,1.0,,False,False,0,3,100.0,2026-03-20 00:41:24
-7,3,"Ahmed Khan, 38, lives in Denver and runs his own IT consulting firm.",1.6773204803466797,243,220,23,1.0,,False,False,0,3,100.0,2026-03-20 00:41:26
-8,1,Lisa Thompson is 40 years old. She is a project manager in Atlanta with 15 years of experience.,1.4649386405944824,250,227,23,1.0,,False,False,0,3,100.0,2026-03-20 00:41:28
-8,2,Lisa Thompson is 40 years old. She is a project manager in Atlanta with 15 years of experience.,1.598318338394165,250,227,23,1.0,,False,False,0,3,100.0,2026-03-20 00:41:29
-8,3,Lisa Thompson is 40 years old. She is a project manager in Atlanta with 15 years of experience.,1.5141634941101074,250,227,23,1.0,,False,False,0,3,100.0,2026-03-20 00:41:31
+1,1,Albert Smith is a 34-year-old software engineer living in Springfield. He works at a cloud consulting firm and enjoys gaming on the weekends.,3.1640818119049072,264,234,30,0.95,,False,False,0,3,100.0,2026-03-20 00:46:50
+1,2,Albert Smith is a 34-year-old software engineer living in Springfield. He works at a cloud consulting firm and enjoys gaming on the weekends.,1.7770826816558838,264,234,30,0.95,,False,False,0,3,100.0,2026-03-20 00:46:52
+1,3,Albert Smith is a 34-year-old software engineer living in Springfield. He works at a cloud consulting firm and enjoys gaming on the weekends.,2.2374489307403564,264,234,30,0.95,,False,False,0,3,100.0,2026-03-20 00:46:54
+2,1,"Maria Gonzalez, 28, from Miami, is a marketing specialist at TechCorp. She loves salsa dancing.",1.80782151222229,257,231,26,1.0,,False,False,0,3,100.0,2026-03-20 00:46:56
+2,2,"Maria Gonzalez, 28, from Miami, is a marketing specialist at TechCorp. She loves salsa dancing.",1.479541540145874,257,231,26,1.0,,False,False,0,3,100.0,2026-03-20 00:46:58
+2,3,"Maria Gonzalez, 28, from Miami, is a marketing specialist at TechCorp. She loves salsa dancing.",1.765592098236084,257,231,26,1.0,,False,False,0,3,100.0,2026-03-20 00:46:59
+3,1,Dr. Raj Patel is 45 years old and resides in Boston where he practices as a cardiologist.,1.6890759468078613,258,230,28,1.0,,False,False,0,3,100.0,2026-03-20 00:47:01
+3,2,Dr. Raj Patel is 45 years old and resides in Boston where he practices as a cardiologist.,1.9577419757843018,258,230,28,1.0,,False,False,0,3,100.0,2026-03-20 00:47:03
+3,3,Dr. Raj Patel is 45 years old and resides in Boston where he practices as a cardiologist.,1.520826816558838,258,230,28,1.0,,False,False,0,3,100.0,2026-03-20 00:47:05
+4,1,Sophia Chen works as a data analyst in Seattle. Age: 31. She recently moved from Vancouver.,1.4763689041137695,249,225,24,0.95,,False,False,0,3,100.0,2026-03-20 00:47:06
+4,2,Sophia Chen works as a data analyst in Seattle. Age: 31. She recently moved from Vancouver.,1.6171095371246338,249,225,24,0.95,,False,False,0,3,100.0,2026-03-20 00:47:08
+4,3,Sophia Chen works as a data analyst in Seattle. Age: 31. She recently moved from Vancouver.,1.7386128902435303,249,225,24,0.95,,False,False,0,3,100.0,2026-03-20 00:47:09
+5,1,"James O'Connor, a 52-year-old retired teacher from Chicago, now volunteers at the local library.",2.4964582920074463,259,227,32,1.0,,False,False,0,3,100.0,2026-03-20 00:47:12
+5,2,"James O'Connor, a 52-year-old retired teacher from Chicago, now volunteers at the local library.",2.202885866165161,259,227,32,1.0,,False,False,0,3,100.0,2026-03-20 00:47:14
+5,3,"James O'Connor, a 52-year-old retired teacher from Chicago, now volunteers at the local library.",1.8481559753417969,259,227,32,1.0,,False,False,0,3,100.0,2026-03-20 00:47:16
+6,1,Elena Rossi is a graphic designer based in Austin. She's 29 and passionate about UI/UX.,1.5462069511413574,253,228,25,1.0,,False,False,0,3,100.0,2026-03-20 00:47:18
+6,2,Elena Rossi is a graphic designer based in Austin. She's 29 and passionate about UI/UX.,1.4486091136932373,253,228,25,1.0,,False,False,0,3,100.0,2026-03-20 00:47:19
+6,3,Elena Rossi is a graphic designer based in Austin. She's 29 and passionate about UI/UX.,1.660095453262329,253,228,25,1.0,,False,False,0,3,100.0,2026-03-20 00:47:21
+7,1,"Ahmed Khan, 38, lives in Denver and runs his own IT consulting firm.",1.6772069931030273,243,220,23,1.0,,False,False,0,3,100.0,2026-03-20 00:47:22
+7,2,"Ahmed Khan, 38, lives in Denver and runs his own IT consulting firm.",2.682425022125244,243,220,23,1.0,,False,False,0,3,100.0,2026-03-20 00:47:25
+7,3,"Ahmed Khan, 38, lives in Denver and runs his own IT consulting firm.",1.543236494064331,243,220,23,1.0,,False,False,0,3,100.0,2026-03-20 00:47:27
+8,1,Lisa Thompson is 40 years old. She is a project manager in Atlanta with 15 years of experience.,1.5276687145233154,250,227,23,1.0,,False,False,0,3,100.0,2026-03-20 00:47:28
+8,2,Lisa Thompson is 40 years old. She is a project manager in Atlanta with 15 years of experience.,1.6254377365112305,250,227,23,1.0,,False,False,0,3,100.0,2026-03-20 00:47:30
+8,3,Lisa Thompson is 40 years old. She is a project manager in Atlanta with 15 years of experience.,2.20762038230896,250,227,23,1.0,,False,False,0,3,100.0,2026-03-20 00:47:32
