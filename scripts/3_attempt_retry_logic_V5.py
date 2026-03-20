@@ -157,7 +157,6 @@ def main():
     match_success_count = 0
 
     total_runs = len(tests) * args.runs
-    success_runs = 0
     success_rows = []  # list to hold only successful row dicts for cost & avg calcs
 
     with open(csv_path, 'w', newline='') as csvfile:
@@ -296,10 +295,9 @@ def main():
                     total_match_pct += match_percentage
                     match_success_count += 1
 
-                    success_rows.append(row)  # ← perfect spot
+                    success_rows.append(row)
 
-    # ← after the with csvfile block ends
-    # Cost estimation summary (successful runs only)
+    # Summary section after CSV is written
     if success_rows:
         total_input = sum(r["input_tokens"] for r in success_rows)
         total_output = sum(r["output_tokens"] for r in success_rows)
@@ -307,23 +305,26 @@ def main():
                      (total_output / 1_000_000 * OUTPUT_COST_PER_MILLION)
         avg_cost = total_cost / len(success_rows)
 
-        print("\nCost Estimation (Successful runs only):")
-        print(f"  Successful runs: {len(success_rows)}")
-        print(f"  Total input tokens: {total_input:,}")
-        print(f"  Total output tokens: {total_output:,}")
-        print(f"  Total estimated cost: ${total_cost:.4f}")
+        avg_confidence = total_confidence / len(success_rows)
+        avg_match_pct = total_match_pct / match_success_count if match_success_count > 0 else 0.0
+        success_rate = (len(success_rows) / total_runs * 100) if total_runs > 0 else 0.0
+
+        print("\n" + "=" * 50)
+        print("BATCH SUMMARY STATISTICS")
+        print("=" * 50)
+        print(f"  Overall success rate:     {success_rate:>6.1f}% ({len(success_rows):>3}/{total_runs})")
+        print(f"  Avg confidence (success): {avg_confidence:>6.3f}")
+        print(f"  Avg exact-match % (success): {avg_match_pct:>6.1f}%")
+        print(f"  Successful runs:          {len(success_rows):>3}")
+        print(f"  Total input tokens:       {total_input:,}")
+        print(f"  Total output tokens:      {total_output:,}")
+        print(f"  Total estimated cost:     ${total_cost:.4f}")
         print(f"  Avg cost per successful run: ${avg_cost:.6f}")
         print(f"  (Based on Claude Sonnet 4.5: ${INPUT_COST_PER_MILLION}/M in, ${OUTPUT_COST_PER_MILLION}/M out)")
-
-        success_rate = (len(success_rows) / total_runs * 100) if total_runs > 0 else 0
-        print(f"  Overall success rate: {success_rate:.1f}% ({len(success_rows)}/{total_runs})")
-
     else:
-        print("\nNo successful runs — cost estimation skipped.")
+        print("\nNo successful runs — summary skipped.")
 
-                    
-
-    print(f"Done. Results: {csv_path}")
+    print(f"\nDone. Results saved to: {csv_path}")
 
 if __name__ == "__main__":
     main()
