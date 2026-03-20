@@ -10,6 +10,11 @@ from botocore.exceptions import ClientError
 # -------------------------------
 # Configuration constants
 # -------------------------------
+
+# Cost estimation constants (Claude Sonnet 4.5 on-demand, us-east-1, March 2026)
+INPUT_COST_PER_MILLION = 3.00   # $ / 1M input tokens
+OUTPUT_COST_PER_MILLION = 15.00 # $ / 1M output tokens
+
 GUARDRAIL_ID = "9g6hem28nedj"
 MODEL_ID = "global.anthropic.claude-sonnet-4-5-20250929-v1:0"
 DEFAULT_REGION = "us-east-1"
@@ -153,6 +158,7 @@ def main():
 
     total_runs = len(tests) * args.runs
     success_runs = 0
+    success_rows = []  # list to hold only successful row dicts for cost & avg calcs
 
     with open(csv_path, 'w', newline='') as csvfile:
         fieldnames = [
@@ -289,6 +295,29 @@ def main():
 
                     total_match_pct += match_percentage
                     match_success_count += 1
+
+                    success_rows.append(row)  # ← perfect spot
+
+    # ← after the with csvfile block ends
+    # Cost estimation summary (successful runs only)
+    if success_rows:
+        total_input = sum(r["input_tokens"] for r in success_rows)
+        total_output = sum(r["output_tokens"] for r in success_rows)
+        total_cost = (total_input / 1_000_000 * INPUT_COST_PER_MILLION) + \
+                     (total_output / 1_000_000 * OUTPUT_COST_PER_MILLION)
+        avg_cost = total_cost / len(success_rows)
+
+        print("\nCost Estimation (Successful runs only):")
+        print(f"  Successful runs: {len(success_rows)}")
+        print(f"  Total input tokens: {total_input:,}")
+        print(f"  Total output tokens: {total_output:,}")
+        print(f"  Total estimated cost: ${total_cost:.4f}")
+        print(f"  Avg cost per successful run: ${avg_cost:.6f}")
+        print(f"  (Based on Claude Sonnet 4.5: ${INPUT_COST_PER_MILLION}/M in, ${OUTPUT_COST_PER_MILLION}/M out)")
+    else:
+        print("\nNo successful runs — cost estimation skipped.")
+
+                    
 
     print(f"Done. Results: {csv_path}")
 
