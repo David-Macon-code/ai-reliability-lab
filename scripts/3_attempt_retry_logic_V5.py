@@ -320,6 +320,9 @@ def main():
         print(f"  Avg exact-match % (success): {avg_match_pct:>6.1f}%")
         print(f"  Avg latency (success):     {avg_latency:>6.3f}s  (total: {total_latency:>6.3f}s over {latency_count} runs)")
 
+        intervened_count = sum(1 for r in success_rows if r["guardrail_intervened"])
+        print(f"  Guardrail intervened:     {intervened_count} times (in successful runs)")
+
         print(f"  Successful runs:          {len(success_rows):>3}")
         print("\nCost Estimation (Successful runs only):")
 
