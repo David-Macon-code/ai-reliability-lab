@@ -151,9 +151,11 @@ def main():
 
         for test_idx, test in enumerate(tests):
             user_message = test.get("input") or test.get("bio") or "Extract details from sample text here."
-            if not user_message or not user_message.strip():
+            user_message = user_message.strip()  # remove leading/trailing whitespace
+
+            if not user_message:
               user_message = "Extract details from sample text here."
-              print(f"DEBUG: Used fallback message for test {test_idx+1} (empty input)")
+            print(f"DEBUG: Used fallback message for test {test_idx+1} (empty input)")
 
             for run_id in range(args.runs):
                 result, error = run_converse_single(
