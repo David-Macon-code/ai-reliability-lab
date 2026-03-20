@@ -158,7 +158,8 @@ def main():
 
     total_runs = len(tests) * args.runs
     success_runs = 0
-    success_rows = []  # list to hold only successful row dicts for cost & avg calcs
+    success_rows = []             # only successful rows
+    all_rows = []                 # EVERY row (for total intervened count)
 
     with open(csv_path, 'w', newline='') as csvfile:
         fieldnames = [
@@ -284,6 +285,7 @@ def main():
 
                 writer.writerow(row)
                 csvfile.flush()
+                all_rows.append(row)  # ← collects every row
 
                 if flake_reason is None:
                     success_count += 1
@@ -296,10 +298,12 @@ def main():
                     total_match_pct += match_percentage
                     match_success_count += 1
 
-                    success_rows.append(row)  # ← perfect spot
+                    success_rows.append(row)
 
-    # ← after the with csvfile block ends
-    
+    # After CSV is fully written
+    total_intervened = sum(1 for row in all_rows if row.get("guardrail_intervened", False))
+    print(f"  Total guardrail interventions (all runs): {total_intervened}")
+
     if success_rows:
         total_input = sum(r["input_tokens"] for r in success_rows)
         total_output = sum(r["output_tokens"] for r in success_rows)
@@ -320,7 +324,7 @@ def main():
         print(f"  Avg exact-match % (success): {avg_match_pct:>6.1f}%")
         print(f"  Avg latency (success):     {avg_latency:>6.3f}s  (total: {total_latency:>6.3f}s over {latency_count} runs)")
 
-        intervened_count = sum(1 for r in success_rows if r["guardrail_intervened"])
+        intervened_count = sum(1 for r in success_rows if r.get("guardrail_intervened", False))
         print(f"  Guardrail intervened:     {intervened_count} times (in successful runs)")
 
         print(f"  Successful runs:          {len(success_rows):>3}")
