@@ -138,8 +138,7 @@ In progress: Week 3 – Automation + Reliability Engineering
 Built with AWS Bedrock + Claude 4.5 family – ongoing PromptOps learning lab.
 
 **Current status:** Day 19 complete – exact-match scoring added (100% match on golden set), retry logic proven, adversarial trade-offs quantified (33.3% unguarded vs 4.8% guarded). Ready for variance analysis & edge-case testing.
-* AWSBedrock #PromptOps #ResponsibleAI #AIFC01*
 
-* License
+* AWSBedrock #PromptOps #ResponsibleAI #AIFC01*
 
 [MIT license](#MIT-1-ov-file)
