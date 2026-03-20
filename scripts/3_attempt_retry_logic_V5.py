@@ -299,7 +299,7 @@ def main():
                     success_rows.append(row)  # ← perfect spot
 
     # ← after the with csvfile block ends
-    # Cost estimation summary (successful runs only)
+    
     if success_rows:
         total_input = sum(r["input_tokens"] for r in success_rows)
         total_output = sum(r["output_tokens"] for r in success_rows)
