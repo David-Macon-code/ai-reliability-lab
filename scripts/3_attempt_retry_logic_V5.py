@@ -150,23 +150,23 @@ def main():
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
 
-        for test_idx, test in enumerate(tests):
+    for test_idx, test in enumerate(tests):
             # Get raw value first (for debug)
-          raw_input = test.get("input")
-          raw_bio = test.get("bio")
+      raw_input = test.get("input")
+      raw_bio = test.get("bio")
 
-          print(f"DEBUG: Raw 'input': {raw_input!r} | Raw 'bio': {raw_bio!r}")
+      print(f"DEBUG: Raw 'input': {raw_input!r} | Raw 'bio': {raw_bio!r}")
 
 # Prefer 'input', fallback to 'bio', ultimate fallback to non-blank
-          user_message = raw_input or raw_bio or "Extract details from sample text here."
+      user_message = raw_input or raw_bio or "Extract details from sample text here."
 
 # Strip and ensure non-empty
-          user_message = (user_message or "").strip()
+      user_message = (user_message or "").strip()
 
-          if not user_message:
+      if not user_message:
             user_message = "Extract details from sample text here."
             print(f"DEBUG: Used fallback message for test {test_idx+1} (empty after strip)")
-          else:
+      else:
     
             print(f"DEBUG: Using user_message for test {test_idx+1}: {user_message[:50]}...")
 
