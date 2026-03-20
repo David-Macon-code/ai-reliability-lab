@@ -62,7 +62,7 @@ def run_converse_single(client, model_id, user_message, temperature=0.0, guardra
 
     guardrail_config = None
     if guardrail_version:
-        guardrail_config = {
+         = {
             "guardrailIdentifier": GUARDRAIL_ID,
             "guardrailVersion": guardrail_version,
             "trace": "enabled"
