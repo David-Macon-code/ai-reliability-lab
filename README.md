@@ -101,35 +101,43 @@ In progress: Week 3 – Automation + Reliability Engineering
   - v4 Low and v3 Medium identical on this set — no usability gain from relaxing to Low  
   - Next: temperature sweep, exact-match scoring, more subtle attacks
 
+- **[Day 19](docs/Day19.md)** — Exact-match scoring + quality metrics
+  - Added match_score (0–3) & match_percentage columns (parsed vs expected fields)
+  - Added average match % to summary (successful runs only)
+  - Fixed blank message crash & fallback safety → real golden inputs used, no ValidationException
+  - Golden set test: 100% pass, perfect 3.0 / 100.0% match on all 24 runs
+  - Script now robust: retry logic, leak detection, refusal handling, exact-match scoring, full summary averages
+  - Next: temperature sweep on failing tests (e.g. test 8), more subtle adversarial attacks, cost estimation per call
+
+
 ### Current Setup Highlights
 
-- Model: `global.anthropic.claude-sonnet-4-5-20250929-v1:0` (inference profile)
-- Guardrail: `9g6hem28nedj` v3 (Medium) + v4 (Low prompt attacks)
-- Main script: **[3_attempt_retry_logic_V5.py](scripts/3_attempt_retry_logic_V5.py)** (Converse API, guardrail toggle, adversarial/golden switching, retry logic, metrics logging)
-- Outputs: CSV in /evaluation/ folders (e.g. no_guardrail_final, retry_v4_low, etc.)
+- Model: `global.anthropic.claude-sonnet-4-5-20250929-v1:0` (inference profile)  
+- Guardrail: `9g6hem28nedj` v3 (Medium) + v4 (Low prompt attacks)  
+- Main script: **[3_attempt_retry_logic_V5.py](scripts/3_attempt_retry_logic_V5.py)** (Converse API, guardrail toggle, retry logic, leak detection, exact-match scoring, metrics logging)  
+- Outputs: CSV in /evaluation/ folders (e.g. no_guardrail_final, retry_v4_low, exact_match_test_fixed, etc.)
 
 ### Key Files & Results
 
-- **[3_attempt_retry_logic_V5.py](scripts/3_attempt_retry_logic_V5.py)** — core evaluation script
-- **[batch_metrics.csv examples](evaluation/)** — recent baselines & tests:
-  - [Unguarded baseline (Day 16)](evaluation/no_guardrail_final/batch_metrics.csv) — 100% pass (160/160)
-  - [Unguarded adversarial (Day 17)](evaluation/adversarial_unguarded_test/batch_metrics.csv) — 33.3% pass
-  - [v4 Low guarded adversarial (Day 17)](evaluation/adversarial_v4_low/batch_metrics.csv) — 4.8% pass
-  - [v3 Medium guarded adversarial (Day 17)](evaluation/adversarial_v3_medium/batch_metrics.csv) — 4.8% pass
-  - [Retry logic test (Day 18)](evaluation/retry_count_test/batch_metrics.csv) — 91.7% pass on expanded set
+- **[3_attempt_retry_logic_V5.py](scripts/3_attempt_retry_logic_V5.py)** — core evaluation script with retry, leak detection, exact-match scoring  
+- **[batch_metrics.csv examples](evaluation/)** — recent baselines & tests:  
+  - [Unguarded baseline (Day 16)](evaluation/no_guardrail_final/batch_metrics.csv) — 100% pass (160/160)  
+  - [Unguarded adversarial (Day 17)](evaluation/adversarial_unguarded_test/batch_metrics.csv) — 33.3% pass  
+  - [v4 Low guarded adversarial (Day 17)](evaluation/adversarial_v4_low/batch_metrics.csv) — 4.8% pass  
+  - [v3 Medium guarded adversarial (Day 17)](evaluation/adversarial_v3_medium/batch_metrics.csv) — 4.8% pass  
+  - [Retry logic test (Day 18)](evaluation/retry_count_test/batch_metrics.csv) — 91.7% pass on expanded set  
+  - [Exact-match scoring test (Day 19)](evaluation/exact_match_test_fixed/batch_metrics.csv) — 100% match on golden set  
 
 ### Next Steps (Day 19+)
 
-- Temperature sweep (0.0 / 0.3 / 0.7) on select tests → flake rate & confidence variance
-- Exact-match scoring (parsed vs "expected" fields → match % column)
-- Expand adversarial set with subtler attacks (base64, multilingual, indirect)
-- Add retry_count logging + cost estimation per call
-- Semantic validation (cosine similarity on embeddings of parsed vs expected)
+- Temperature sweep (0.0 / 0.3 / 0.7) on failing tests (e.g. test 8) → flake variance analysis  
+- Expand adversarial set with subtler attacks (base64 variants, multilingual, indirect roleplay)  
+- Add cost estimation per call (tokens × Claude pricing) to summary  
+- Explore semantic validation (cosine similarity on embeddings of parsed vs expected)  
 
 Built with AWS Bedrock + Claude 4.5 family – ongoing PromptOps learning lab.
 
-**Current status:** Day 18 complete – 100% benign pass, adversarial shows security/usability trade-offs (33.3% unguarded vs 4.8% guarded v4/v3). Retry logic added. Ready for variance analysis & robustness improvements.
-
+**Current status:** Day 19 complete – exact-match scoring added (100% match on golden set), retry logic proven, adversarial trade-offs quantified (33.3% unguarded vs 4.8% guarded). Ready for variance analysis & edge-case testing.
 * AWSBedrock #PromptOps #ResponsibleAI #AIFC01*
 
 * License
