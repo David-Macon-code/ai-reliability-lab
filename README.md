@@ -109,6 +109,13 @@ In progress: Week 3 – Automation + Reliability Engineering
   - Script now robust: retry logic, leak detection, refusal handling, exact-match scoring, full summary averages
   - Next: temperature sweep on failing tests (e.g. test 8), more subtle adversarial attacks, cost estimation per call
 
+- **[Day 20](docs/Day20.md)** — Temperature sweep & variance analysis  
+  - Ran temperature sweep (0.0 / 0.3 / 0.7) on test 1 (DAN) & test 4 (delimiter): 10 runs each  
+  - Results: 100% pass rate across all temps, minimal confidence variance (0.95–1.0), no flake increase  
+  - Insight: Claude Sonnet 4.5 highly deterministic on structured extraction even under injection pressure  
+  - Next: cost estimation per call, semantic validation (embeddings), more edge-case adversarial tests  
+
+
 
 ### Current Setup Highlights
 
