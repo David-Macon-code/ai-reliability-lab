@@ -118,8 +118,14 @@ def run_converse_single(client, model_id, user_message, temperature=0.0, guardra
                     # Last retry failed – return failure
                     return None, error_str
 
-        # If we got here, response is valid
-        output_text = response['output']['message']['content'][0]['text']
+        # Safety check for guardrail refusal or empty content
+        content = response.get('output', {}).get('message', {}).get('content', [])
+        if not content or not isinstance(content, list) or not content[0].get('text'):
+            error_msg = "Guardrail refusal or empty content returned (no JSON output)"
+            print(f"DEBUG: {error_msg}")
+            return None, error_msg
+
+        output_text = content[0]['text']
         print(f"DEBUG: Output text length: {len(output_text)} chars")
         print(f"DEBUG: Output text preview: {output_text[:200]}...")
 
