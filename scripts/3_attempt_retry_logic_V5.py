@@ -186,6 +186,8 @@ def main():
     success_count = 0
     total_latency = 0.0
     latency_count = 0
+    total_match_pct = 0.0
+    match_success_count = 0
     
     total_runs = len(tests) * args.runs
     success_runs = 0
@@ -194,7 +196,7 @@ def main():
         fieldnames = [
             "test_id", "run_id", "input_text", "latency", "total_tokens",
             "input_tokens", "output_tokens", "confidence", "flake_reason",
-            "guardrail_intervened", "leak_detected","retry_count", "timestamp"
+            "guardrail_intervened", "leak_detected","retry_count", "match_score", "match_percentage", "timestamp"
         ]
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
@@ -219,19 +221,53 @@ def main():
                 intervened = False
                 leak_detected = False
                 
-                if result and result["success"]:
-                    parsed = result["parsed"]
-                    confidence = parsed.get("confidence", 0.0)
+                                    
+                    # ... existing flake_reason, intervened, leak_detected ...
+
+                    # Exact-match scoring (only if success)
+                expected = test.get("expected", {})
+                if not expected:
+                      print(f"DEBUG: No 'expected' fields for test {test_idx+1}")
+
+                if expected:
+                        matches = 0
+                        total_fields = 0
+
+                        # Name match (case-insensitive, fuzzy optional later)
+                        if "name" in parsed and "full_name" in expected:
+                            total_fields += 1
+                            if parsed["name"].strip().lower() == expected["full_name"].strip().lower():
+                                matches += 1
+
+                        # Age match
+                        if "age" in parsed and "age" in expected:
+                            total_fields += 1
+                            if parsed["age"] == expected["age"]:
+                                matches += 1
+
+                        # City match
+                        if "city" in parsed and "city" in expected:
+                            total_fields += 1
+                            if parsed["city"].strip().lower() == expected["city"].strip().lower():
+                                matches += 1
+
+                        if total_fields > 0:
+                            match_score = matches
+                            match_percentage = (matches / total_fields) * 100
+
+                    # Add to row (even if no expected, defaults to 0)
+                row["match_score"] = match_score
+                row["match_percentage"] = round(match_percentage, 1)
                     
-                    if confidence < 0.7:
+                if confidence < 0.7:
                         flake_reason = "low_confidence"
                     
-                    if result["raw_response"].get("guardrailIntervened", False):
+                if result["raw_response"].get("guardrailIntervened", False):
                         intervened = True
                         flake_reason = flake_reason or "guardrail_block"
                     
                     # Leak detection
-                    try:
+                try:
                         output_text = result["output_text"]
                         output_lower = output_text.lower()
                         leak_keywords = [
@@ -241,13 +277,13 @@ def main():
                         if any(kw in output_lower for kw in leak_keywords):
                             leak_detected = True
                             flake_reason = flake_reason or "potential_leak"
-                    except (KeyError, AttributeError, TypeError):
+                except (KeyError, AttributeError, TypeError):
                         pass
                     
-                    if flake_reason is None:
+                if flake_reason is None:
                         success_runs += 1
                 else:
-                    flake_reason = error or "api_call_failed"
+                  flake_reason = error or "api_call_failed"
                 
                 print(f"DEBUG: flake_reason decided as: {flake_reason}")
                 
@@ -264,6 +300,8 @@ def main():
                     "guardrail_intervened": intervened,
                     "leak_detected": leak_detected,
                     "retry_count": result.get("retry_count", 0) if result else 0,
+                    "match_score": match_score,           # ← ADD
+                    "match_percentage": match_percentage, # ← ADD
                     "timestamp": time.strftime("%Y-%m-%d %H:%M:%S")
                 }
                 
@@ -277,6 +315,9 @@ def main():
                     if row["latency"] is not None:
                         total_latency += row["latency"]
                         latency_count += 1
+
+                    total_match_pct += match_percentage
+                    match_success_count += 1
     
     # Summary
     print(f"\nBatch complete. Results in: {csv_path}")
@@ -300,9 +341,11 @@ def main():
         avg_confidence = total_confidence / success_count
         avg_tokens = total_tokens_success / success_count
         avg_latency = total_latency / latency_count if latency_count > 0 else 0
+        avg_match_pct = total_match_pct / match_success_count if match_success_count > 0 else 0.0
         print(f"Average confidence (successful runs): {avg_confidence:.3f}")
         print(f"Average total tokens (successful runs): {avg_tokens:.1f}")
         print(f"Average latency (successful runs): {avg_latency:.2f}s")
+        print(f"Average match percentage (successful runs): {avg_match_pct:.1f}%")
     else:
         print("No successful runs → no average confidence/tokens/latency available")
     
