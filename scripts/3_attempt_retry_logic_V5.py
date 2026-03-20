@@ -46,6 +46,11 @@ def get_bedrock_client(region=DEFAULT_REGION):
 def run_converse_single(client, model_id, user_message, temperature=0.0, guardrail_version=None):
     messages = [{"role": "user", "content": [{"text": user_message}]}]
 
+    if not user_message or not user_message.strip():
+        error_msg = "Blank or empty user message – skipping call"
+        print(f"DEBUG: {error_msg}")
+        return None, error_msg
+
     inference_config = {"maxTokens": 512, "temperature": temperature}
 
     output_config = {
