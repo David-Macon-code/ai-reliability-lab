@@ -310,6 +310,7 @@ def main():
         avg_confidence = total_confidence / len(success_rows)
         avg_match_pct = total_match_pct / match_success_count if match_success_count > 0 else 0.0
         success_rate = (len(success_rows) / total_runs * 100) if total_runs > 0 else 0.0
+        avg_latency = total_latency / latency_count if latency_count > 0 else 0.0
 
         print("\n" + "=" * 50)
         print("BATCH SUMMARY STATISTICS")
@@ -317,6 +318,7 @@ def main():
         print(f"  Overall success rate:     {success_rate:>6.1f}% ({len(success_rows):>3}/{total_runs})")
         print(f"  Avg confidence (success): {avg_confidence:>6.3f}")
         print(f"  Avg exact-match % (success): {avg_match_pct:>6.1f}%")
+        print(f"  Avg latency (success):     {avg_latency:>6.3f}s")
         print(f"  Successful runs:          {len(success_rows):>3}")
         print("\nCost Estimation (Successful runs only):")
         print(f"  Total input tokens:       {total_input:,}")
