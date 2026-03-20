@@ -314,6 +314,10 @@ def main():
         print(f"  Total estimated cost: ${total_cost:.4f}")
         print(f"  Avg cost per successful run: ${avg_cost:.6f}")
         print(f"  (Based on Claude Sonnet 4.5: ${INPUT_COST_PER_MILLION}/M in, ${OUTPUT_COST_PER_MILLION}/M out)")
+
+        success_rate = (len(success_rows) / total_runs * 100) if total_runs > 0 else 0
+        print(f"  Overall success rate: {success_rate:.1f}% ({len(success_rows)}/{total_runs})")
+
     else:
         print("\nNo successful runs — cost estimation skipped.")
 
