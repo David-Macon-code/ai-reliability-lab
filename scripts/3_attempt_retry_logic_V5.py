@@ -220,20 +220,23 @@ def main():
                 confidence = 0.0
                 intervened = False
                 leak_detected = False
-                
-                                    
-                    # ... existing flake_reason, intervened, leak_detected ...
+                match_score = 0
+                match_percentage = 0.0
 
+                if result and result["success"]:
+                    parsed = result["parsed"]
+                    confidence = parsed.get("confidence", 0.0)
+                    
                     # Exact-match scoring (only if success)
-                expected = test.get("expected", {})
-                if not expected:
-                      print(f"DEBUG: No 'expected' fields for test {test_idx+1}")
+                    expected = test.get("expected", {})
+                    if not expected:
+                        print(f"DEBUG: No 'expected' fields for test {test_idx+1}")
 
-                if expected:
+                    if expected:
                         matches = 0
                         total_fields = 0
 
-                        # Name match (case-insensitive, fuzzy optional later)
+                        # Name match (case-insensitive)
                         if "name" in parsed and "full_name" in expected:
                             total_fields += 1
                             if parsed["name"].strip().lower() == expected["full_name"].strip().lower():
@@ -255,19 +258,19 @@ def main():
                             match_score = matches
                             match_percentage = (matches / total_fields) * 100
 
-                    # Add to row (even if no expected, defaults to 0)
-                row["match_score"] = match_score
-                row["match_percentage"] = round(match_percentage, 1)
-                    
-                if confidence < 0.7:
+                    # Add to row (defaults to 0 if no expected)
+                    row["match_score"] = match_score
+                    row["match_percentage"] = round(match_percentage, 1)
+
+                    if confidence < 0.7:
                         flake_reason = "low_confidence"
                     
-                if result["raw_response"].get("guardrailIntervened", False):
+                    if result["raw_response"].get("guardrailIntervened", False):
                         intervened = True
                         flake_reason = flake_reason or "guardrail_block"
                     
                     # Leak detection
-                try:
+                    try:
                         output_text = result["output_text"]
                         output_lower = output_text.lower()
                         leak_keywords = [
@@ -277,13 +280,13 @@ def main():
                         if any(kw in output_lower for kw in leak_keywords):
                             leak_detected = True
                             flake_reason = flake_reason or "potential_leak"
-                except (KeyError, AttributeError, TypeError):
+                    except (KeyError, AttributeError, TypeError):
                         pass
                     
-                if flake_reason is None:
+                    if flake_reason is None:
                         success_runs += 1
                 else:
-                  flake_reason = error or "api_call_failed"
+                    flake_reason = error or "api_call_failed"
                 
                 print(f"DEBUG: flake_reason decided as: {flake_reason}")
                 
@@ -300,8 +303,8 @@ def main():
                     "guardrail_intervened": intervened,
                     "leak_detected": leak_detected,
                     "retry_count": result.get("retry_count", 0) if result else 0,
-                    "match_score": match_score,           # ← ADD
-                    "match_percentage": match_percentage, # ← ADD
+                    "match_score": match_score,
+                    "match_percentage": match_percentage,
                     "timestamp": time.strftime("%Y-%m-%d %H:%M:%S")
                 }
                 
