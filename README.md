@@ -48,8 +48,8 @@ Applying AIF-C01 cert knowledge on responsible AI, content filtering, Bedrock se
 | --- | --- | --- | --- |
 | 1 | LLM Foundations + Prompt Testing | Complete | 100% structured JSON on V3, golden test set created |
 | 2 | Observability + Security + API Control | Complete | Guardrail tuned (Medium strength), trace parsing + metrics logging, 100% golden pass, 93%+ injection blocks |
-| 3 | Automation + Reliability Engineering | In progress | Batch scripts, retry logic, flake tracking, cost notes |
-| 4 | RAG + Cost Optimization + Enterprise Framing | Planned | Toy RAG, hallucination compare, model swap, final polish |
+| 3 | Automation + Reliability Engineering | Complete | Batch scripts, retry logic, flake tracking, cost notes |
+| 4 | RAG + Cost Optimization + Enterprise Framing | In progress | Toy RAG, hallucination compare, model swap, final polish |
 
 **Technologies & Tools Used**
 
