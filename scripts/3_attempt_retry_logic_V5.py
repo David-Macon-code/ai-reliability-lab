@@ -350,7 +350,7 @@ def main():
         print(f"  Overall success rate:       {success_rate:>6.1f}% ({len(success_rows):>3}/{total_runs})")
         print(f"  Avg confidence (success):    {avg_confidence:>6.3f}")
         print(f"  Avg exact-match % (success): {avg_match_pct:>6.1f}%")
-        print(f"  Avg latency (success):       {avg_latency:>6.3f}s  (total: {total_latency:>6.3f}s over            {latency_count} runs)")
+        print(f"  Avg latency (success):       {avg_latency:>6.3f}s  (total: {total_latency:>6.3f}s over {latency_count} runs)")
 
         intervened_count = sum(1 for r in success_rows if r.get("guardrail_intervened", False))
         print(f"  Guardrail intervened:         {intervened_count} times (in successful runs)")
