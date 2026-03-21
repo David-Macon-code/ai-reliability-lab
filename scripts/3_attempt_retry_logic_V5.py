@@ -328,6 +328,8 @@ def main():
 
     block_rate = (total_intervened / total_runs * 100) if total_runs > 0 else 0.0
     print(f"  Guardrail block rate:     {block_rate:.1f}% ({total_intervened}/{total_runs})")
+    blocked_runs = total_runs - len(success_rows)
+    print(f"  Blocked runs:             {blocked_runs}    ({blocked_runs / total_runs * 100:.1f}%)")
     print("-" * 40)
 
     if success_rows:
