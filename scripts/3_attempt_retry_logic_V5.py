@@ -355,7 +355,7 @@ def main():
         intervened_count = sum(1 for r in success_rows if r.get("guardrail_intervened", False))
         print(f"  Guardrail intervened:         {intervened_count} times (in successful runs)")
 
-        print(f"  Successful runs:           {len(success_rows):>3}")
+        print(f"  Successful runs:            {len(success_rows):>3}")
         print("\nCost Estimation (Successful runs only):")
 
         print(f"  Total input tokens:           {total_input:,}")
@@ -366,7 +366,7 @@ def main():
         print(f"  (Based on Claude Sonnet 4.5:  ${INPUT_COST_PER_MILLION}/M in, ${OUTPUT_COST_PER_MILLION}/M out)")
 
         print("-" * 70)
-        print(f"  Guardrail version:        {args.guardrail_version or 'None'}")
+        print(f"  Guardrail version:            {args.guardrail_version or 'None'}")
     else:
         print("\nNo successful runs — summary skipped.")
 
