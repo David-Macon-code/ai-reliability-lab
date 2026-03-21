@@ -52,6 +52,8 @@ In progress: Week 3 – Automation + Reliability Engineering
 | Testing & Evaluation  | Multi-run comparisons, determinism logging, golden test set creation (8–10 cases)        | Golden set saved; V3 perfect determinism at temp=0.0 |
 | Major Win             | Leveraged Bedrock Converse API native structured outputs (Claude 4.5 family)             | Eliminated "JSON hardest" problem; 100% schema compliance |
 
+<details>
+<summary>Click to expand Week 1 details</summary>
 - **[Day 1](./docs/day1_summary.md)** — Studied tokens, context windows, temperature, and top_p; summarized core inference concepts.
 - **[Day 2](./docs/day2_failures.md)** — Documented 5 common LLM failure modes, including Bedrock-specific content filtering edge cases.
 - **[Day 3](./docs/day3.md)** — Created and console-tested baseline Prompt V1 for the core entity extraction task.
@@ -59,6 +61,8 @@ In progress: Week 3 – Automation + Reliability Engineering
 - **[Day 5](./docs/day5.md)** — Implemented Prompt V3 using Bedrock's native structured outputs (json_schema); achieved ~100% valid JSON.
 - **[Day 6](./docs/day6.md)** — Ran multi-version tests, logged token usage/determinism, and built the golden test set (8–10 cases).
 - **[Day 7](./docs/week1_findings.md)** — Compiled Week 1 Findings Report with JSON success rate table highlighting structured outputs impact.
+
+</details>
 
 ### Week 2
 
@@ -74,6 +78,9 @@ In progress: Week 3 – Automation + Reliability Engineering
 | Security Tuning       | Reduced false positives from High → Medium strength; logged trace details (confidence, latency) | From 50% false positives → 0% on golden |
 | Overall Reliability   | Combined structured outputs + Guardrails + observability pipeline                        | Production-viable security + usability balance |
 
+<details>
+<summary>Click to expand Week 2 details</summary>
+
 - **[Day 8](./docs/day8.md)** — Set up full boto3 Converse API scripting with latency and token observability logging.
 - **[Day 9](./docs/day9.md)** — Expanded batch testing; logged precise latency/token metrics to CSV for golden runs.
 - **[Day 10](./docs/day10.md)** — Built basic validation script and eval spreadsheet; scored initial golden pass rates.
@@ -82,39 +89,36 @@ In progress: Week 3 – Automation + Reliability Engineering
 - **[Day 13](./docs/day13.md)** — Enhanced validation script to parse guardrail traces; confirmed 100% injection blocks but 50% false positives pre-tuning.
 - **[Day 14](./docs/day14.md)** — Finalized guardrail tuning, compared metrics, and wrapped Week 2 with improved observability + security baseline.
 
+</details>
+
 ### Week 3
 
-- **[Week 3 In Progress]** — Batch scripts, retry logic, flake tracking, cost notes
+- **[Week 3 Findings](./docs/week3_completion.md)** — Built production-grade batch harness with retries, temperature sweep (100% pass across 0.0/0.3/0.7), guardrail sweeps (v3 Medium & v4 Low), full observability, and ~82% cost savings on adversarial prompts.
 
-- **[Day 15](docs/Day15.md)** — Implemented Bedrock Converse batch runner with native structured outputs, metrics tracking, and perfect 40/40 pass rate on golden tests
+### Week 3 Overview: Automation + Reliability Engineering
 
-- **[Day 16](docs/Day16.md)** — Established stable Bedrock Converse baseline with native structured outputs on Claude Sonnet 4.5 inference profile; achieved 100% golden pass rate (160/160 runs unguarded); deployed relaxed guardrail v4 (Low prompt attacks); added toggle flag (--guardrail-version); confirmed 100% pass + zero interventions on benign set with v4 guarded run; captured scaled metrics (avg conf 0.962, avg tokens ~296); Week 3 reliability harness locked in.
+| Category                        | Key Activities & Outcomes                                                                 | Result / Metric                                      |
+|---------------------------------|-------------------------------------------------------------------------------------------|------------------------------------------------------|
+| Batch Foundation & Automation   | Refactored to dedicated batch runner with CLI args, CSV logging, golden/adversarial toggle | Full batch script (`V5`), per-run metrics in CSV    |
+| Determinism & Variance Testing  | Temperature sweep (0.0 / 0.3 / 0.7) on adversarial/benign tests; 10 runs each            | 100% pass rate, zero flake increase, high determinism |
+| Retry & Resilience Patterns     | 3-attempt retry loop with exponential backoff; retry_count logging                        | Captured transient failures; retry_count in CSV      |
+| Failure Classification          | Categorized flakes: guardrail_block, low_confidence, json_parse_error, empty response     | Detailed flake_reason in CSV + summary counts        |
+| Guardrail & Security Sweeps     | Multi-version sweeps (v3 Medium, v4 Low); block rate, intervention, cost impact           | Success 91.7% → 16.7%; block rate 83–100%; ~82% cost savings |
+| Observability & Metrics         | Added total interventions, block rate %, blocked runs, latency (avg + total), cost estimation | Polished console summary; accurate in all modes      |
+| Overall Reliability             | Combined structured outputs, retries, guardrails, batch automation                       | Production-viable pipeline; 82% cost reduction proven |
 
-- **[Day 17](docs/Day17.md)** — Conducted adversarial injection testing on 7 jailbreak/prompt attack examples × 3 runs each (21 calls per mode); unguarded achieved 33.3% pass rate (7/21); both v4 Low and v3 Medium guarded modes achieved 4.8% pass rate (1/21) with high blocking; confirmed identical strict behavior between v4 and v3 on obvious attacks; leak_detected zero across all; Week 3 security/usability comparison baseline established.
+<details>
+<summary>Click to expand Week 3 details</summary>
 
-- **[Day 18](docs/Day18.md)** Retry logic + guarded retry runs  
-  - Added 3-attempt retry with exponential backoff + retry_count column  
-  - Retry test on expanded adversarial set (12 tests × 3 runs = 36 calls):  
-    - Unguarded: 91.7% pass  
-    - Guarded v4 Low: 16.7% pass  
-    - Guarded v3 Medium: 16.7% pass  
-  - v4 Low and v3 Medium identical on this set — no usability gain from relaxing to Low  
-  - Next: temperature sweep, exact-match scoring, more subtle attacks
+- **[Day 15](./docs/Day15.md)** — Built batch foundation: CLI args, CSV logging, golden/adversarial toggle
+- **[Day 16](./docs/Day16.md)** — Ran temperature sweep (0.0/0.3/0.7): 100% pass, zero flake increase
+- **[Day 17](./docs/Day17.md)** — Added retry logic (3 attempts with backoff); logged retry_count
+- **[Day 18](./docs/Day18.md)** — Classified failures (guardrail_block, low_confidence, etc.); built detailed summary
+- **[Day 19](./docs/Day19.md)** — Swept guardrail versions (v3 Medium, v4 Low): success dropped to 16.7%
+- **[Day 20](./docs/Day20.md)** — Added cost estimation ($3/$15 rates), token usage, latency avg/total
+- **[Day 21](./docs/Day21md)** — Polished summary (interventions, block rate, blocked runs); fixed false positives; Week 3 complete
 
-- **[Day 19](docs/Day19.md)** — Exact-match scoring + quality metrics
-  - Added match_score (0–3) & match_percentage columns (parsed vs expected fields)
-  - Added average match % to summary (successful runs only)
-  - Fixed blank message crash & fallback safety → real golden inputs used, no ValidationException
-  - Golden set test: 100% pass, perfect 3.0 / 100.0% match on all 24 runs
-  - Script now robust: retry logic, leak detection, refusal handling, exact-match scoring, full summary averages
-  - Next: temperature sweep on failing tests (e.g. test 8), more subtle adversarial attacks, cost estimation per call
-
-- **[Day 20](docs/Day20.md)** — Temperature sweep & variance analysis  
-  - Ran temperature sweep (0.0 / 0.3 / 0.7) on test 1 (DAN) & test 4 (delimiter): 10 runs each  
-  - Results: 100% pass rate across all temps, minimal confidence variance (0.95–1.0), no flake increase  
-  - Insight: Claude Sonnet 4.5 highly deterministic on structured extraction even under injection pressure  
-  - Next: cost estimation per call, semantic validation (embeddings), more edge-case adversarial tests  
-
+  </details>
 
 
 ### Current Setup Highlights
@@ -127,24 +131,29 @@ In progress: Week 3 – Automation + Reliability Engineering
 ### Key Files & Results
 
 - **[3_attempt_retry_logic_V5.py](scripts/3_attempt_retry_logic_V5.py)** — core evaluation script with retry, leak detection, exact-match scoring  
-- **[batch_metrics.csv examples](evaluation/)** — recent baselines & tests:  
-  - [Unguarded baseline (Day 16)](evaluation/no_guardrail_final/batch_metrics.csv) — 100% pass (160/160)  
-  - [Unguarded adversarial (Day 17)](evaluation/adversarial_unguarded_test/batch_metrics.csv) — 33.3% pass  
-  - [v4 Low guarded adversarial (Day 17)](evaluation/adversarial_v4_low/batch_metrics.csv) — 4.8% pass  
-  - [v3 Medium guarded adversarial (Day 17)](evaluation/adversarial_v3_medium/batch_metrics.csv) — 4.8% pass  
-  - [Retry logic test (Day 18)](evaluation/retry_count_test/batch_metrics.csv) — 91.7% pass on expanded set  
-  - [Exact-match scoring test (Day 19)](evaluation/exact_match_test_fixed/batch_metrics.csv) — 100% match on golden set  
 
-### Next Steps (Day 19+)
+### Next Steps — Week 4: RAG + Cost Optimization + Enterprise Framing
 
-- Temperature sweep (0.0 / 0.3 / 0.7) on failing tests (e.g. test 8) → flake variance analysis  
-- Expand adversarial set with subtler attacks (base64 variants, multilingual, indirect roleplay)  
-- Add cost estimation per call (tokens × Claude pricing) to summary  
-- Explore semantic validation (cosine similarity on embeddings of parsed vs expected)  
+Week 4 extends reliability to retrieval-augmented generation (RAG) workflows using Bedrock-native tools. Focus: build a toy RAG pipeline, reduce hallucinations, optimize cost/token usage, and frame for enterprise use cases (security, scalability).
+
+**Day 22 — RAG Basics & Notes**
+
+**Day 23 — Toy Dataset & Retrieval Sim**
+
+**Day 24 — RAG Pipeline Integration**
+
+**Day 25 — Hallucination Comparison**
+
+**Day 26 — Model Comparison**
+
+**Day 27–29 — Optimization & Enterprise Framing**
+
+**Day 30 — Polish & Push**
+
 
 Built with AWS Bedrock + Claude 4.5 family – ongoing PromptOps learning lab.
 
-**Current status:** Day 19 complete – exact-match scoring added (100% match on golden set), retry logic proven, adversarial trade-offs quantified (33.3% unguarded vs 4.8% guarded). Ready for variance analysis & edge-case testing.
+**Current status:** Day 21 complete – Week 3 fully wrapped with production-grade batch harness, retry/resilience, temperature sweep (100% pass), guardrail sweeps (~82% cost savings, 83–100% block rate), and polished observability metrics. Ready for Week 4 RAG + Titan Embeddings.
 
 * AWSBedrock #PromptOps #ResponsibleAI #AIFC01*
 
