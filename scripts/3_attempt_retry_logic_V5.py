@@ -261,7 +261,6 @@ def main():
                         flake_reason = "low_confidence"
 
                     if args.guardrail_version and result["raw_response"].get("guardrailIntervened", False):
-                      print(f"DEBUG: Success but guardrailIntervened=True on test {test_idx+1}")
                       intervened = True
                       flake_reason = flake_reason or "guardrail_block"
 
