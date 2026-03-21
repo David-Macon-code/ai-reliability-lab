@@ -260,7 +260,7 @@ def main():
                     if confidence < 0.7:
                         flake_reason = "low_confidence"
 
-                    if result["raw_response"].get("guardrailIntervened", False):
+                    if args.guardrail_version and result["raw_response"].get("guardrailIntervened", False):
                         intervened = True
                         flake_reason = flake_reason or "guardrail_block"
 
