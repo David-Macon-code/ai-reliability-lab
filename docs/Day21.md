@@ -1,12 +1,10 @@
 ## Day 21 — Week 3 Wrap-Up: Reliability Engineering Complete
 
 
-
 **Major Wins**
 
-- Proved that Guardrails can deliver ~82% cost reduction while preserving perfect extraction quality on passes — a huge reliability + economics win.
+- Proved that Bedrock Guardrails deliver ~82% cost reduction on adversarial prompts while preserving perfect extraction quality (100% exact-match on passes) — a massive real-world reliability + economics win that directly showcases employability in PromptOps and AIF-C01-level AI workflows.
 - Built a production-grade batch evaluation harness that reliably quantifies LLM reliability, flake rates, guardrail effectiveness, and cost impact
-- Demonstrated ~82% cost savings with Bedrock Guardrails on adversarial prompts — massive real-world value for PromptOps / AIF-C01
 - Achieved 100% exact-match accuracy on all successful extractions across configs — structured outputs are rock-solid
 - Eliminated false positives in no-guardrail metrics — intervention counts now 100% accurate
 - Full observability in a clean console summary: success rate, confidence, match %, latency (avg + total), interventions, block rate, blocked runs, cost estimation
