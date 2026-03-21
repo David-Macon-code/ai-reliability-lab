@@ -1,5 +1,7 @@
 ## Day 21 — Week 3 Wrap-Up: Reliability Engineering Complete
 
+
+
 **Major Wins**
 
 - Built a production-grade batch evaluation harness that reliably quantifies LLM reliability, flake rates, guardrail effectiveness, and cost impact
@@ -29,6 +31,8 @@
 | Avg Exact-Match % (success)     | 100.0%       | 100.0%   | 100.0%      |
 | Avg Latency (success)           | 2.085s       | 2.713s   | 2.426s      |
 | Total Estimated Cost            | $0.0422      | $0.0076  | $0.0076     |
+
+**Bottom line**: Guardrails deliver ~82% cost reduction while preserving perfect extraction quality on passes — a huge reliability + economics win.
 
 **Final Polish & Fixes**
 
