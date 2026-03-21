@@ -357,7 +357,7 @@ def main():
         intervened_count = sum(1 for r in success_rows if r.get("guardrail_intervened", False))
         print(f"  Guardrail intervened:         {intervened_count} times (in successful runs)")
 
-        print(f"  Successful runs:             {len(success_rows):>3}")
+        print(f"  Successful runs:            {len(success_rows):>3}")
         print("\nCost Estimation (Successful runs only):")
 
         print(f"  Total input tokens:           {total_input:,}")
