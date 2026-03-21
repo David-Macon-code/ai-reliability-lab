@@ -13,6 +13,12 @@ A personal lab I created to demostrate real world experience by following a stru
 
 Applying AIF-C01 cert knowledge on responsible AI, content filtering, Bedrock services, and Guardrails. Weeks 1–3: tuned Guardrails blocking 93%+ injections with 0% false positives on golden benign tests and batch sweeps proving ~82% cost reduction and 83–100% block rate on adversarial prompts while preserving 100% extraction quality on passes.
 
+**Employability Highlights**  
+
+- Demonstrated 82% cost reduction + 83–100% adversarial block rate with Bedrock Guardrails  
+- Achieved 100% exact-match extraction reliability across configs  
+- Applied AIF-C01 knowledge (responsible AI, content filtering, Guardrails) to real batch pipelines
+
 **Current Status (as of March 21, 2026)**
 
 ### Progress Overview
@@ -44,6 +50,13 @@ Applying AIF-C01 cert knowledge on responsible AI, content filtering, Bedrock se
 | 2 | Observability + Security + API Control | Complete | Guardrail tuned (Medium strength), trace parsing + metrics logging, 100% golden pass, 93%+ injection blocks |
 | 3 | Automation + Reliability Engineering | In progress | Batch scripts, retry logic, flake tracking, cost notes |
 | 4 | RAG + Cost Optimization + Enterprise Framing | Planned | Toy RAG, hallucination compare, model swap, final polish |
+
+**Technologies & Tools Used**
+
+- AWS Bedrock (Converse API, Guardrails, Titan Embeddings G1)
+- Claude Sonnet 4.5 / Haiku 4.5
+- Python (boto3, tenacity for retries, sentence-transformers potential)
+- Observability: CSV metrics, console summaries, cost estimation
 
 ### Detailed Reports
 
