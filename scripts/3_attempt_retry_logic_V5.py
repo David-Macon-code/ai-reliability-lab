@@ -220,7 +220,7 @@ def main():
 
                 flake_reason = None
                 confidence = 0.0
-                intervened = False
+                intervened = True
                 leak_detected = False
                 match_score = 0
                 match_percentage = 0.0
@@ -283,6 +283,7 @@ def main():
                     flake_reason = error or "api_failed"
                 if "guardrail_block" in str(error).lower():
                         flake_reason = "guardrail_block"
+                        intervened = True
 
                 print(f"DEBUG: flake_reason decided as: {flake_reason}")
 
