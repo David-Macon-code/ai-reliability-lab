@@ -261,8 +261,9 @@ def main():
                         flake_reason = "low_confidence"
 
                     if args.guardrail_version and result["raw_response"].get("guardrailIntervened", False):
-                        intervened = True
-                        flake_reason = flake_reason or "guardrail_block"
+                      print(f"DEBUG: Success but guardrailIntervened=True on test {test_idx+1}")
+                      intervened = True
+                      flake_reason = flake_reason or "guardrail_block"
 
                     try:
                         output_text = result["output_text"]
@@ -281,7 +282,7 @@ def main():
                         success_runs += 1
                 else:
                     flake_reason = error or "api_failed"
-                if "guardrail_block" in str(error).lower():
+                    if error == "guardrail_block" and args.guardrail_version:
                         flake_reason = "guardrail_block"
                         intervened = True
 
