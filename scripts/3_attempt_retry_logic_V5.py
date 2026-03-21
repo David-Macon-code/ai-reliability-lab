@@ -344,26 +344,28 @@ def main():
         success_rate = (len(success_rows) / total_runs * 100) if total_runs > 0 else 0.0
         avg_latency = total_latency / latency_count if latency_count > 0 else 0.0
 
-        print("\n" + "=" * 50)
+        print("\n" + "=" * 70)
         print("BATCH SUMMARY STATISTICS")
-        print("=" * 50)
+        print("=" * 70)
         print(f"  Overall success rate:        {success_rate:>6.1f}% ({len(success_rows):>3}/{total_runs})")
         print(f"  Avg confidence (success):    {avg_confidence:>6.3f}")
         print(f"  Avg exact-match % (success): {avg_match_pct:>6.1f}%")
         print(f"  Avg latency (success):       {avg_latency:>6.3f}s  (total: {total_latency:>6.3f}s over            {latency_count} runs)")
 
         intervened_count = sum(1 for r in success_rows if r.get("guardrail_intervened", False))
-        print(f"  Guardrail intervened:     {intervened_count} times (in successful runs)")
+        print(f"  Guardrail intervened:         {intervened_count} times (in successful runs)")
 
-        print(f"  Successful runs:          {len(success_rows):>3}")
+        print(f"  Successful runs:              {len(success_rows):>3}")
         print("\nCost Estimation (Successful runs only):")
 
-        print(f"  Total input tokens:       {total_input:,}")
-        print(f"  Total output tokens:      {total_output:,}")
-        print(f"  Total estimated cost:     ${total_cost:.4f}")
+        print(f"  Total input tokens:           {total_input:,}")
+        print(f"  Total output tokens:          {total_output:,}")
+        print(f"  Total estimated cost:        ${total_cost:.4f}")
         print(f"  Avg cost per successful run: ${avg_cost:.6f}")
+
         print(f"  (Based on Claude Sonnet 4.5: ${INPUT_COST_PER_MILLION}/M in, ${OUTPUT_COST_PER_MILLION}/M out)")
 
+        print("-" * 70)
         print(f"  Guardrail version:        {args.guardrail_version or 'None'}")
     else:
         print("\nNo successful runs — summary skipped.")
