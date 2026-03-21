@@ -325,6 +325,9 @@ def main():
     total_intervened = sum(1 for row in all_rows if row.get("guardrail_intervened", False))
     print(f"  Total guardrail interventions (all runs): {total_intervened}")
 
+    block_rate = (total_intervened / total_runs * 100) if total_runs > 0 else 0.0
+    print(f"  Guardrail block rate:     {block_rate:.1f}% ({total_intervened}/{total_runs})")
+
     if success_rows:
         total_input = sum(r["input_tokens"] for r in success_rows)
         total_output = sum(r["output_tokens"] for r in success_rows)
