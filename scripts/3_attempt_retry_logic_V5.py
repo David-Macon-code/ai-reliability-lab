@@ -106,7 +106,6 @@ def run_converse_single(client, model_id, user_message, temperature=0.0, guardra
             except ClientError as e:
                 error_str = str(e)
                 print(f"DEBUG: attempt {attempt+1} failed: {error_str}")
-
                 retry_count += 1
 
                 if attempt < max_retries - 1:
@@ -116,12 +115,32 @@ def run_converse_single(client, model_id, user_message, temperature=0.0, guardra
                 else:
                     return None, error_str
 
+        # === IMPROVED GUARDRAIL BLOCK DETECTION ===
+        # Check for explicit intervention flag
+        if response.get("guardrailIntervened", False):
+            return None, "guardrail_block"
+
+        # Check trace if present
+        trace = response.get("trace", {})
+        if trace and trace.get("guardrailIntervened", False):
+            return None, "guardrail_block"
+
+        # Check for empty or missing content (common when guardrails block)
         content = response.get('output', {}).get('message', {}).get('content', [])
         if not content or not content[0].get('text'):
-            return None, "Empty response"
+            return None, "guardrail_block"   # empty response from guardrail
 
         output_text = content[0]['text']
-        parsed = json.loads(output_text)
+
+        # Try to parse JSON (only if we have content)
+        try:
+            parsed = json.loads(output_text)
+        except json.JSONDecodeError:
+            # If it's not valid JSON and guardrail was active, treat as block
+            if guardrail_version:
+                return None, "guardrail_block"
+            else:
+                return None, "json_parse_error"
 
         return {
             "success": True,
@@ -262,6 +281,8 @@ def main():
                         success_runs += 1
                 else:
                     flake_reason = error or "api_failed"
+                if "guardrail_block" in str(error).lower():
+                        flake_reason = "guardrail_block"
 
                 print(f"DEBUG: flake_reason decided as: {flake_reason}")
 
