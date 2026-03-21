@@ -327,10 +327,10 @@ def main():
     print(f"  Total guardrail interventions (all runs): {total_intervened}")
 
     block_rate = (total_intervened / total_runs * 100) if total_runs > 0 else 0.0
-    print(f"  Guardrail block rate:     {block_rate:.1f}% ({total_intervened}/{total_runs})")
+    print(f"  Guardrail block rate:                     {block_rate:.1f}% ({total_intervened}/{total_runs})")
     blocked_runs = total_runs - len(success_rows)
-    print(f"  Blocked runs:             {blocked_runs}    ({blocked_runs / total_runs * 100:.1f}%)")
-    print("-" * 40)
+    print(f"  Blocked runs:                             {blocked_runs}    ({blocked_runs / total_runs * 100:.1f}%)")
+    print("-" * 60)
 
     if success_rows:
         total_input = sum(r["input_tokens"] for r in success_rows)
@@ -347,10 +347,10 @@ def main():
         print("\n" + "=" * 50)
         print("BATCH SUMMARY STATISTICS")
         print("=" * 50)
-        print(f"  Overall success rate:     {success_rate:>6.1f}% ({len(success_rows):>3}/{total_runs})")
-        print(f"  Avg confidence (success): {avg_confidence:>6.3f}")
+        print(f"  Overall success rate:        {success_rate:>6.1f}% ({len(success_rows):>3}/{total_runs})")
+        print(f"  Avg confidence (success):    {avg_confidence:>6.3f}")
         print(f"  Avg exact-match % (success): {avg_match_pct:>6.1f}%")
-        print(f"  Avg latency (success):     {avg_latency:>6.3f}s  (total: {total_latency:>6.3f}s over {latency_count} runs)")
+        print(f"  Avg latency (success):       {avg_latency:>6.3f}s  (total: {total_latency:>6.3f}s over            {latency_count} runs)")
 
         intervened_count = sum(1 for r in success_rows if r.get("guardrail_intervened", False))
         print(f"  Guardrail intervened:     {intervened_count} times (in successful runs)")
