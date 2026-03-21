@@ -220,7 +220,7 @@ def main():
 
                 flake_reason = None
                 confidence = 0.0
-                intervened = True
+                intervened = False
                 leak_detected = False
                 match_score = 0
                 match_percentage = 0.0
