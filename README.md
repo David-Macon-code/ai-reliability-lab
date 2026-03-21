@@ -9,26 +9,34 @@ Issued March 11, 2026 | Valid until March 2029
 
 </div>
 
-A personal lab I created following a structured 30-day plan to build reliable, observable, secure LLM workflows using **AWS Bedrock** (Converse API with native structured outputs, Guardrails, observability, etc.).
+A personal lab I created to demostrate real world experience by following a structured 30-day plan to build reliable, observable, secure LLM workflows using **AWS Bedrock** (Converse API with native structured outputs, Guardrails, observability, etc.).
 
-Directly applying cert knowledge on responsible AI, content filtering, Bedrock services, and Guardrails to Weeks 1–2 results (e.g., tuned Guardrails blocking 93%+ injections with 0% false positives on golden benign tests).
+Applying AIF-C01 cert knowledge on responsible AI, content filtering, Bedrock services, and Guardrails. Weeks 1–3: tuned Guardrails blocking 93%+ injections with 0% false positives on golden benign tests and batch sweeps proving ~82% cost reduction and 83–100% block rate on adversarial prompts while preserving 100% extraction quality on passes.
 
-**Current Status (as of March 19, 2026)**
+**Current Status (as of March 21, 2026)**
+
+### Progress Overview
 
 | Week | Status          | Key Outcomes                                                                 |
 |------|-----------------|------------------------------------------------------------------------------|
 | 1    | ✅ Complete     | LLM foundations, V1–V3 prompts, native structured outputs → **~100% JSON validity**, golden set created |
 | 2    | ✅ Complete     | Observability pipeline, Bedrock Guardrails tuned (Medium) → **93.3% injection blocks**, **100% golden pass** |
+| 3    | ✅ Complete     | Batch harness with retries, temp sweep (100% pass), guardrail sweeps (v3/v4) → **~82% cost savings**, **83–100% block rate**, full metrics polish |
 
-- Week 1 – : LLM foundations, prompt iteration (V1 → V3), native structured outputs achieved ~100% JSON validity.
-- Week 2 – : Observability (guardrail trace parsing + metrics CSV), security tuning (Guardrail v3 – Medium strength), before/after testing.
+- **Week 1** – LLM foundations, prompt iteration (V1 → V3), native structured outputs achieved ~100% JSON validity.
+- **Week 2** – Observability (guardrail trace parsing + metrics CSV), security tuning (Guardrail v3 – Medium strength), before/after testing.
   - Golden benign: 100% pass rate (0% false positives after tuning)
   - Injections: 93.3% blocked (14/15), one LOW-conf leak
   - Key win: Balanced usability + strong attack protection (enhanced by AIF-C01 insights on Guardrails & responsible AI)
+- **Week 3** – Automation & reliability engineering sprint: built production-grade batch runner, added retry logic (3 attempts), temperature sweep (100% pass across 0.0/0.3/0.7), multi-guardrail sweeps (v3 Medium, v4 Low), full observability (interventions, block rate, blocked runs, latency total/avg, cost estimation).
+  - Success rate drop: 91.7% (no GR) → 16.7% (GR)
+  - Cost savings: ~82% ($0.0422 → $0.0076 for 36 runs)
+  - Extraction quality: 100% exact-match on passes
+  - Key win: Proved guardrails deliver massive cost reduction + reliability boost while preserving quality — directly employable in PromptOps / AIF-C01 workflows
 
-In progress: Week 3 – Automation + Reliability Engineering
+**In progress: Week 4** – RAG + Cost Optimization + Enterprise Framing
 
-## Progress Overview
+## Lab Overview
 
 | Week | Theme | Status | Key Outcomes |
 | --- | --- | --- | --- |
@@ -54,6 +62,7 @@ In progress: Week 3 – Automation + Reliability Engineering
 
 <details>
 <summary>Click to expand Week 1 details</summary>
+
 - **[Day 1](./docs/day1_summary.md)** — Studied tokens, context windows, temperature, and top_p; summarized core inference concepts.
 - **[Day 2](./docs/day2_failures.md)** — Documented 5 common LLM failure modes, including Bedrock-specific content filtering edge cases.
 - **[Day 3](./docs/day3.md)** — Created and console-tested baseline Prompt V1 for the core entity extraction task.
