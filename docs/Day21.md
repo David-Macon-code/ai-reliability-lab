@@ -4,6 +4,7 @@
 
 **Major Wins**
 
+- Proved that Guardrails can deliver ~82% cost reduction while preserving perfect extraction quality on passes — a huge reliability + economics win.
 - Built a production-grade batch evaluation harness that reliably quantifies LLM reliability, flake rates, guardrail effectiveness, and cost impact
 - Demonstrated ~82% cost savings with Bedrock Guardrails on adversarial prompts — massive real-world value for PromptOps / AIF-C01
 - Achieved 100% exact-match accuracy on all successful extractions across configs — structured outputs are rock-solid
@@ -32,7 +33,6 @@
 | Avg Latency (success)           | 2.085s       | 2.713s   | 2.426s      |
 | Total Estimated Cost            | $0.0422      | $0.0076  | $0.0076     |
 
-**Bottom line**: Guardrails deliver ~82% cost reduction while preserving perfect extraction quality on passes — a huge reliability + economics win.
 
 **Final Polish & Fixes**
 
