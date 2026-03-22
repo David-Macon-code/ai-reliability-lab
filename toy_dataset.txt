@@ -1,5 +1,5 @@
 Document 1:
-John Doe is 34 years old and lives in Atlanta, Georgia. He works in technology sales and enjoys hiking on weekends.
+Chris Mott is 34 years old and lives in Atlanta, Georgia. He works in technology sales and enjoys hiking on weekends.
 
 Document 2:
 Maria Gonzalez, 28, is from Miami, Florida. She is a marketing specialist who loves photography and beach volleyball.
