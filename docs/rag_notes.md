@@ -56,3 +56,12 @@ Resources:
 - Key modules focused on: Knowledge Bases, Titan Embeddings integration, RAG workflows
 - Hands-on labs run locally on laptop Jupyter (faster/more reliable than SageMaker Studio)
 - Sample output from Module 5: [sales.csv](../sales.csv)
+
+## Titan Embeddings v2 Test Results (Local Jupyter)
+
+- Model: amazon.titan-embed-text-v2:0
+- Dimension: 1024
+- Sample texts embedded successfully
+- Cosine similarity example:
+  - Text 1 vs Text 3 (location overlap): ~0.XX (high, as expected)
+  - Notebook: [Day22_Titan_Embeddings_Test.ipynb](../Day22_Titan_Embeddings_Test.ipynb)
