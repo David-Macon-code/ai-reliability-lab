@@ -1,0 +1,14 @@
+Document 1:
+John Doe is 34 years old and lives in Atlanta, Georgia. He works in technology sales and enjoys hiking on weekends.
+
+Document 2:
+Maria Gonzalez, 28, is from Miami, Florida. She is a marketing specialist who loves photography and beach volleyball.
+
+Document 3:
+Dr. Raj Patel is 45 years old and lives in Boston, Massachusetts. He is a university professor specializing in computer science.
+
+Document 4:
+Sophia Chen is 31 and lives in Seattle, Washington. She develops AI applications and is passionate about sustainable technology.
+
+Document 5:
+Fuquay-Varina is a growing town in Wake County, North Carolina, located near Raleigh. It is known for its family-friendly community and parks.
