@@ -21,6 +21,8 @@ Applying AIF-C01 cert knowledge on responsible AI, content filtering, Bedrock se
 
 **Current Status (as of March 21, 2026)**
 
+
+
 ### Progress Overview
 
 | Week | Status          | Key Outcomes                                                                 |
