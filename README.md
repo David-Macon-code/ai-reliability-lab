@@ -52,14 +52,7 @@ Adversarial jailbreak set | 3 runs per config | Bedrock Converse API
 
 ---
 
-#### Cost Comparison (No Guardrail)
-
-![Cost Savings – No Guardrail](cost_savings_no_gr.png){width=60%}
-<p align="center"><em>Total cost for 36 runs (no guardrail) — using Sonnet pricing for fair comparison</em></p>
-
----
-
-#### Cost Comparison (Guarded Runs)
+#### Cost Comparison
 
 ![Cost Savings – Guarded Runs](cost_savings_guarded.png){width=60%}
 <p align="center"><em>Guarded runs — Haiku uses real lower pricing (~$1/$5 per M)</em></p>
