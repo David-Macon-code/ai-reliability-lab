@@ -23,23 +23,37 @@ Applying AIF-C01 cert knowledge on responsible AI, content filtering, Bedrock se
 
 ## Highlights
 
-- Reliable batch evaluation harness with retries, flake classification, and Bedrock Guardrails
+- Reliable LLM evaluation harness with retries, flake classification, and Bedrock Guardrails
 - Demonstrated ~82% cost reduction via guardrails on adversarial prompts
-- Compared Claude Sonnet 4.5 vs Haiku 4.5 on adversarial jailbreak set
+- Compared Claude Sonnet 4.5 vs Haiku 4.5: speed, reliability, and cost trade-offs
 
-Haiku 4.5 delivered:
+### Model & Cost Comparison: Sonnet 4.5 vs Haiku 4.5
 
-- **100% success** without guardrails (vs Sonnet ~92%)
-- ~35% lower average latency
-- ~50% fewer output tokens → ~65–70% lower real cost at Bedrock pricing
+Adversarial set | 3 runs per config | Bedrock Converse API
 
-![Sonnet vs Haiku Guardrail Comparison](sonnet_vs_haiku_guardrail_comparison.png)
+![Success & Guardrail Comparison](sonnet_vs_haiku_guardrail_comparison.png)
 <p align="center"><em>Success rate and guardrail intervention — Haiku (orange) vs Sonnet (blue)</em></p>
 
-![Latency Comparison – Sonnet vs Haiku](sonnet_vs_haiku_latency.png)
-<p align="center"><em>Average latency per successful call — Haiku consistently faster</em></p>
+![Latency Comparison](sonnet_vs_haiku_latency.png)
+<p align="center"><em>Avg latency per success — Haiku consistently faster</em></p>
 
-Full details in [Haiku_Guardrail_Comparison.ipynb](Haiku_Guardrail_Comparison.ipynb)
+![Cost Savings – No Guardrail](cost_savings_no_gr.png)
+<p align="center"><em>Total cost for 36 runs (no guardrail) — using Sonnet pricing for fair comparison</em></p>
+
+![Cost Savings – Guarded Runs](cost_savings_guarded.png)
+<p align="center"><em>Guarded cost — Haiku uses real lower pricing (~$1/$5 per M)</em></p>
+
+**Key takeaways**
+
+- Haiku 4.5: 100% success without guardrails (vs Sonnet 91.7%)
+- ~35% lower latency
+- ~50% fewer output tokens → ~65–70% lower real inference cost
+- Guardrails block similarly (~75–100%) with no quality loss (100% exact-match)
+
+Full analysis in notebooks:
+
+- [Week3_Guardrail_Visualization.ipynb](Week3_Guardrail_Visualization.ipynb)
+- [Haiku_Guardrail_Comparison.ipynb](Haiku_Guardrail_Comparison.ipynb)
 
 ### Progress Overview
 
