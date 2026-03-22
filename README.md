@@ -29,30 +29,47 @@ Applying AIF-C01 cert knowledge on responsible AI, content filtering, Bedrock se
 
 ### Model & Cost Comparison: Sonnet 4.5 vs Haiku 4.5
 
-Adversarial set | 3 runs per config | Bedrock Converse API
+Adversarial jailbreak set | 3 runs per config | Bedrock Converse API
 
-![Success & Guardrail Comparison](sonnet_vs_haiku_guardrail_comparison.png)
+**Key findings**
+
+- Haiku 4.5 achieved **100% success** without guardrails (vs Sonnet 91.7%)
+- ~35% lower average latency per success
+- ~50% fewer output tokens → ~65–70% lower real inference cost at Bedrock pricing
+- Guardrails block similarly (~75–100%) with no quality drop (100% exact-match)
+
+#### Success Rate & Guardrail Intervention
+
+![Success & Guardrail Comparison](sonnet_vs_haiku_guardrail_comparison.png){width=80%}
 <p align="center"><em>Success rate and guardrail intervention — Haiku (orange) vs Sonnet (blue)</em></p>
 
-![Latency Comparison](sonnet_vs_haiku_latency.png)
+---
+
+#### Latency per Successful Call
+
+![Latency Comparison](sonnet_vs_haiku_latency.png){width=60%}
 <p align="center"><em>Avg latency per success — Haiku consistently faster</em></p>
 
-![Cost Savings – No Guardrail](cost_savings_no_gr.png)
+---
+
+#### Cost Comparison (No Guardrail)
+
+![Cost Savings – No Guardrail](cost_savings_no_gr.png){width=60%}
 <p align="center"><em>Total cost for 36 runs (no guardrail) — using Sonnet pricing for fair comparison</em></p>
 
-![Cost Savings – Guarded Runs](cost_savings_guarded.png)
-<p align="center"><em>Guarded cost — Haiku uses real lower pricing (~$1/$5 per M)</em></p>
+---
 
-**Key takeaways**
+#### Cost Comparison (Guarded Runs)
 
-- Haiku 4.5: 100% success without guardrails (vs Sonnet 91.7%)
-- ~35% lower latency
-- ~50% fewer output tokens → ~65–70% lower real inference cost
-- Guardrails block similarly (~75–100%) with no quality loss (100% exact-match)
+![Cost Savings – Guarded Runs](cost_savings_guarded.png){width=60%}
+<p align="center"><em>Guarded runs — Haiku uses real lower pricing (~$1/$5 per M)</em></p>
 
-Full analysis in notebooks:
+**Bottom line**  
+Haiku 4.5 delivers comparable or better reliability with significant speed and cost advantages — strong candidate for production workloads.
 
-- [Week3_Guardrail_Visualization.ipynb](Week3_Guardrail_Visualization.ipynb)
+Full notebooks:  
+
+- [Week3_Guardrail_Visualization.ipynb](Week3_Guardrail_Visualization.ipynb)  
 - [Haiku_Guardrail_Comparison.ipynb](Haiku_Guardrail_Comparison.ipynb)
 
 ### Progress Overview
