@@ -67,11 +67,6 @@ Adversarial jailbreak set | 3 runs per config | Bedrock Converse API
 **Bottom line**  
 Haiku 4.5 delivers comparable or better reliability with significant speed and cost advantages — strong candidate for production workloads.
 
-Full notebooks:  
-
-- [Week3_Guardrail_Visualization.ipynb](Week3_Guardrail_Visualization.ipynb)  
-- [Haiku_Guardrail_Comparison.ipynb](Haiku_Guardrail_Comparison.ipynb)
-
 ### Progress Overview
 
 | Week | Status          | Key Outcomes                                                                 |
