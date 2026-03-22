@@ -37,6 +37,12 @@ Adversarial set | 3 runs per config | Bedrock Converse API
 ![Latency Comparison](sonnet_vs_haiku_latency.png)
 <p align="center"><em>Avg latency per success — Haiku consistently faster</em></p>
 
+![Cost Savings – No Guardrail](cost_savings_no_gr.png)
+<p align="center"><em>Total cost for 36 runs (no guardrail) — using Sonnet pricing for fair comparison</em></p>
+
+![Cost Savings – Guarded Runs](cost_savings_guarded.png)
+<p align="center"><em>Guarded cost — Haiku uses real lower pricing (~$1/$5 per M)</em></p>
+
 **Key takeaways**
 
 - Haiku 4.5: 100% success without guardrails (vs Sonnet 91.7%)
