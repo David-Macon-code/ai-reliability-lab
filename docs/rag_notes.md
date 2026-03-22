@@ -40,3 +40,11 @@ Resources:
 
 - Course: Building Generative AI Applications Using Amazon Bedrock
 - Docs: <https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base.html>
+
+## Local vs SageMaker Studio Experience (Day 22)
+
+- Completed Module 5 locally after SageMaker was slow/buggy (2 restarts needed)
+- Same notebooks ran faster/more reliably on laptop Jupyter
+- Cost: $0 compute vs. billed Studio instance time
+- Takeaway: For Bedrock API prototyping (InvokeModel, Converse, Knowledge Bases), local Jupyter is often better
+- Generated sample output: [sales.csv](sales.csv)
