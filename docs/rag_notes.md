@@ -48,3 +48,11 @@ Resources:
 - Cost: $0 compute vs. billed Studio instance time
 - Takeaway: For Bedrock API prototyping (InvokeModel, Converse, Knowledge Bases), local Jupyter is often better
 - Generated sample output: [sales.csv](sales.csv)
+
+## Course Completion – Building Generative AI Applications Using Amazon Bedrock
+
+- Completed: March 22, 2026
+- Certificate awarded to David Macon
+- Key modules focused on: Knowledge Bases, Titan Embeddings integration, RAG workflows
+- Hands-on labs run locally on laptop Jupyter (faster/more reliable than SageMaker Studio)
+- Sample output from Module 5: [sales.csv](../sales.csv)
