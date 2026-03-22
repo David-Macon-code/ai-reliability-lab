@@ -21,7 +21,25 @@ Applying AIF-C01 cert knowledge on responsible AI, content filtering, Bedrock se
 
 **Current Status (as of March 21, 2026)**
 
+## Highlights
 
+- Reliable batch evaluation harness with retries, flake classification, and Bedrock Guardrails
+- Demonstrated ~82% cost reduction via guardrails on adversarial prompts
+- Compared Claude Sonnet 4.5 vs Haiku 4.5 on adversarial jailbreak set
+
+Haiku 4.5 delivered:
+
+- **100% success** without guardrails (vs Sonnet ~92%)
+- ~35% lower average latency
+- ~50% fewer output tokens → ~65–70% lower real cost at Bedrock pricing
+
+![Sonnet vs Haiku Guardrail Comparison](sonnet_vs_haiku_guardrail_comparison.png)
+<p align="center"><em>Success rate and guardrail intervention — Haiku (orange) vs Sonnet (blue)</em></p>
+
+![Latency Comparison – Sonnet vs Haiku](sonnet_vs_haiku_latency.png)
+<p align="center"><em>Average latency per successful call — Haiku consistently faster</em></p>
+
+Full details in [Haiku_Guardrail_Comparison.ipynb](Haiku_Guardrail_Comparison.ipynb)
 
 ### Progress Overview
 
