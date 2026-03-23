@@ -72,3 +72,12 @@ Resources:
 - "Account not authorized" on batch inference — requires support case
 - Submitted support request for review (use case: personal AI bootcamp / RAG prototyping)
 - Lesson: AWS Bedrock often requires manual approval for new accounts on advanced features
+
+
+## Day 23: Manual RAG Simulation (Baseline vs Expected)
+
+| Query                              | Baseline Result (no context) | Expected Answer (from toy_dataset.txt) | Improvement Potential |
+|------------------------------------|------------------------------|----------------------------------------|-----------------------|
+| Who is Sophia Chen...              | api_failed (throughput block) | Sophia Chen is 31 and lives in Seattle, Washington. She develops AI applications. | High (generation would succeed with context) |
+| What is Fuquay-Varina known for?   | api_failed                   | Fuquay-Varina is a growing town in Wake County, North Carolina, near Raleigh. It is known for its family-friendly community and parks. | High |
+| What is Dr. Raj Patel's profession?| api_failed                   | Dr. Raj Patel is a university professor specializing in computer science. | High |
