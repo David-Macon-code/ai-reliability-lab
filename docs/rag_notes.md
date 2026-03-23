@@ -65,3 +65,10 @@ Resources:
 - Cosine similarity example:
   - Text 1 vs Text 3 (location overlap): ~0.XX (high, as expected)
   - Notebook: [Day22_Titan_Embeddings_Test.ipynb](../Day22_Titan_Embeddings_Test.ipynb)
+
+## Bedrock Access Limitation (March 22, 2026)
+
+- On-demand Converse / InvokeModel blocked for major models (Claude 4.5 family, Llama 3.1, Mistral, Titan variants)
+- "Account not authorized" on batch inference — requires support case
+- Submitted support request for review (use case: personal AI bootcamp / RAG prototyping)
+- Lesson: AWS Bedrock often requires manual approval for new accounts on advanced features
