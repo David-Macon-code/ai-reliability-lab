@@ -1,4 +1,4 @@
-# Day 22 – RAG Foundations & Bedrock Reality Check (March 22, 2026)
+# Day 22 – RAG Foundations & Bedrock Reality Check 
 
 ## Status Summary
 
