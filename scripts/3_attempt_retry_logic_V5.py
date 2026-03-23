@@ -191,25 +191,12 @@ def main():
         writer.writeheader()
 
         for test_idx, test in enumerate(tests):
-            # Get raw value first (for debug)
-            raw_input = test.get("input")
-            raw_bio = test.get("bio")
+                    # TEMPORARY BASELINE TEST – single hard-coded query
+            user_message = "Who is Sophia Chen and where does she live?"
 
-            print(f"DEBUG: Raw 'input': {raw_input!r} | Raw 'bio': {raw_bio!r}")
+        print(f"DEBUG: Using baseline test query: {user_message}")
 
-            # Prefer 'input', fallback to 'bio', ultimate fallback to non-blank
-            user_message = raw_input or raw_bio or "Extract details from sample text here."
-
-            # Strip and ensure non-empty
-            user_message = (user_message or "").strip()
-
-            if not user_message:
-                user_message = "Extract details from sample text here."
-                print(f"DEBUG: Used fallback message for test {test_idx+1} (empty after strip)")
-            else:
-                print(f"DEBUG: Using user_message for test {test_idx+1}: {user_message[:50]}...")
-
-            for run_id in range(args.runs):
+        for run_id in range(args.runs):
                 print(f"Running test {test_idx+1}/{len(tests)} - run {run_id+1}/{args.runs}")
 
                 result, error = run_converse_single(
