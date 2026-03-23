@@ -207,6 +207,7 @@ Week 4 extends reliability to retrieval-augmented generation (RAG) workflows usi
 
 See [rag_notes.md](docs/rag_notes.md) for details and [Day22_Titan_Embeddings_Test.ipynb](Day22_Titan_Embeddings_Test.ipynb) for embeddings demo.
 
+
 **Day 23 — Toy Dataset & Retrieval Sim**
 
 **Day 24 — RAG Pipeline Integration**
