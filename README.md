@@ -197,7 +197,15 @@ Haiku 4.5 delivers comparable or better reliability with significant speed and c
 
 Week 4 extends reliability to retrieval-augmented generation (RAG) workflows using Bedrock-native tools. Focus: build a toy RAG pipeline, reduce hallucinations, optimize cost/token usage, and frame for enterprise use cases (security, scalability).
 
-**Day 22 — RAG Basics & Notes**
+## Week 4 Progress (Day 22 – March 22, 2026)
+
+- Completed AWS Bedrock RAG course (certificate awarded)
+- Tested Titan Embeddings v2 locally (1024 dims, cosine similarity)
+- Created toy dataset & Knowledge Base (`8OOQBDOPXT`)
+- Retrieval working; on-demand generation blocked by Bedrock restrictions
+- Pivoting to Batch Inference on Day 23
+
+See [rag_notes.md](docs/rag_notes.md) for details and [Day22_Titan_Embeddings_Test.ipynb](Day22_Titan_Embeddings_Test.ipynb) for embeddings demo.
 
 **Day 23 — Toy Dataset & Retrieval Sim**
 
