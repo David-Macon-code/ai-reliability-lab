@@ -81,3 +81,22 @@ Resources:
 | Who is Sophia Chen...              | api_failed (throughput block) | Sophia Chen is 31 and lives in Seattle, Washington. She develops AI applications. | High (generation would succeed with context) |
 | What is Fuquay-Varina known for?   | api_failed                   | Fuquay-Varina is a growing town in Wake County, North Carolina, near Raleigh. It is known for its family-friendly community and parks. | High |
 | What is Dr. Raj Patel's profession?| api_failed                   | Dr. Raj Patel is a university professor specializing in computer science. | High |
+
+## Day 24 – Prompt Engineering Best Practices for Amazon Bedrock (Completed March 23–24, 2026)
+
+Certificate awarded.
+
+### Key Bedrock-Specific Takeaways
+
+- Role prompting: Use clear roles (e.g., "You are an expert data extractor") to improve accuracy on Claude models.
+- Structured outputs: Leverage `outputConfig` with JSON schema for guaranteed valid JSON (near 100% success on supported models like Sonnet 4.5).
+- Temperature & top_p tuning: Start with temperature=0.0 for deterministic extraction; increase slightly (0.2–0.5) for creative tasks.
+- Chain-of-thought: Explicitly instruct "Think step by step" for reasoning-heavy queries.
+- Few-shot examples: Include 1–3 examples in prompt for better entity extraction consistency.
+- Guardrail instructions: Combine with Bedrock Guardrails for injection defense without heavy prompting.
+- Model-specific quirks: Claude models respond best to detailed instructions; avoid overly verbose prompts on Haiku.
+- Cost-aware prompting: Keep prompts concise to minimize token usage (Haiku excels here).
+
+Notebook reference: [Day24_Prompt_Engineering_Notes.ipynb] (create if needed)
+
+Next: Batch job submission (awaiting support clearance) and hallucination comparison.
