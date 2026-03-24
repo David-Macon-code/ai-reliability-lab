@@ -191,12 +191,12 @@ def main():
         writer.writeheader()
 
         for test_idx, test in enumerate(tests):
-                    # TEMPORARY BASELINE TEST – single hard-coded query
+            # TEMPORARY BASELINE TEST – single hard-coded query (no context)
             user_message = "Who is Sophia Chen and where does she live?"
 
-        print(f"DEBUG: Using baseline test query: {user_message}")
+            print(f"DEBUG: Using baseline test query: {user_message}")
 
-        for run_id in range(args.runs):
+            for run_id in range(args.runs):
                 print(f"Running test {test_idx+1}/{len(tests)} - run {run_id+1}/{args.runs}")
 
                 result, error = run_converse_single(
