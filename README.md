@@ -25,7 +25,7 @@ Applying AIF-C01 cert knowledge on responsible AI, content filtering, Bedrock se
 
 <p align="left">
   <img src="certs/Building-Generative-AI-Applications-Using-Amazon-Bedrock.jpg" width="320" alt="Building Generative AI Applications Using Amazon Bedrock">
-  <img src="certs/Building-cost-effective-RAG-applications.jpg" width="320" alt="Building cost-effective RAG applications">
+  <img src="certs/Building-cost-effective-RAG-applications.jpg" width="320" alt="Building cost-effective RAG applications with Amazon Bedrock Knowledge Bases and Amazon S3 Vectors">
   <img src="certs/NEW-Ultimate-AWS-Certified-Al-Practitioner-AlFC01.jpg" width="320" alt="Ultimate AWS Certified AI Practitioner AIFC01">
 </p>
 
