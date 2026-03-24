@@ -100,3 +100,11 @@ Certificate awarded.
 Notebook reference: [Day24_Prompt_Engineering_Notes.ipynb] (create if needed)
 
 Next: Batch job submission (awaiting support clearance) and hallucination comparison.
+
+## Guardrails on RAG
+
+- Apply Bedrock Guardrails at the Knowledge Base or Converse level to block prompt injection and PII leakage.
+- Recommended: Content filters for toxic/harmful content + sensitive data redaction for extraction tasks.
+- In our toy setup: Guardrails would prevent refusals on fictional data while still protecting real PII.
+- Future improvement: Combine Guardrails with structured outputs for safer RAG pipelines.
+
