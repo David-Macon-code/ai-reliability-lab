@@ -264,12 +264,16 @@ Completed "Amazon Bedrock Getting Started" (certificate awarded). Updated rag_no
 ***[Day 26](./docs/Day26.md)**  – Manual RAG + Hallucination Baseline (cont)
 Ran baseline (no context) using batch script. Documented on-demand throughput block on Haiku 4.5. Prepared manual RAG simulation with retrieved KB chunks. Retrieval working reliably.
 
+***[Day 27](./docs/Day27.md)**  – Manual RAG Simulation + Developing Generative AI Solutions
+
 **In Progress**  
 
 - Batch inference job (awaiting support case #177423331600991 clearance)  
 - Hallucination comparison (baseline vs manual RAG)  
 - Cost analysis and Guardrails on RAG notes  
-- Final Week 4 RAG Report and polish**Day 25 — Hallucination Comparison**
+- Final Week 4 RAG Report and polish
+
+**Day 25 — Hallucination Comparison**
 
 **Day 27–29 — Optimization & Enterprise Framing**
 
