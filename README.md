@@ -26,12 +26,12 @@ Applying AIF-C01 cert knowledge on responsible AI, content filtering, Bedrock se
 <p align="left">
   <img src="certs/Building-Generative-AI-Applications-Using-Amazon-Bedrock.jpg" width="320" alt="Building Generative AI Applications Using Amazon Bedrock">
   <img src="certs/Building-cost-effective-RAG-applications.jpg" width="320" alt="Building cost-effective RAG applications">
-  <img src="certs/Prompt-Engineering-Best-Practices.jpg" width="320" alt="Prompt Engineering Best Practices for Amazon Bedrock Models">
+  <img src="certs/[NEW]-Ultimate-AWS-Certified-Al-Practitioner-AlFC01.jpg" width="320" alt="Ultimate AWS Certified AI Practitioner AIFC01">
 </p>
 
 ### Additional Training
 
-- [Exam Prep Plan Overview: AWS Certified AI Practitioner (AIF-C01)](certs/Exam-Prep-Plan-Overview-AWS-Certified-AI-Practitioner.jpg)
+- [Prompt Engineering Best Practices for Amazon Bedrock Models](certs/Prompt-Engineering-Best-Practices.jpg)
 - [Exam Prep Overview: AWS Certified AI Practitioner (AIF-C01)](certs/Exam-Prep-Overview-AWS-Certified-AI-Practitioner.jpg)
 - [Official Practice Question Set: AWS Certified AI Practitioner (AIF-C01)](certs/Official-Practice-Question-Set-AWS-Certified-AI-Practitioner.jpg)
 
