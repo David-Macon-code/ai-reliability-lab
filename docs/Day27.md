@@ -1,13 +1,16 @@
-## Day 27 – Manual RAG Simulation 
+## Day 27 – Manual RAG Simulation + Developing Generative AI Solutions (March 24, 2026)
 
-**Note**: On-demand generation blocked by AWS (support case #177423331600991 pending). Using manual simulation with retrieved chunks.
+## Completed
 
-| Query                                      | Baseline (no context)      | Expected RAG Answer (from KB chunks) | Improvement Potential |
-|--------------------------------------------|----------------------------|--------------------------------------|-----------------------|
-| Who is Sophia Chen and where does she live?| Blocked (throughput error) | Sophia Chen is 31 and lives in Seattle, Washington. She develops AI applications. | High – context provides accurate details |
-| What is Fuquay-Varina known for?           | Blocked                    | Fuquay-Varina is a growing town in Wake County, North Carolina, near Raleigh. Known for family-friendly community and parks. | High |
-| What is Dr. Raj Patel's profession?        | Blocked                    | Dr. Raj Patel is a university professor specializing in computer science. | High |
-| Where is Maria Gonzalez from and what does she do? | Blocked               | Maria Gonzalez, 28, is from Miami, Florida. She is a marketing specialist. | High |
-| Summarize the AnyCompany 10-K financial highlights | Blocked               | Financial statements include notes on position, operations, and cash flow. Strong reputation, wide range of products. | Medium – pulls directly from PDF |
+| Item | Status | Details |
+|------|--------|---------|
+| Manual RAG simulation (baseline vs expected from KB chunks) | **Completed** | Documented retrieval success and generation block due to AWS on-demand restrictions. |
+| Developing Generative Artificial Intelligence Solutions | **Completed** | Certificate awarded to David Macon. |
 
-**Conclusion**: Retrieval is working. Generation is blocked by AWS policy. Manual RAG would significantly reduce hallucinations and improve accuracy if generation were available.
+## Key Takeaways from Course
+
+- Prompt engineering and RAG are foundational for reliable GenAI applications.
+- Context retrieval significantly reduces hallucinations compared to pure LLM generation.
+- Model selection, cost management, and guardrails are critical for production use cases.
+
+**Project Observation**: Retrieval from Knowledge Base (`8OOQBDOPXT`) works reliably. On-demand generation remains blocked (support case #177423331600991 pending). Manual RAG simulation shows clear potential for improved accuracy when generation is available.
