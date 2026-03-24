@@ -117,3 +117,27 @@ Next: Batch job submission (awaiting support clearance) and hallucination compar
 
 **Key Insight**:  
 Even though on-demand generation is currently blocked, the RAG approach (when functional) should reduce both hallucination rate and long-term cost by producing more accurate answers on the first try, minimizing retries and follow-up queries.
+
+## Day 29 – Enterprise Framing (March 25, 2026)
+
+**Completed**
+
+### Security
+
+- Use Bedrock Guardrails with Knowledge Bases to block prompt injection, PII leakage, and harmful content.
+- Apply least-privilege IAM roles for the Knowledge Base service role.
+- Enable detailed logging and monitoring for production RAG deployments.
+
+### Scalability
+
+- Knowledge Bases with S3 Vectors scale better than pure in-memory embeddings for larger datasets.
+- Batch Inference is the recommended path for high-volume or restricted workloads (our current situation).
+- Consider hybrid approach: Titan Embeddings for initial retrieval + larger models (Sonnet) only when needed.
+
+### Cost Optimization
+
+- RAG reduces long-term token usage by improving first-attempt accuracy and lowering hallucinations/retries.
+- Use Haiku for simple extraction tasks and Sonnet only for complex reasoning.
+- S3 Vectors + proper chunking can reduce storage costs by up to 90% compared to full vector DB solutions.
+
+**Overall Recommendation**: Start with Bedrock Knowledge Bases + Guardrails for most production RAG use cases. Monitor token usage closely and pivot to Batch Inference when on-demand limits are hit.
