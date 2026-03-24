@@ -1,4 +1,4 @@
-## Day 27 – Manual RAG Simulation + Developing Generative AI Solutions (March 24, 2026)
+## Day 27 – Manual RAG Simulation + Developing Generative AI Solutions 
 
 ## Completed
 
