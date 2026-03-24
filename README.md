@@ -219,7 +219,14 @@ See [rag_notes.md](docs/rag_notes.md) for details and [Day22_Titan_Embeddings_Te
 
 See [rag_notes.md](docs/rag_notes.md) for details.
 
-**Day 24 — RAG Pipeline Integration**
+***[Day 24](./docs/Day24.md)** 
+
+- Completed "Prompt Engineering Best Practices for Amazon Bedrock Models" (certificate awarded)
+- Added Bedrock-specific prompting tips to rag_notes.md
+- Batch input ready; awaiting support clearance for job submission
+
+See [rag_notes.md](docs/rag_notes.md) for details.
+
 
 **Day 25 — Hallucination Comparison**
 
