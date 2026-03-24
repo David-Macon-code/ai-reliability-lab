@@ -199,7 +199,6 @@ Haiku 4.5 delivers comparable or better reliability with significant speed and c
 
   </details>
 
-
 ### Current Setup Highlights
 
 - Model: `global.anthropic.claude-sonnet-4-5-20250929-v1:0` (inference profile)  
@@ -225,9 +224,6 @@ Week 4 extends reliability to retrieval-augmented generation (RAG) workflows usi
 
 See [rag_notes.md](docs/rag_notes.md) for details and [Day22_Titan_Embeddings_Test.ipynb](Day22_Titan_Embeddings_Test.ipynb) for embeddings demo.
 
-
-
-
 ***[Day 23](./docs/Day23.md)** — Toy Dataset & Retrieval Sim**
 
 - Created batch input JSONL & uploaded to S3
@@ -237,14 +233,13 @@ See [rag_notes.md](docs/rag_notes.md) for details and [Day22_Titan_Embeddings_Te
 
 See [rag_notes.md](docs/rag_notes.md) for details.
 
-***[Day 24](./docs/Day24.md)** 
+***[Day 24](./docs/Day24.md)**
 
 - Completed "Prompt Engineering Best Practices for Amazon Bedrock Models" (certificate awarded)
 - Added Bedrock-specific prompting tips to rag_notes.md
 - Batch input ready; awaiting support clearance for job submission
 
 See [rag_notes.md](docs/rag_notes.md) for details.
-
 
 **Day 25 — Hallucination Comparison**
 
@@ -254,10 +249,9 @@ See [rag_notes.md](docs/rag_notes.md) for details.
 
 **Day 30 — Polish & Push**
 
-
 Built with AWS Bedrock + Claude 4.5 family – ongoing PromptOps learning lab.
 
-**Current status:** 
+**Current status:**
 
 - #AWS #AWSBedrock #PromptOps #ResponsibleAI #AIFC01*
 
