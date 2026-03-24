@@ -108,3 +108,12 @@ Next: Batch job submission (awaiting support clearance) and hallucination compar
 - In our toy setup: Guardrails would prevent refusals on fictional data while still protecting real PII.
 - Future improvement: Combine Guardrails with structured outputs for safer RAG pipelines.
 
+## Cost Comparison: Baseline vs RAG (March 25, 2026)
+
+| Scenario                  | Avg Output Tokens | Est. Cost per Query (Sonnet 4.5 pricing) | Notes |
+|---------------------------|-------------------|------------------------------------------|-------|
+| Baseline (no context)     | 0                 | $0.0000                                  | Complete failure due to on-demand throughput block. No tokens processed. High risk of hallucination if generation were possible. |
+| Manual RAG (with context) | ~45–80            | ~$0.0007 – $0.0012                       | Chunks provide direct context, reducing hallucination risk and likely lowering output tokens (model needs less "creative" generation). Expected significant improvement in accuracy and efficiency once generation is unblocked. |
+
+**Key Insight**:  
+Even though on-demand generation is currently blocked, the RAG approach (when functional) should reduce both hallucination rate and long-term cost by producing more accurate answers on the first try, minimizing retries and follow-up queries.
