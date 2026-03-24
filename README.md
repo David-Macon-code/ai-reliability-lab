@@ -37,7 +37,7 @@ Applying AIF-C01 cert knowledge on responsible AI, content filtering, Bedrock se
 
 *All certificates are stored in the [`/certs/`](certs/) folder.*
 
-**Current Status (as of March 23, 2026)**
+**Current Status (as of March 24, 2026)**
 
 ## Highlights
 
@@ -210,9 +210,28 @@ Haiku 4.5 delivers comparable or better reliability with significant speed and c
 
 - **[3_attempt_retry_logic_V5.py](scripts/3_attempt_retry_logic_V5.py)** — core evaluation script with retry, leak detection, exact-match scoring  
 
-### Next Steps — Week 4: RAG + Cost Optimization + Enterprise Framing
+### Week 4: RAG + Cost Optimization + Enterprise Framing & Real-World AWS Constraints
 
-Week 4 extends reliability to retrieval-augmented generation (RAG) workflows using Bedrock-native tools. Focus: build a toy RAG pipeline, reduce hallucinations, optimize cost/token usage, and frame for enterprise use cases (security, scalability).
+**Completed**
+
+- Built and synced Bedrock Knowledge Base (`8OOQBDOPXT`) with toy dataset and sample 10-K PDF
+- Tested Titan Embeddings v2 locally (1024 dims, cosine similarity)
+- Created batch input JSONL and uploaded to S3 for future inference
+- Completed three core AWS Skill Builder courses:
+  - Building Generative AI Applications Using Amazon Bedrock
+  - Building cost-effective RAG applications with Amazon Bedrock Knowledge Bases and Amazon S3 Vectors
+  - Prompt Engineering Best Practices for Amazon Bedrock Models
+- Documented on-demand generation blocking (throughput restrictions) and manual RAG workaround
+- Retrieval from KB validated (chunks returned successfully)
+
+**In Progress / Pending**
+
+- Batch inference job (awaiting support case #177423331600991 clearance)
+- Manual RAG vs baseline hallucination comparison
+- Cost analysis and Guardrails on RAG
+- Final Week 4 RAG Report and polish
+
+See detailed notes in [`rag_notes.md`](docs/rag_notes.md) and certificates in [`/certs/`](certs/).
 
 - **[Day 22](./docs/Day22.md)** -  RAG Foundations & Bedrock Reality Check
 
@@ -233,17 +252,24 @@ See [rag_notes.md](docs/rag_notes.md) for details and [Day22_Titan_Embeddings_Te
 
 See [rag_notes.md](docs/rag_notes.md) for details.
 
-***[Day 24](./docs/Day24.md)**
+***[Day 24](./docs/Day24.md)** – Prompt Engineering Best Practices
 
 - Completed "Prompt Engineering Best Practices for Amazon Bedrock Models" (certificate awarded)
 - Added Bedrock-specific prompting tips to rag_notes.md
 - Batch input ready; awaiting support clearance for job submission
 
-See [rag_notes.md](docs/rag_notes.md) for details.
+***[Day 25](./docs/Day25.md)**  Manual RAG + Hallucination Baseline
+Completed "Amazon Bedrock Getting Started" (certificate awarded). Updated rag_notes.md with course notes. Prepared for manual RAG comparison.
 
-**Day 25 — Hallucination Comparison**
+***[Day 26](./docs/Day26.md)**  – Manual RAG + Hallucination Baseline (cont)
+Ran baseline (no context) using batch script. Documented on-demand throughput block on Haiku 4.5. Prepared manual RAG simulation with retrieved KB chunks. Retrieval working reliably.
 
-**Day 26 — Model Comparison**
+**In Progress**  
+
+- Batch inference job (awaiting support case #177423331600991 clearance)  
+- Hallucination comparison (baseline vs manual RAG)  
+- Cost analysis and Guardrails on RAG notes  
+- Final Week 4 RAG Report and polish**Day 25 — Hallucination Comparison**
 
 **Day 27–29 — Optimization & Enterprise Framing**
 
