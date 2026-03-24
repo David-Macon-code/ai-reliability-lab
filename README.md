@@ -37,8 +37,6 @@ Applying AIF-C01 cert knowledge on responsible AI, content filtering, Bedrock se
 
 *All certificates are stored in the [`/certs/`](certs/) folder.*
 
-*All certificates are stored in the [`/certs/`](certs/) folder.*
-
 **Current Status (as of March 23, 2026)**
 
 ## Highlights
