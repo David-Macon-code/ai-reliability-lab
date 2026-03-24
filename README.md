@@ -19,7 +19,25 @@ Applying AIF-C01 cert knowledge on responsible AI, content filtering, Bedrock se
 - Achieved 100% exact-match extraction reliability across configs  
 - Applied AIF-C01 knowledge (responsible AI, content filtering, Guardrails) to real batch pipelines
 
-**Current Status (as of March 21, 2026)**
+## Certifications & Training (AWS Skill Builder + Udemy)
+
+### Core Courses
+
+![Building Generative AI Applications Using Amazon Bedrock](certs/Building-Generative-AI-Applications-Using-Amazon-Bedrock.png)
+
+![Building cost-effective RAG applications with Amazon Bedrock Knowledge Bases and Amazon S3 Vectors](certs/Building-cost-effective-RAG-applications.png)
+
+![Prompt Engineering Best Practices for Amazon Bedrock Models](certs/Prompt-Engineering-Best-Practices.png)
+
+### Additional Training
+
+- [Exam Prep Plan Overview: AWS Certified AI Practitioner (AIF-C01)](certs/Exam-Prep-Plan-Overview-AWS-Certified-AI-Practitioner.png)
+- [Exam Prep Overview: AWS Certified AI Practitioner (AIF-C01)](certs/Exam-Prep-Overview-AWS-Certified-AI-Practitioner.png)
+- [Official Practice Question Set: AWS Certified AI Practitioner (AIF-C01)](certs/Official-Practice-Question-Set-AWS-Certified-AI-Practitioner.png)
+
+*All certificates are stored in the [`/certs/`](certs/) folder.*
+
+**Current Status (as of March 23, 2026)**
 
 ## Highlights
 
@@ -239,8 +257,8 @@ See [rag_notes.md](docs/rag_notes.md) for details.
 
 Built with AWS Bedrock + Claude 4.5 family – ongoing PromptOps learning lab.
 
-**Current status:** Day 21 complete – Week 3 fully wrapped with production-grade batch harness, retry/resilience, temperature sweep (100% pass), guardrail sweeps (~82% cost savings, 83–100% block rate), and polished observability metrics. Ready for Week 4 RAG + Titan Embeddings.
+**Current status:** 
 
-* AWSBedrock #PromptOps #ResponsibleAI #AIFC01*
+- #AWS #AWSBedrock #PromptOps #ResponsibleAI #AIFC01*
 
 [MIT license](#MIT-1-ov-file)
