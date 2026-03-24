@@ -23,7 +23,7 @@ Applying AIF-C01 cert knowledge on responsible AI, content filtering, Bedrock se
 
 ### Core Courses
 
-![Building Generative AI Applications Using Amazon Bedrock](certs/Building-Generative-AI-Applications-Using-Amazon-Bedrock.jpg)
+![Building Generative AI Applications Using Amazon Bedrock](/certs/Building-Generative-AI-Applications-Using-Amazon-Bedrock.jpg)
 
 ![Building cost-effective RAG applications with Amazon Bedrock Knowledge Bases and Amazon S3 Vectors](certs/Building-cost-effective-RAG-applications.jpg)
 
