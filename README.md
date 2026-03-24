@@ -31,9 +31,9 @@ Applying AIF-C01 cert knowledge on responsible AI, content filtering, Bedrock se
 
 ### Additional Training
 
-- [Exam Prep Plan Overview: AWS Certified AI Practitioner (AIF-C01)](certs/Exam-Prep-Plan-Overview-AWS-Certified-AI-Practitioner.png)
-- [Exam Prep Overview: AWS Certified AI Practitioner (AIF-C01)](certs/Exam-Prep-Overview-AWS-Certified-AI-Practitioner.png)
-- [Official Practice Question Set: AWS Certified AI Practitioner (AIF-C01)](certs/Official-Practice-Question-Set-AWS-Certified-AI-Practitioner.png)
+- [Exam Prep Plan Overview: AWS Certified AI Practitioner (AIF-C01)](certs/Exam-Prep-Plan-Overview-AWS-Certified-AI-Practitioner.jpg)
+- [Exam Prep Overview: AWS Certified AI Practitioner (AIF-C01)](certs/Exam-Prep-Overview-AWS-Certified-AI-Practitioner.jpg)
+- [Official Practice Question Set: AWS Certified AI Practitioner (AIF-C01)](certs/Official-Practice-Question-Set-AWS-Certified-AI-Practitioner.jpg)
 
 *All certificates are stored in the [`/certs/`](certs/) folder.*
 
