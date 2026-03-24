@@ -273,8 +273,6 @@ Ran baseline (no context) using batch script. Documented on-demand throughput bl
 - Cost analysis and Guardrails on RAG notes  
 - Final Week 4 RAG Report and polish
 
-**Day 25 — Hallucination Comparison**
-
 **Day 27–29 — Optimization & Enterprise Framing**
 
 **Day 30 — Polish & Push**
