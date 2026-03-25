@@ -299,7 +299,6 @@ Completed "Designing Secure Retrieval Augmented Generation (RAG) Applications wi
 
 - [`README.md`](README.md) — Project overview and Week 4 progress
 - [`docs/Day22.md`](docs/Day22.md) through [`docs/Day30.md`](docs/Day30.md) — Daily progress logs
-- [`docs/Week_4_Findings.md`](docs/Week_4_Findings.md) — Detailed Week 4 findings and lessons learned
 
 </details>
 
