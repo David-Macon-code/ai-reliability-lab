@@ -209,6 +209,8 @@ Adversarial jailbreak set | 3 runs per config | Bedrock Converse API
 
 ### Week 4
 
+- **[Week 4 Findings](./docs/Week_4_Findings.md)** - Week 4 focused on implementing Retrieval-Augmented Generation (RAG) using Amazon Bedrock. I successfully built a working Knowledge Base, validated retrieval, and prepared batch infrastructure. However, on-demand generation (Converse / InvokeModel) was heavily restricted, forcing a manual RAG simulation and pivot toward Batch Inference.
+
 ### Week 4 Overview – RAG Foundations & Real-World AWS Constraints**
 
 | Category                          | Completed Tasks |
@@ -220,8 +222,6 @@ Adversarial jailbreak set | 3 runs per config | Bedrock Converse API
 | **Documentation & Analysis**      | - Documented on-demand generation blocking<br>- Documented real-world throughput restrictions |
 | **Learning & Optimization**       | - Completed 8 AWS Skill Builder courses focused on RAG prompt engineering, security, and cost optimization |
 | **Support & Escalation**          | - Opened support case #17742333160099 |
-
-- **[Week 4 Findings](./docs/Week_4_Findings.md)** - Week 4 focused on implementing Retrieval-Augmented Generation (RAG) using Amazon Bedrock. I successfully built a working Knowledge Base, validated retrieval, and prepared batch infrastructure. However, on-demand generation (Converse / InvokeModel) was heavily restricted, forcing a manual RAG simulation and pivot toward Batch Inference.
 
 ### Key Files & Results
 
