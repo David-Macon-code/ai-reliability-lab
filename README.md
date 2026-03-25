@@ -37,7 +37,7 @@ Applying AIF-C01 cert knowledge on responsible AI, content filtering, Bedrock se
 
 *All certificates are stored in the [`/certs/`](certs/) folder.*
 
-**Current Status (as of March 24, 2026)**
+**Current Status (as of March 25, 2026)**
 
 ## Highlights
 
@@ -266,20 +266,15 @@ Ran baseline (no context) using batch script. Documented on-demand throughput bl
 
 ***[Day 27](./docs/Day27.md)**  – Manual RAG Simulation + Developing Generative AI Solutions
 
-***[Day 28](./docs/Day28.md)**  –
-Completed "Designing Secure Retrieval Augmented Generation (RAG) Applications with AWS" and "Foundations of Prompt Engineering" (certificates awarded). Added enterprise security takeaways and advanced prompt engineering techniques to rag_notes.md. Continued manual RAG simulation while awaiting support case clearance.
+***[Day 28](./docs/Day28.md)**  – Cost Analysis + Guardrails on RAG
+Performed cost analysis (baseline vs RAG token usage and estimated savings) and added Guardrails on RAG notes. No new courses completed.
 
 ***[Day 29](./docs/Day29.md)**  - Designing Secure RAG + Foundations of Prompt Engineering
 Completed "Designing Secure Retrieval Augmented Generation (RAG) Applications with AWS" and "Foundations of Prompt Engineering" (certificates awarded). Added enterprise security takeaways and advanced prompt engineering techniques to rag_notes.md. Continued manual RAG simulation while awaiting support case clearance.
 
 **In Progress**  
 
-- Batch inference job (awaiting support case #177423331600991 clearance)  
-- Hallucination comparison (baseline vs manual RAG)  
-- Cost analysis and Guardrails on RAG notes  
 - Final Week 4 RAG Report and polish
-
-**Day 27–29 — Optimization & Enterprise Framing**
 
 **Day 30 — Polish & Push**
 
