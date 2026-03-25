@@ -223,10 +223,6 @@ Adversarial jailbreak set | 3 runs per config | Bedrock Converse API
 | **Learning & Optimization**       | - Completed 8 AWS Skill Builder courses focused on RAG prompt engineering, security, and cost optimization |
 | **Support & Escalation**          | - Opened support case #17742333160099 |
 
-### Key Files & Results
-
-- **[3_attempt_retry_logic_V5.py](scripts/3_attempt_retry_logic_V5.py)** — core evaluation script with retry, leak detection, exact-match scoring  
-
 ### Week 4: RAG + Cost Optimization + Enterprise Framing & Real-World AWS Constraints
 
 **Completed**
@@ -294,6 +290,10 @@ Completed "Designing Secure Retrieval Augmented Generation (RAG) Applications wi
 | Final commit & push | **Completed** | Repo cleaned, documented, and ready for job applications. |
 
   </details>
+
+### Key Files & Results
+
+- **[3_attempt_retry_logic_V5.py](scripts/3_attempt_retry_logic_V5.py)** — core evaluation script with retry, leak detection, exact-match scoring
 
 Certificates: [`/certs/`](certs/)
 
