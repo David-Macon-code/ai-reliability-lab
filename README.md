@@ -266,6 +266,12 @@ Ran baseline (no context) using batch script. Documented on-demand throughput bl
 
 ***[Day 27](./docs/Day27.md)**  – Manual RAG Simulation + Developing Generative AI Solutions
 
+***[Day 28](./docs/Day28.md)**  –
+Completed "Designing Secure Retrieval Augmented Generation (RAG) Applications with AWS" and "Foundations of Prompt Engineering" (certificates awarded). Added enterprise security takeaways and advanced prompt engineering techniques to rag_notes.md. Continued manual RAG simulation while awaiting support case clearance.
+
+***[Day 29](./docs/Day29.md)**  - Designing Secure RAG + Foundations of Prompt Engineering
+Completed "Designing Secure Retrieval Augmented Generation (RAG) Applications with AWS" and "Foundations of Prompt Engineering" (certificates awarded). Added enterprise security takeaways and advanced prompt engineering techniques to rag_notes.md. Continued manual RAG simulation while awaiting support case clearance.
+
 **In Progress**  
 
 - Batch inference job (awaiting support case #177423331600991 clearance)  
