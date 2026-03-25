@@ -213,7 +213,7 @@ Adversarial jailbreak set | 3 runs per config | Bedrock Converse API
 
 | Week | Status     | Key Outcomes |
 |------|------------|--------------|
-| 4    | ✅ Complete | Implemented working Bedrock Knowledge Base (`8OOQBDOPXT`) with Titan Embeddings v2, validated retrieval, created batch input infrastructure, performed manual RAG simulation (baseline vs context-augmented), and documented on-demand generation blocking. Completed 8 AWS Skill Builder courses focused on RAG, prompt engineering, security, and cost optimization. |
+| 4    | ✅ Complete | Implemented working Bedrock Knowledge Base (`8OOQBDOPXT`) with Titan Embeddings v2.<br>Validated retrieval, created batch input infrastructure, performed manual RAG simulation (baseline vs context-augmented).<br>Documented on-demand generation blocking.<br>Completed 8 AWS Skill Builder courses focused on RAG, prompt engineering, security, and cost optimization.<br><br>**Highlights**:<br>• Built and synced Knowledge Base with toy dataset and sample 10-K PDF<br>• Validated Titan Embeddings v2 locally (1024 dimensions, cosine similarity)<br>• Created `batch_queries.jsonl` for future batch inference<br>• Performed manual RAG simulation while on-demand generation was blocked by AWS<br>• Documented real-world throughput restrictions and opened support case #177423331600991 |
 
 ### Week 4 Highlights
 
