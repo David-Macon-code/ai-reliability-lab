@@ -29,14 +29,6 @@ Implemented end-to-end RAG using Titan Embeddings v2 and Bedrock Knowledge Bases
 
 ## Certifications & Training (March 2026)
 
-### AWS Skill Builder – Core Courses Completed
-
-<p align="left">
-  <img src="certs/Building-Generative-AI-Applications-Using-Amazon-Bedrock.jpg" width="320" alt="Building Generative AI Applications Using Amazon Bedrock">
-  <img src="certs/Building-cost-effective-RAG-applications.jpg" width="320" alt="Building cost-effective RAG applications">
-  <img src="certs/NEW-Ultimate-AWS-Certified-Al-Practitioner-AlFC01.jpg" width="320" alt="Ultimate AWS Certified AI Practitioner AIFC01">
-</p>
-
 **Full List of AWS Skill Builder Courses Completed:**
 
 - Building Generative AI Applications Using Amazon Bedrock
@@ -78,48 +70,35 @@ Adversarial jailbreak set | 3 runs per config | Bedrock Converse API
 - ~50% fewer output tokens → ~65–70% lower real inference cost at Bedrock pricing
 - Guardrails block similarly (~75–100%) with no quality drop (100% exact-match)
 
-#### Success Rate & Guardrail Intervention
+## Progress Overview
 
-![Success & Guardrail Comparison](sonnet_vs_haiku_guardrail_comparison.png){width=80%}
-<p align="center"><em>Success rate and guardrail intervention — Haiku (orange) vs Sonnet (blue)</em></p>
+| Week | Status     | Key Outcomes |
+|------|------------|--------------|
+| 1    | ✅ Complete | LLM foundations, prompt iteration (V1 → V3), native structured outputs → ~100% JSON validity, golden test set created |
+| 2    | ✅ Complete | Observability pipeline, Bedrock Guardrails tuning (v3 Medium) → 93.3% injection blocks with 0% false positives on golden tests |
+| 3    | ✅ Complete | Production-grade batch harness with retries, temperature sweeps, full guardrail sweeps (v3/v4) → ~82% cost reduction, 83–100% block rate on adversarial prompts, 100% exact-match extraction quality on passes |
+| 4    | ✅ Complete | End-to-end RAG implementation with Titan Embeddings v2 and Bedrock Knowledge Bases (`8OOQBDOPXT`), manual RAG simulation, batch input preparation, cost-effective RAG strategies, and enterprise framing (security, scalability, Guardrails on RAG). Completed 8 AWS Skill Builder courses. |
 
----
+### Week-by-Week Highlights
 
-#### Latency per Successful Call
+**Week 1** – LLM foundations, prompt iteration (V1 → V3), native structured outputs achieved ~100% JSON validity on Converse API.
 
-![Latency Comparison](sonnet_vs_haiku_latency.png){width=60%}
-<p align="center"><em>Avg latency per success — Haiku consistently faster</em></p>
+**Week 2** – Observability (guardrail trace parsing + metrics CSV), security tuning with Bedrock Guardrails (v3 Medium).  
 
----
+- Golden benign: 100% pass rate (0% false positives)  
+- Injections: 93.3% blocked (14/15)  
+- Key win: Balanced usability + strong attack protection using AIF-C01 responsible AI principles.
 
-#### Cost Comparison
+**Week 3** – Automation & reliability engineering: built production-grade batch runner with retry logic, temperature sweeps (100% pass), multi-guardrail sweeps (v3 Medium / v4 Low).  
 
-![Cost Savings – Guarded Runs](cost_savings_guarded.png){width=60%}
-<p align="center"><em>Guarded runs — Haiku uses real lower pricing (~$1/$5 per M)</em></p>
+- Success rate: 91.7% (no GR) → 16.7% (with GR)  
+- Cost savings: ~82% ($0.0422 → $0.0076 for 36 runs)  
+- Extraction quality: 100% exact-match on successful runs  
+- Key win: Proved Guardrails deliver massive cost reduction and reliability boost while preserving quality.
 
-**Bottom line**  
-Haiku 4.5 delivers comparable or better reliability with significant speed and cost advantages — strong candidate for production workloads.
+**Week 4** – RAG Foundations & Real-World Constraints: Implemented working Knowledge Base with Titan Embeddings, validated retrieval, created batch infrastructure, performed manual RAG simulation (baseline vs context-augmented), and documented on-demand generation blocking. Completed 8 AWS Skill Builder courses focused on RAG, prompt engineering, security, and cost optimization.
 
-### Progress Overview
-
-| Week | Status          | Key Outcomes                                                                 |
-|------|-----------------|------------------------------------------------------------------------------|
-| 1    | ✅ Complete     | LLM foundations, V1–V3 prompts, native structured outputs → **~100% JSON validity**, golden set created |
-| 2    | ✅ Complete     | Observability pipeline, Bedrock Guardrails tuned (Medium) → **93.3% injection blocks**, **100% golden pass** |
-| 3    | ✅ Complete     | Batch harness with retries, temp sweep (100% pass), guardrail sweeps (v3/v4) → **~82% cost savings**, **83–100% block rate**, full metrics polish |
-
-- **Week 1** – LLM foundations, prompt iteration (V1 → V3), native structured outputs achieved ~100% JSON validity.
-- **Week 2** – Observability (guardrail trace parsing + metrics CSV), security tuning (Guardrail v3 – Medium strength), before/after testing.
-  - Golden benign: 100% pass rate (0% false positives after tuning)
-  - Injections: 93.3% blocked (14/15), one LOW-conf leak
-  - Key win: Balanced usability + strong attack protection (enhanced by AIF-C01 insights on Guardrails & responsible AI)
-- **Week 3** – Automation & reliability engineering sprint: built production-grade batch runner, added retry logic (3 attempts), temperature sweep (100% pass across 0.0/0.3/0.7), multi-guardrail sweeps (v3 Medium, v4 Low), full observability (interventions, block rate, blocked runs, latency total/avg, cost estimation).
-  - Success rate drop: 91.7% (no GR) → 16.7% (GR)
-  - Cost savings: ~82% ($0.0422 → $0.0076 for 36 runs)
-  - Extraction quality: 100% exact-match on passes
-  - Key win: Proved guardrails deliver massive cost reduction + reliability boost while preserving quality — directly employable in PromptOps / AIF-C01 workflows
-
-**In progress: Week 4** – RAG + Cost Optimization + Enterprise Framing
+**Current Status**: Week 4 successfully completed. Awaiting support case clearance for batch inference to enable full generation testing.
 
 ## Lab Overview
 
