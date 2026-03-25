@@ -11,13 +11,21 @@ Issued March 11, 2026 | Valid until March 2029
 
 A personal lab I created to demostrate real world experience by following a structured 30-day plan to build reliable, observable, secure LLM workflows using **AWS Bedrock** (Converse API with native structured outputs, Guardrails, observability, etc.).
 
-Applying AIF-C01 cert knowledge on responsible AI, content filtering, Bedrock services, and Guardrails. Weeks 1–3: tuned Guardrails blocking 93%+ injections with 0% false positives on golden benign tests and batch sweeps proving ~82% cost reduction and 83–100% block rate on adversarial prompts while preserving 100% extraction quality on passes.
+Applying AIF-C01 cert knowledge on responsible AI, content filtering, Bedrock services, and Guardrails across the entire bootcamp.
 
-**Employability Highlights**  
+**Weeks 1–3 (Reliability & Observability):**  
+Built a robust batch evaluation harness with retry logic, structured outputs (JSON schema via Converse), and comprehensive metrics (latency, tokens, cost, confidence, exact-match %). Conducted extensive Guardrails testing (v3 Medium / v4 Low), achieving 83–100% block rate on adversarial prompts with 0% false positives on golden benign tests and ~82% cost reduction while maintaining 100% exact-match extraction quality on successful runs.
 
-- Demonstrated 82% cost reduction + 83–100% adversarial block rate with Bedrock Guardrails  
-- Achieved 100% exact-match extraction reliability across configs  
-- Applied AIF-C01 knowledge (responsible AI, content filtering, Guardrails) to real batch pipelines
+**Week 4 (RAG Foundations):**  
+Implemented end-to-end RAG using Titan Embeddings v2 and Bedrock Knowledge Bases (`8OOQBDOPXT`). Validated retrieval, created batch input infrastructure, performed manual RAG simulation (baseline vs context-augmented), and documented real-world on-demand generation restrictions. Completed 8 AWS Skill Builder courses focused on RAG, prompt engineering, security, and cost optimization.
+
+### Employability Highlights
+
+- Demonstrated **82% cost reduction** + **83–100% adversarial block rate** with Bedrock Guardrails while preserving 100% extraction quality
+- Built reliable batch evaluation pipelines with structured outputs, retry logic, and observability
+- Implemented Retrieval-Augmented Generation (RAG) with Titan Embeddings and Knowledge Bases, including manual workaround for on-demand restrictions
+- Applied AIF-C01 principles (responsible AI, content filtering, Guardrails, security) to real-world pipelines
+- Completed 8 AWS Skill Builder courses with certificates, covering prompt engineering, cost-effective RAG, and secure RAG design
 
 ## Certifications & Training (AWS Skill Builder + Udemy)
 
