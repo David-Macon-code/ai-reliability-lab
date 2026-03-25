@@ -16,8 +16,14 @@ Applying AIF-C01 cert knowledge on responsible AI, content filtering, Bedrock se
 ## Weeks 1–3 (Reliability & Observability):**  
 Built a robust batch evaluation harness with retry logic, structured outputs (JSON schema via Converse), and comprehensive metrics (latency, tokens, cost, confidence, exact-match %). Conducted extensive Guardrails testing (v3 Medium / v4 Low), achieving 83–100% block rate on adversarial prompts with 0% false positives on golden benign tests and ~82% cost reduction while maintaining 100% exact-match extraction quality on successful runs.
 
-## Week 4 (RAG Foundations):**  
-Implemented end-to-end RAG using Titan Embeddings v2 and Bedrock Knowledge Bases (`8OOQBDOPXT`). Validated retrieval, created batch input infrastructure, performed manual RAG simulation (baseline vs context-augmented), and documented real-world on-demand generation restrictions. Completed 8 AWS Skill Builder courses focused on RAG, prompt engineering, security, and cost optimization.
+## Week 4 – RAG Foundations & Real-World Constraints
+
+- Implemented a working **Knowledge Base** (`8OOQBDOPXT`) using Titan Embeddings v2
+- Validated retrieval from the KB with toy dataset and sample 10-K document
+- Created batch input infrastructure (`batch_queries.jsonl` uploaded to S3)
+- Performed manual RAG simulation (baseline vs context-augmented prompts) using existing batch script
+- Documented on-demand generation blocking (Converse / InvokeModel restrictions)
+- Completed **8 AWS Skill Builder courses** focused on RAG, prompt engineering, security, and cost optimization
 
 ### Employability Highlights
 
