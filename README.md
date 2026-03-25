@@ -116,12 +116,36 @@ Adversarial jailbreak set | 3 runs per config | Bedrock Converse API
 | 3 | Automation + Reliability Engineering | Complete | Batch scripts, retry logic, flake tracking, cost notes |
 | 4 | RAG + Cost Optimization + Enterprise Framing | Complete | Toy RAG, hallucination compare, model swap, final polish |
 
-**Technologies & Tools Used**
+## Technologies & Tools Used
 
-- AWS Bedrock (Converse API, Guardrails, Titan Embeddings G1)
-- Claude Sonnet 4.5 / Haiku 4.5
-- Python (boto3, tenacity for retries, sentence-transformers potential)
-- Observability: CSV metrics, console summaries, cost estimation
+**Core AWS Services**
+
+- **Amazon Bedrock** — Converse API, Knowledge Bases, Titan Embeddings v2, Guardrails (v3 Medium / v4 Low), Batch Inference (planned)
+- **Amazon S3** — Data storage for toy dataset and batch input
+
+**Models**
+
+- Claude Sonnet 4.5 & Haiku 4.5 (Anthropic via Bedrock)
+- Titan Embeddings v2 (`amazon.titan-embed-text-v2:0`)
+- Local testing with fallback models (when on-demand blocked)
+
+**Languages & Libraries**
+
+- **Python 3.14** — Main development language
+- **boto3** — Official AWS SDK for Bedrock (Converse, Retrieve, Knowledge Base management)
+- **pandas + seaborn** — Metrics analysis and visualization (Jupyter notebooks)
+- **tenacity** — Retry logic in batch harness
+
+**Observability & Reliability**
+
+- Custom batch evaluation harness (`3_attempt_retry_logic_V5.py`)
+- Comprehensive metrics: latency, token usage, cost estimation, confidence, exact-match %, flake_reason, guardrail interventions
+- CSV logging and summary statistics
+
+**Development Environment**
+
+- Local JupyterLab (preferred over SageMaker Studio for speed and cost)
+- Git + GitHub for version control and portfolio showcase
 
 ### Detailed Reports
 
