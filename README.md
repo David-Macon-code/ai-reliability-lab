@@ -209,14 +209,7 @@ Adversarial jailbreak set | 3 runs per config | Bedrock Converse API
 
 ### Week 4
 
-- **[Week 4 Findings](./docs/Week_4_Findings.md)**
-
-### Current Setup Highlights
-
-- Model: `global.anthropic.claude-sonnet-4-5-20250929-v1:0` (inference profile)  
-- Guardrail: `9g6hem28nedj` v3 (Medium) + v4 (Low prompt attacks)  
-- Main script: **[3_attempt_retry_logic_V5.py](scripts/3_attempt_retry_logic_V5.py)** (Converse API, guardrail toggle, retry logic, leak detection, exact-match scoring, metrics logging)  
-- Outputs: CSV in /evaluation/ folders (e.g. no_guardrail_final, retry_v4_low, exact_match_test_fixed, etc.)
+- **[Week 4 Findings](./docs/Week_4_Findings.md)** - Week 4 focused on implementing Retrieval-Augmented Generation (RAG) using Amazon Bedrock. I successfully built a working Knowledge Base, validated retrieval, and prepared batch infrastructure. However, on-demand generation (Converse / InvokeModel) was heavily restricted, forcing a manual RAG simulation and pivot toward Batch Inference.
 
 ### Key Files & Results
 
@@ -288,12 +281,9 @@ Completed "Designing Secure Retrieval Augmented Generation (RAG) Applications wi
 | README polish | **Completed** | Updated Week 4 section with all days and added certifications display. |
 | Final commit & push | **Completed** | Repo cleaned, documented, and ready for job applications. |
 
-See full report: [Week_4_RAG_Report.md](docs/Week_4_RAG_Report.md)  
-Certificates: [`/certs/`](certs/)
-
   </details>
 
-Week 4 successfully completed.
+Certificates: [`/certs/`](certs/)
 
 Built with AWS Bedrock + Claude 4.5 family – ongoing PromptOps learning lab.
 
