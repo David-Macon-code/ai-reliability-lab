@@ -9,9 +9,21 @@ Issued March 11, 2026 | Valid until March 2029
 
 </div>
 
-A personal lab I created to demostrate real world experience by following a structured 30-day plan to build reliable, observable, secure LLM workflows using **AWS Bedrock** (Converse API with native structured outputs, Guardrails, observability, etc.).
+# AI Reliability Lab
 
-Applying AIF-C01 cert knowledge on responsible AI, content filtering, Bedrock services, and Guardrails across the entire bootcamp.
+**A personal 30-day AI Bootcamp project** I created to demonstrate real-world experience building reliable, observable, and secure LLM workflows using AWS Bedrock.
+
+Applying AIF-C01 certification knowledge on responsible AI, content filtering, Bedrock services, and Guardrails across the entire bootcamp — from prompt iteration and structured outputs to Guardrail tuning, observability, cost optimization, and Retrieval-Augmented Generation (RAG).
+
+---
+
+**Focus Areas:**
+
+- Reliability engineering & observability
+- Guardrails and security
+- Cost-aware prompting and RAG implementation
+- Real-world AWS constraints and workarounds
+
 
 ## Weeks 1–3 (Reliability & Observability):**  
 Built a robust batch evaluation harness with retry logic, structured outputs (JSON schema via Converse), and comprehensive metrics (latency, tokens, cost, confidence, exact-match %). Conducted extensive Guardrails testing (v3 Medium / v4 Low), achieving 83–100% block rate on adversarial prompts with 0% false positives on golden benign tests and ~82% cost reduction while maintaining 100% exact-match extraction quality on successful runs.
