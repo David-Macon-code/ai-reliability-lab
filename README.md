@@ -27,21 +27,35 @@ Implemented end-to-end RAG using Titan Embeddings v2 and Bedrock Knowledge Bases
 - Applied AIF-C01 principles (responsible AI, content filtering, Guardrails, security) to real-world pipelines
 - Completed 8 AWS Skill Builder courses with certificates, covering prompt engineering, cost-effective RAG, and secure RAG design
 
-## Certifications & Training (AWS Skill Builder + Udemy)
+## Certifications & Training (March 2026)
 
-### Core Courses
+### AWS Skill Builder – Core Courses Completed
 
 <p align="left">
-  <img src="certs/Building-Generative-AI-Applications-Using-Amazon-Bedrock.jpg" width="310" alt="Building Generative AI Applications Using Amazon Bedrock">
-  <img src="certs/Building-cost-effective-RAG-applications.jpg" width="310" alt="Building cost-effective RAG applications with Amazon Bedrock Knowledge Bases and Amazon S3 Vectors">
-  <img src="certs/NEW-Ultimate-AWS-Certified-Al-Practitioner-AlFC01.jpg" width="310" alt="Ultimate AWS Certified AI Practitioner AIFC01">
+  <img src="certs/Building-Generative-AI-Applications-Using-Amazon-Bedrock.jpg" width="320" alt="Building Generative AI Applications Using Amazon Bedrock">
+  <img src="certs/Building-cost-effective-RAG-applications.jpg" width="320" alt="Building cost-effective RAG applications">
+  <img src="certs/NEW-Ultimate-AWS-Certified-Al-Practitioner-AlFC01.jpg" width="320" alt="Ultimate AWS Certified AI Practitioner AIFC01">
 </p>
 
-### Additional Training
+**Full List of AWS Skill Builder Courses Completed:**
 
-- [Prompt Engineering Best Practices for Amazon Bedrock Models](certs/Prompt-Engineering-Best-Practices.jpg)
-- [Exam Prep Overview: AWS Certified AI Practitioner (AIF-C01)](certs/Exam-Prep-Overview-AWS-Certified-AI-Practitioner.jpg)
-- [Official Practice Question Set: AWS Certified AI Practitioner (AIF-C01)](certs/Official-Practice-Question-Set-AWS-Certified-AI-Practitioner.jpg)
+- Building Generative AI Applications Using Amazon Bedrock
+- Building cost-effective RAG applications with Amazon Bedrock Knowledge Bases and Amazon S3 Vectors
+- Prompt Engineering Best Practices for Amazon Bedrock Models
+- Amazon Bedrock Getting Started
+- Developing Generative Artificial Intelligence Solutions
+- Designing Secure Retrieval Augmented Generation (RAG) Applications with AWS
+- Essentials of Prompt Engineering
+- Foundations of Prompt Engineering
+- Exam Prep Plan Overview: AWS Certified AI Practitioner (AIF-C01)
+- Exam Prep Overview: AWS Certified AI Practitioner (AIF-C01)
+- Official Practice Question Set: AWS Certified AI Practitioner (AIF-C01)
+
+### Udemy Courses Completed
+
+- Intro to AI: A Beginner's Guide to Artificial Intelligence
+- NEW Ultimate AWS Certified AI Practitioner AIF-C01
+- Practice Exams AWS Certified AI Practitioner - AIF-C01
 
 *All certificates are stored in the [`/certs/`](certs/) folder.*
 
