@@ -298,15 +298,14 @@ Completed "Designing Secure Retrieval Augmented Generation (RAG) Applications wi
 ### Documentation
 
 - [`README.md`](README.md) — Project overview and Week 4 progress
-- [`docs/Day22.md`](docs/Day22.md) through [`docs/Day30.md`](docs/Day30.md) — Daily progress logs
+- [`docs/Day1.md`](docs/day1_summary.md) through [`docs/Day30.md`](docs/Day30.md) — Daily progress logs
 
 </details>
-
-Certificates: [`/certs/`](certs/)
 
 Built with AWS Bedrock + Claude 4.5 family – ongoing PromptOps learning lab.
 
 **Current status:**
+Completed
 
 - #AWS #AWSBedrock #PromptOps #ResponsibleAI #AIFC01*
 
