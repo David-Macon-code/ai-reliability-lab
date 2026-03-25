@@ -275,9 +275,33 @@ Completed "Designing Secure Retrieval Augmented Generation (RAG) Applications wi
 
   </details>
 
-### Key Files & Results
+## Key Files & Folders
+  <details>
+  <summary>Click to expand Key Files & Folders details</summary>
 
-- **[3_attempt_retry_logic_V5.py](scripts/3_attempt_retry_logic_V5.py)** — core evaluation script with retry, leak detection, exact-match scoring
+### Core Notebooks & Reports
+
+- [`Day22_Titan_Embeddings_Test.ipynb`](Day22_Titan_Embeddings_Test.ipynb) — Titan Embeddings v2 testing and cosine similarity
+- [`Week_4_RAG_Report.md`](docs/Week_4_RAG_Report.md) — Full Week 4 summary and findings
+- [`rag_notes.md`](docs/rag_notes.md) — Detailed RAG notes, course takeaways, and lessons learned
+
+### Scripts & Automation
+
+- [`scripts/3_attempt_retry_logic_V5.py`](scripts/3_attempt_retry_logic_V5.py) — Production-grade batch evaluation harness with retries, metrics, cost estimation, and Guardrails support
+
+### Data & Infrastructure
+
+- [`toy_dataset.txt`](toy_dataset.txt) — Custom toy dataset for RAG testing
+- [`batch_queries.jsonl`](batch_queries.jsonl) — Input file for batch inference (ready for submission)
+- [`certs/`](certs/) — All AWS Skill Builder certificates
+
+### Documentation
+
+- [`README.md`](README.md) — Project overview and Week 4 progress
+- [`docs/Day22.md`](docs/Day22.md) through [`docs/Day30.md`](docs/Day30.md) — Daily progress logs
+- [`docs/Week_4_Findings.md`](docs/Week_4_Findings.md) — Detailed Week 4 findings and lessons learned
+
+</details>
 
 Certificates: [`/certs/`](certs/)
 
