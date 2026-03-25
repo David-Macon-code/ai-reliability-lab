@@ -223,22 +223,6 @@ Adversarial jailbreak set | 3 runs per config | Bedrock Converse API
 | **Learning & Optimization**       | - Completed 8 AWS Skill Builder courses focused on RAG prompt engineering, security, and cost optimization |
 | **Support & Escalation**          | - Opened support case #17742333160099 |
 
-### Week 4: RAG + Cost Optimization + Enterprise Framing & Real-World AWS Constraints
-
-**Completed**
-
-- Built and synced Bedrock Knowledge Base (`8OOQBDOPXT`) with toy dataset and sample 10-K PDF
-- Tested Titan Embeddings v2 locally (1024 dims, cosine similarity)
-- Created batch input JSONL and uploaded to S3 for future inference
-- Completed three core AWS Skill Builder courses:
-  - Building Generative AI Applications Using Amazon Bedrock
-  - Building cost-effective RAG applications with Amazon Bedrock Knowledge Bases and Amazon S3 Vectors
-  - Prompt Engineering Best Practices for Amazon Bedrock Models
-- Documented on-demand generation blocking (throughput restrictions) and manual RAG workaround
-- Retrieval from KB validated (chunks returned successfully)
-
-See detailed notes in [`rag_notes.md`](docs/rag_notes.md) and certificates in [`/certs/`](certs/).
-
   <details>
   <summary>Click to expand Week 4 details</summary>
 
