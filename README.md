@@ -272,11 +272,18 @@ Performed cost analysis (baseline vs RAG token usage and estimated savings) and 
 ***[Day 29](./docs/Day29.md)**  - Designing Secure RAG + Foundations of Prompt Engineering
 Completed "Designing Secure Retrieval Augmented Generation (RAG) Applications with AWS" and "Foundations of Prompt Engineering" (certificates awarded). Added enterprise security takeaways and advanced prompt engineering techniques to rag_notes.md. Continued manual RAG simulation while awaiting support case clearance.
 
-**In Progress**  
+***[Day 30](./docs/Day30.md)**  -Week 4 Final Report & Polish
 
-- Final Week 4 RAG Report and polish
+| Item | Status | Details |
+|------|--------|---------|
+| Week 4 RAG Report | **Completed** | Wrote comprehensive summary of RAG implementation, challenges, and lessons learned. |
+| README polish | **Completed** | Updated Week 4 section with all days and added certifications display. |
+| Final commit & push | **Completed** | Repo cleaned, documented, and ready for job applications. |
 
-**Day 30 — Polish & Push**
+See full report: [Week_4_RAG_Report.md](docs/Week_4_RAG_Report.md)  
+Certificates: [`/certs/`](certs/)
+
+Week 4 successfully completed.
 
 Built with AWS Bedrock + Claude 4.5 family – ongoing PromptOps learning lab.
 
