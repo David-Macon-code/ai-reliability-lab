@@ -11,7 +11,7 @@ Issued March 11, 2026 | Valid until March 2029
 
 # AI Reliability Lab
 
-**A personal 30-day AI Bootcamp project** I created to demonstrate real-world experience building reliable, observable, and secure LLM workflows using AWS Bedrock.
+**A personal 30-day AI Bootcamp project** I designed to demonstrate real-world experience building reliable, observable, and secure LLM workflows using AWS Bedrock.
 
 Applying AIF-C01 certification knowledge on responsible AI, content filtering, Bedrock services, and Guardrails across the entire bootcamp — from prompt iteration and structured outputs to Guardrail tuning, observability, cost optimization, and Retrieval-Augmented Generation (RAG).
 
