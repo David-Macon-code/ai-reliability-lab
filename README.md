@@ -209,6 +209,20 @@ Adversarial jailbreak set | 3 runs per config | Bedrock Converse API
 
 ### Week 4
 
+## Week 4 Overview – RAG Foundations & Real-World AWS Constraints
+
+| Week | Status     | Key Outcomes |
+|------|------------|--------------|
+| 4    | ✅ Complete | Implemented working Bedrock Knowledge Base (`8OOQBDOPXT`) with Titan Embeddings v2, validated retrieval, created batch input infrastructure, performed manual RAG simulation (baseline vs context-augmented), and documented on-demand generation blocking. Completed 8 AWS Skill Builder courses focused on RAG, prompt engineering, security, and cost optimization. |
+
+### Week 4 Highlights
+
+- Built and synced Knowledge Base with toy dataset and sample 10-K PDF
+- Validated Titan Embeddings v2 locally (1024 dimensions, cosine similarity)
+- Created `batch_queries.jsonl` for future batch inference
+- Performed manual RAG simulation while on-demand generation was blocked by AWS
+- Documented real-world throughput restrictions and opened support case #177423331600991
+
 - **[Week 4 Findings](./docs/Week_4_Findings.md)** - Week 4 focused on implementing Retrieval-Augmented Generation (RAG) using Amazon Bedrock. I successfully built a working Knowledge Base, validated retrieval, and prepared batch infrastructure. However, on-demand generation (Converse / InvokeModel) was heavily restricted, forcing a manual RAG simulation and pivot toward Batch Inference.
 
 ### Key Files & Results
