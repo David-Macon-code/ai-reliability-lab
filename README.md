@@ -207,6 +207,10 @@ Adversarial jailbreak set | 3 runs per config | Bedrock Converse API
 
   </details>
 
+### Week 4
+
+- **[Week 4 Findings](./docs/Week_4_Findings.md)**
+
 ### Current Setup Highlights
 
 - Model: `global.anthropic.claude-sonnet-4-5-20250929-v1:0` (inference profile)  
@@ -232,14 +236,10 @@ Adversarial jailbreak set | 3 runs per config | Bedrock Converse API
 - Documented on-demand generation blocking (throughput restrictions) and manual RAG workaround
 - Retrieval from KB validated (chunks returned successfully)
 
-**In Progress / Pending**
-
-- Batch inference job (awaiting support case #177423331600991 clearance)
-- Manual RAG vs baseline hallucination comparison
-- Cost analysis and Guardrails on RAG
-- Final Week 4 RAG Report and polish
-
 See detailed notes in [`rag_notes.md`](docs/rag_notes.md) and certificates in [`/certs/`](certs/).
+
+  <details>
+  <summary>Click to expand Week 4 details</summary>
 
 - **[Day 22](./docs/Day22.md)** -  RAG Foundations & Bedrock Reality Check
 
@@ -290,6 +290,8 @@ Completed "Designing Secure Retrieval Augmented Generation (RAG) Applications wi
 
 See full report: [Week_4_RAG_Report.md](docs/Week_4_RAG_Report.md)  
 Certificates: [`/certs/`](certs/)
+
+  </details>
 
 Week 4 successfully completed.
 
